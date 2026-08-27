@@ -2,23 +2,23 @@
 
 ## Current status
 
-**Phase:** 3 — Public website *(complete on branch `feat/public-website`)*
+**Phase:** 4 — Property catalogue *(complete on branch `feat/property-catalogue`)*
 
-**State:** Phases 0–2 done. Phase 3 built the public marketing site: Home
-(hero + inline search + featured/latest cards), About, Services (4 sections),
-Contact (live `site_settings`), Areas, Privacy/Terms scaffolds, a real Property
-Detail page with a gallery lightbox, and a styled 404 — plus per-route metadata,
-OG, canonical, `robots.txt`, build-time `sitemap.xml`, JSON-LD (ADR-011),
-self-hosted Fraunces + Inter, Vercel Web Analytics, a mobile nav drawer, and
-route-level code splitting. All five quality gates green; **25/25 tests pass**
-(8 unit/component + integration).
+**State:** Phases 0–3 done. Phase 4 built the `/properties` catalogue: URL-driven
+filters (listing type · property type · area · price · bedrooms · verified),
+debounced keyword search (`ilike`), sort, numbered pagination, a desktop filter
+sidebar + mobile filter sheet, active-filter chips, and empty/loading/error
+states — all on the Phase 2 data layer (no schema changes, no new deps). The Home
+hero search and `/areas` chips now deep-link into it. All five gates green;
+**43/43 tests pass** (12 files, incl. 11 local-Supabase integration).
 
 ```
 Phase 0  ── approved 2026-08-27
 Phase 1 (Repository foundation)   ── done
 Phase 2 (Supabase foundation)     ── done locally; owner to create the hosted project + db push
 Phase 3 (Public website)          ── done (feat/public-website)
-Phase 4 (Property catalogue)      ← next: /properties list, search, filters, pagination
+Phase 4 (Property catalogue)      ── done (feat/property-catalogue)
+Phase 5 (Lead generation)         ← next: enquiry / viewing / contact / "list your property" forms + notify-lead wiring
 ```
 
 ## Completed
@@ -45,11 +45,11 @@ Phase 4 (Property catalogue)      ← next: /properties list, search, filters, p
 
 ## Current next task
 
-**Next: Phase 4 — Property catalogue.** `/properties` list page, keyword search,
-filters (listing type / property type / area / price / bedrooms / verified),
-pagination, sort. The hero search on Home and the area chips on `/areas` already
-navigate to `/properties?…` with query params for Phase 4 to consume. (Needs a
-plan + approval before execution.)
+**Next: Phase 5 — Lead generation.** The four public forms (property enquiry,
+viewing request, general contact, structured "list your property" submission),
+`notify-lead` full wiring (Gmail SMTP + in-dashboard), honeypot + rate limit,
+consent checkbox. The Contact page and property-detail CTAs currently point at
+tap-to-call / WhatsApp and a "form coming soon" note. (Needs a plan + approval.)
 
 **Status of handoffs:**
 - ✅ GitHub: `github.com/Bigmanbiggiey/k-pearl-agency`. Branches: `main` (scaffold),
@@ -86,6 +86,9 @@ Business owner returned the questionnaire. Resolved every open decision (`docs/p
 
 ### 2026-08-27 (Phase 2 — Supabase foundation complete locally)
 `supabase init` + 11 migrations implementing `docs/database.md` v2.0 (tables, `public_*` views, RLS, storage, auth trigger, KP-#### sequence). Local ports remapped to 553xx to coexist with another local Supabase stack. Seed: 28 Nairobi-metro areas, real `site_settings`, 2 dev staff, 8 sample properties. Generated `frontend/src/types/database.types.ts`. Wired the property **read** paths (`propertyService`/`propertyRepository` → `public_properties`/`public_property_media`) + `areaRepository` + the four Zod schemas. `notify-lead` Edge Function scaffolded. 11/11 tests pass (3 smoke + 8 local-Supabase integration); RLS also verified via psql (agent assigned-only, admin any, admin-only featured/verified, anon sees only published). All five gates green. Later: pushed to `github.com/Bigmanbiggiey/k-pearl-agency`; moved `areas`+`site_settings` into `20260827090012_reference_data` so `db push` needs no manual SQL; added `docs/supabase-setup.md`.
+
+### 2026-08-27 (Phase 4 — Property catalogue)
+Branch `feat/property-catalogue`. Built the `/properties` page on the existing data layer: `src/features/property-search/` (`filterParams` URL↔filters, `usePropertyFilters`, `PropertyFilters`, `ActiveFilterChips`, `SortSelect`, `Pagination`, `FiltersSheet`), `useProperties(filters)` hook with `keepPreviousData`, `useDebouncedCallback`, and `LISTING_TYPES`/`PROPERTY_TYPES` in `lib/format.ts`. `propertySearch.schema.ts` refactored to expose `propertySearchFields.shape` for lenient per-field URL parsing. `PropertiesPage` replaces the stub. Canonical stays `/properties`; filtered/paged views are `noindex`. 18 new tests (filterParams, usePropertyFilters, Pagination, PropertiesPage + 3 integration assertions) — 43/43 pass. No schema changes, no new dependencies.
 
 ### 2026-08-27 (Phase 3 — Public website)
 Branch `feat/public-website`. Built the public marketing site: Home (dark hero + inline property search + featured/latest `PropertyCard` grids + services + why-us + owner CTA), About, Services (4 sections from `src/content/services.ts`), Contact (live `useSiteSettings` → tap-to-call / `wa.me` / `mailto:`), Areas (grouped by county), Privacy/Terms scaffolds with review banner, Property Detail (`useProperty` → facts / description / amenities / gallery lightbox / WhatsApp CTA prefilled with the reference code), styled 404. SEO: `<Seo>` via React 19 metadata hoisting, JSON-LD `RealEstateListing`, `public/robots.txt`, build-time `scripts/generate-sitemap.mjs` (ADR-011). Added deps: `@fontsource-variable/{fraunces,inter}` (25.a), `@vercel/analytics`, `@radix-ui/react-dialog`. Router converted to `React.lazy` per route + vendor `manualChunks`. Copy drafted in `src/content/*` (pending owner approval). 25/25 tests pass; all five gates green.

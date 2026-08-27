@@ -61,9 +61,14 @@
 - [ ] Logo-variant assets (transparent, horizontal lockup, favicon, light-surface) — designer handoff (25.b)
 
 ## Phase 4 — Property catalogue
-- [ ] Property list + pagination
-- [ ] Search (keyword)
-- [ ] Filters: listing type (rent/sale/short_let), property type (9), area, price range, bedrooms, verified-only
+*(complete — branch `feat/property-catalogue`; 43/43 tests, gates green)*
+- [x] `/properties` list page + numbered pagination (decision 11.a)
+- [x] Keyword search (debounced; `ilike` — Postgres FTS is a noted fast-follow)
+- [x] Filters: listing type, property type (9), area (grouped by county), price range, bedrooms (n+), verified-only
+- [x] URL-driven filter state (`usePropertyFilters` ↔ `filterParams`); shareable links
+- [x] Desktop filter sidebar + mobile filter sheet (Radix Dialog); active-filter chips
+- [x] Sort (newest / price ↑ / price ↓); empty / loading / error states
+- [x] Deep-links from Home hero search and `/areas` chips consumed
 - [x] Property detail + gallery *(built in Phase 3)*
 - [x] "Price on request" + short-let price-period rendering *(built in Phase 3)*
 - [x] Featured / latest properties *(built in Phase 3)*

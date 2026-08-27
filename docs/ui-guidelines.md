@@ -61,6 +61,22 @@ As built (Phase 3; per `docs/product-definition.md` §17):
 ("How it works" is folded into the Services page; a dedicated Areas grid lives on
 `/areas` rather than the homepage.)
 
+## Property catalogue (`/properties`, Phase 4)
+
+- Filters live in the URL query string (shareable links). `usePropertyFilters` +
+  `filterParams` are the only place that maps URL ↔ filter state; defaults are
+  omitted from the URL.
+- Desktop (`lg+`): sticky filter sidebar. Below `lg`: a "Filters (n)" button opens
+  a Radix Dialog bottom sheet.
+- Above the grid: result count, keyword search (debounced ~350 ms), sort select,
+  and removable active-filter chips.
+- Pagination: numbered + windowed on `sm+`, `‹ Prev · Page X of Y · Next ›` on
+  mobile (decision 11.a).
+- States: skeleton grid while loading; "No properties match these filters." +
+  Clear-filters action when empty.
+- SEO: canonical is always `/properties`; any active filter or `page > 1` sets
+  `noindex` (avoids thin duplicate pages).
+
 ## Property card
 
 Show:

@@ -67,14 +67,15 @@ k-pearl-agency/
 │       │   └── admin/                ✓  StaffDashboard*, StaffLogin*   (* = still stubs)
 │       ├── repositories/             ✓  property, area, siteSettings (read); inquiry/viewingRequest (stubs)
 │       ├── services/                 ✓  property (read); inquiry/viewingRequest (stubs)
-│       ├── hooks/                    ✓  useSiteSettings, useAreas, useFeatured/Latest/useProperty
+│       ├── features/
+│       │   └── property-search/      ✓  filterParams, usePropertyFilters, PropertyFilters, ActiveFilterChips, SortSelect, Pagination, FiltersSheet
+│       ├── hooks/                    ✓  useSiteSettings, useAreas, useProperties/Featured/Latest/Property, useDebouncedCallback
 │       ├── lib/                      ✓  env, supabase, errors, queryKeys, seo, format, media, contact
-│       ├── schemas/                  ✓  common, propertySearch, inquiry, viewingRequest, propertySubmission
+│       ├── schemas/                  ✓  common, propertySearch (+ fields), inquiry, viewingRequest, propertySubmission
 │       ├── types/                    ✓  domain, property, siteSettings, database.types (generated), index
 │       ├── styles/                   ✓  index.css — Tailwind v4 @theme + Fraunces/Inter
 │       ├── test/                     ✓  setup, utils, smoke, *.integration.test
 │       ├── entities/                    (still unused — feature domain concepts, later)
-│       ├── features/                    (still unused — grouped workflows, Phase 4+)
 │       └── assets/                      component-imported assets (as needed)
 ├── supabase/
 │   ├── migrations/                      (Phase 2 — after docs/database.md is approved)
