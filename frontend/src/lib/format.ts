@@ -32,6 +32,21 @@ export function propertyTypeLabel(type: PropertyType): string {
   return PROPERTY_TYPE_LABEL[type];
 }
 
+/** Ordered option lists for filter controls. */
+export const LISTING_TYPES: readonly ListingType[] = ['rent', 'sale', 'short_let'];
+
+export const PROPERTY_TYPES: readonly PropertyType[] = [
+  'apartment',
+  'house',
+  'townhouse',
+  'maisonette',
+  'studio',
+  'bedsitter',
+  'office',
+  'shop',
+  'land',
+];
+
 const currencyFormatter = new Intl.NumberFormat('en-KE', { maximumFractionDigits: 0 });
 
 export function formatPrice(

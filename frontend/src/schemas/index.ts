@@ -1,5 +1,9 @@
 export * from './common';
-export { propertySearchSchema, propertySortSchema } from './propertySearch.schema';
+export {
+  propertySearchSchema,
+  propertySearchFields,
+  propertySortSchema,
+} from './propertySearch.schema';
 export type { PropertySearchInput, PropertySort } from './propertySearch.schema';
 export { inquirySchema } from './inquiry.schema';
 export type { InquiryInput } from './inquiry.schema';

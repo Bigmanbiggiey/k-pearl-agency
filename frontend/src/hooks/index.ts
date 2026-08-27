@@ -1,3 +1,9 @@
 export { useSiteSettings } from './useSiteSettings';
 export { useAreas, groupAreasByCounty } from './useAreas';
-export { useFeaturedProperties, useLatestProperties, useProperty } from './useProperties';
+export { useDebouncedCallback } from './useDebouncedCallback';
+export {
+  useProperties,
+  useFeaturedProperties,
+  useLatestProperties,
+  useProperty,
+} from './useProperties';
