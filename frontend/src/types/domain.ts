@@ -4,8 +4,23 @@
  * The persisted enum values in `docs/database.md` must match these strings.
  */
 
-/** ADR-003 — the catalogue covers both rentals and sales. */
-export type ListingType = 'rent' | 'sale';
+/** ADR-003 (amended) — the catalogue covers rentals, sales and short-lets. */
+export type ListingType = 'rent' | 'sale' | 'short_let';
+
+/** Rate basis; null for `sale`. */
+export type PricePeriod = 'month' | 'night' | 'week';
+
+/** docs/database.md v2.0 — the nine property categories. */
+export type PropertyType =
+  | 'apartment'
+  | 'house'
+  | 'townhouse'
+  | 'maisonette'
+  | 'studio'
+  | 'bedsitter'
+  | 'office'
+  | 'shop'
+  | 'land';
 
 /** docs/product-definition.md §9 — property lifecycle. */
 export type PropertyStatus = 'draft' | 'published' | 'unavailable' | 'let_or_sold' | 'archived';
@@ -13,8 +28,14 @@ export type PropertyStatus = 'draft' | 'published' | 'unavailable' | 'let_or_sol
 /** ADR-007 — two staff roles for MVP. */
 export type StaffRole = 'admin' | 'agent';
 
-/** docs/product-definition.md §13 — one lead table, discriminated by type. */
-export type InquiryType = 'property_enquiry' | 'general' | 'owner_listing';
+/**
+ * docs/product-definition.md §13 — one lead table, discriminated by type.
+ * `owner_listing` moved to `property_submissions` (ADR-009).
+ */
+export type InquiryType = 'property_enquiry' | 'general';
+
+/** ADR-009 — owner "list your property" submission lifecycle. */
+export type PropertySubmissionStatus = 'new' | 'in_review' | 'converted' | 'declined';
 
 export type InquiryStatus = 'new' | 'contacted' | 'in_progress' | 'closed';
 

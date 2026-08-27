@@ -1,6 +1,9 @@
-/*
- * Zod schemas for external/user input (CLAUDE.md §6). Added per feature:
- * enquiry, viewing request, property create/update, staff login. The
- * environment schema lives in `@/lib/env`.
- */
-export {};
+export * from './common';
+export { propertySearchSchema, propertySortSchema } from './propertySearch.schema';
+export type { PropertySearchInput, PropertySort } from './propertySearch.schema';
+export { inquirySchema } from './inquiry.schema';
+export type { InquiryInput } from './inquiry.schema';
+export { viewingRequestSchema } from './viewingRequest.schema';
+export type { ViewingRequestInput } from './viewingRequest.schema';
+export { propertySubmissionSchema } from './propertySubmission.schema';
+export type { PropertySubmissionInput } from './propertySubmission.schema';
