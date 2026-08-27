@@ -2,61 +2,58 @@
 
 ## Current status
 
-**Phase:** 0 — Product foundation
+**Phase:** 1 — Repository foundation *(in progress)*
 
-**State:** **Discovery complete — awaiting human approval.**
+**State:** Phase 0 approved (ADR-002 … ADR-008 accepted 2026-08-27). Phase 1
+application shell built on branch `chore/phase-1-foundation`; all quality gates
+pass locally. **Phase 2 (database) is blocked** on the business-owner
+questionnaire.
 
 ```
-Phase 0
+Phase 0  ── approved 2026-08-27 (ADRs accepted)
   ↓
-Discovery complete   ← we are here
+Phase 1 (Repository foundation)   ← in progress; shell + tooling done
   ↓
-Awaiting human approval
-  ↓
-Phase 1 (Repository foundation)
+Phase 2 (Supabase foundation)     ← BLOCKED on docs/business-owner-questionnaire.md
 ```
 
 ## Completed
 
-- Rental Hunt KE repository reviewed as the reference architecture and product contrast.
-- K Pearl branding image reviewed.
-- K Pearl-specific project structure prepared.
-- Claude operating manual prepared.
-- Initial product, requirements, architecture, database, UI, coding and roadmap documentation prepared.
-- **Phase 0 discovery completed:** `docs/product-definition.md` created — the Product Definition & Requirements Baseline (business model, users, property model, lifecycle, IA, staff experience, roles, MVP scope, database implications, architecture implications, technical foundation findings, and a consolidated list of open decisions).
-- **Proposed ADR-002 … ADR-008** added to `docs/decisions.md` (agency-first model, rentals + sales, no owner entity, no public accounts, capture-only viewings, two-role staff model, stay on Vite SPA).
-- **Approval-gate materials prepared:**
-  - `docs/phase-0-decision-register.md` — every open decision as an approval questionnaire (question, why it matters, recommendation, alternative, impact, owner-decision column), grouped A–O, with a consistency audit and a decision-burden summary (~20 genuine business decisions).
-  - `docs/business-owner-questionnaire.md` — plain-language version for a non-technical owner, with a defaults table.
-  - `docs/database-readiness.md` — readiness check of `docs/database.md` against the product definition. Verdict: **NOT READY** until the business decisions are resolved and the schema reworked.
-- **Phase 0 audit performed.** Result: **PASS WITH OPEN DECISIONS.** No blocking contradictions; seven minor consistency items logged in the decision register (C1–C7).
+### Phase 0
+- Rental Hunt KE reviewed as architecture reference and product contrast.
+- `docs/product-definition.md` — Product Definition & Requirements Baseline.
+- `docs/phase-0-decision-register.md`, `docs/business-owner-questionnaire.md`, `docs/database-readiness.md`.
+- Consistency audit: PASS WITH OPEN DECISIONS (items C1–C7).
+- **ADR-002 … ADR-008 accepted by the project owner on 2026-08-27** (agency-first model, rentals + sales, no owner entity, no public accounts, capture-only viewings, two-role staff model, stay on Vite SPA). Recorded in `docs/decisions.md`.
 
-## Not yet approved
+### Phase 1 (branch `chore/phase-1-foundation`)
+- Git repository initialised; branch created.
+- All dependencies pinned to exact versions; `frontend/package-lock.json` committed. Stable-generation pins where absolute-latest breaks the ecosystem: **TypeScript 5.9** (typescript-eslint has no TS 7 support), **ESLint 9** (jsx-a11y / import plugins cap at 9), **Vite 7** (Vite 8 + plugin-react still maturing).
+- Tooling: `tsconfig.json` (strict), `vite.config.ts` (React + Tailwind v4 plugins, inline Vitest config), flat `eslint.config.js` (typescript-eslint type-checked, react, react-hooks, jsx-a11y, import; `no-explicit-any`; `no-restricted-imports` enforces the Supabase-in-repositories-only rule), Prettier, `.nvmrc` (24). CI: Node 20 → 24, added `format:check`.
+- Tailwind v4 CSS-first setup with `@theme` brand tokens (provisional, pending decision J-3).
+- Application shell: `main.tsx` → `App` (RootErrorBoundary → QueryClientProvider → RouterProvider); public route tree under `PublicLayout` (Header/Footer, skip link), staff route tree under `StaffLayout` + `StaffAuthGuard` placeholder; UI primitives (Button/Card/Badge/Container); every route is a navigable stub via shared `PagePlaceholder`.
+- `lib/`: Zod-validated `env`, single `supabase` client, `AppError` model (`docs/api-design.md` codes) + `notImplemented`, `queryKeys`.
+- Layered stubs: `repositories/` (property/inquiry/viewingRequest — signatures match `docs/api-design.md` incl. the lifecycle + `assign` methods) and delegating `services/`; all throw `notImplemented()`.
+- `types/domain.ts`: literal unions locked in by ADR-003/006/007; `database.types.ts` placeholder for Phase 2 generation.
+- Smoke tests (3 passing): home header/heading, 404, staff shell.
+- **Quality gates green locally:** `typecheck`, `lint` (`--max-warnings=0`), `format:check`, `test`, `build`. `npm run dev` serves the shell.
+- Docs synced: `docs/api-design.md` (C2 — lifecycle + assign methods), `docs/project-structure.md` (actual tree), `docs/roadmap.md` (Phase 1 items), `README.md` (getting started).
 
-- Exact business services and wording.
-- Rentals / sales / both; commercial + land; short-term lets.
-- Exact property categories, amenities vocabulary, and served areas.
-- Staff roles (proposed: `admin`, `agent`).
-- Final database schema (see `docs/product-definition.md` §28 for proposed deltas).
-- Final page copy and legal (Privacy / Terms).
-- Official contact details (phone, WhatsApp, email, address, social).
-- Additional brand assets (transparent/vector logo, horizontal lockup, standalone mark).
-- Production Supabase project, hosting target, and domain.
-- Proposed ADR-002 … ADR-008.
+## Blocked / not yet done
+
+- **CI has not run** — no GitHub remote yet. Add a remote and push `chore/phase-1-foundation` to exercise `.github/workflows/ci.yml`.
+- **Phase 2 (Supabase foundation)** — needs `docs/business-owner-questionnaire.md` answered, the `docs/phase-0-decision-register.md` decisions resolved, and `docs/database.md` reworked per `docs/database-readiness.md` and human-approved. No SQL, migrations, or Supabase project before that.
+- Root `npm install` (supabase CLI) deferred to Phase 2.
+- Real brand fonts / final colour hex (decisions 25.a / J-3); full logo asset pack (25.b).
+- Contact details, legal copy, served-areas list, property types, amenities — all still open (see the decision register).
 
 ## Current next task
 
-**Human action required:**
-
-1. The business owner completes `docs/business-owner-questionnaire.md`.
-2. Answers are transcribed into the **Owner decision** / **Status** columns of `docs/phase-0-decision-register.md`.
-3. Proposed ADR-002 … ADR-008 are marked ACCEPT / AMEND / REJECT in `docs/decisions.md`.
-4. `docs/database.md` is reworked per `docs/database-readiness.md`, then approved by a human.
-5. A human moves this file to "Phase 0 approved".
-
-No application code, SQL, migrations, dependency installation, git initialisation, or Supabase project creation until steps 1–5 are done.
-
-After approval: begin **Phase 1 (Repository foundation)** per `docs/roadmap.md`, starting with the technical-foundation fixes in `docs/product-definition.md` §30 (pin dependencies, commit a lockfile, add TS/Vite/Tailwind/ESLint/Vitest configs, add the app shell, get CI green) — not feature code.
+1. **Business owner completes `docs/business-owner-questionnaire.md`.**
+2. Transcribe answers into `docs/phase-0-decision-register.md` (Owner decision / Status columns).
+3. Rework `docs/database.md` per `docs/database-readiness.md`; human-approve it.
+4. Create the GitHub remote; push `chore/phase-1-foundation`; confirm CI is green; open a PR.
+5. Then start **Phase 2 (Supabase foundation)**: `supabase init`, migrations, RLS, storage, seed, generate `src/types/database.types.ts`.
 
 ## Change log
 
@@ -64,7 +61,10 @@ After approval: begin **Phase 1 (Repository foundation)** per `docs/roadmap.md`,
 Initial project foundation created.
 
 ### 2026-08-27 (later)
-Phase 0 discovery completed. Added `docs/product-definition.md`. Added proposed ADR-002…ADR-008 to `docs/decisions.md`. Added Phase 0 pointers to `docs/roadmap.md`, `docs/requirements.md`, `docs/vision.md`, and `docs/database.md`. State moved to "Discovery complete — awaiting human approval". Phase 0 is **not** marked approved.
+Phase 0 discovery completed. Added `docs/product-definition.md` and proposed ADR-002…ADR-008.
 
 ### 2026-08-27 (approval-gate preparation)
-Ran a Phase 0 consistency audit (verdict: PASS WITH OPEN DECISIONS; items C1–C7 logged). Added `docs/phase-0-decision-register.md`, `docs/business-owner-questionnaire.md`, and `docs/database-readiness.md`. No documents rewritten beyond this file. Phase 0 remains **AWAITING HUMAN APPROVAL** — not approved.
+Consistency audit (PASS WITH OPEN DECISIONS; C1–C7). Added `docs/phase-0-decision-register.md`, `docs/business-owner-questionnaire.md`, `docs/database-readiness.md`.
+
+### 2026-08-27 (Phase 0 approved · Phase 1 started)
+Project owner accepted ADR-002 … ADR-008. Initialised git. Built the Phase 1 repository foundation on `chore/phase-1-foundation`: pinned dependencies + lockfile, full tooling config, brand tokens, application shell with routing and the layered architecture scaffold, and smoke tests. All local quality gates pass. Phase 2 remains blocked on the business-owner questionnaire.

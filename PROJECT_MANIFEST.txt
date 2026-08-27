@@ -1,3 +1,6 @@
+# Snapshot of the original Phase 0 scaffold. For the current tree see
+# docs/project-structure.md (kept up to date) or `git ls-files`.
+
 .env.example
 .github/workflows/ci.yml
 .gitignore

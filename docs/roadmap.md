@@ -17,14 +17,17 @@
 - [ ] Approve database design
 
 ## Phase 1 — Repository foundation
-- [ ] Initialize Vite + React + TypeScript
-- [ ] Configure Tailwind v4
-- [ ] Configure linting/formatting
-- [ ] Configure testing
-- [ ] Configure Supabase client
-- [ ] Add environment handling
-- [ ] Add application shell
-- [ ] Add brand assets
+*(in progress — `chore/phase-1-foundation`; all quality gates green locally)*
+- [x] Initialize Vite + React + TypeScript
+- [x] Configure Tailwind v4
+- [x] Configure linting/formatting
+- [x] Configure testing
+- [x] Configure Supabase client
+- [x] Add environment handling
+- [x] Add application shell
+- [x] Add brand assets *(logo wired; provisional colour tokens pending decision J-3)*
+- [ ] Push to a GitHub remote so CI runs
+- [ ] Per-route code splitting (moved here from Phase 3 backlog)
 
 ## Phase 2 — Supabase foundation
 - [ ] Create project
