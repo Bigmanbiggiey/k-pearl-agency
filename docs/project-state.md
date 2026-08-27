@@ -58,13 +58,16 @@ Areas, Privacy/Terms shells; wire `site_settings`; SEO foundations; Vercel Web
 Analytics; logo-variant assets; per-route code splitting; draft copy for owner
 approval. (Needs a plan + approval before execution.)
 
-**Owner handoffs (parallel, none block Phase 3):**
-- Create the GitHub remote and push `chore/phase-1-foundation`; confirm CI is green.
-- Create the hosted Supabase project → `supabase link` + `db push` (seed only
-  `areas` + `site_settings` in production), then set the first admin.
-- Begin Meta Business verification for +254704061324 (WhatsApp, needed for Phase 7).
-- Supply property photography; brief a designer for the logo variants.
-- Line up legal review of the Privacy/Terms drafts (Phase 7).
+**Status of handoffs:**
+- ✅ GitHub: pushed to `github.com/Bigmanbiggiey/k-pearl-agency` (`main` + `chore/phase-1-foundation`). CI runs on push.
+- ⏳ Hosted Supabase project — owner to create, then `supabase link` + `db push`
+  (the `20260827090012_reference_data` migration seeds `areas` + `site_settings`;
+  the dev `seed.sql` is not applied to production). See the Supabase setup guide.
+- **Deferred to post-launch:** Meta Business verification for +254704061324
+  (WhatsApp alerts). Launch ships with email + in-dashboard alerts only (ADR-010).
+- **Property photography:** entered via the admin panel during Phase 6 testing —
+  the owner will not pre-supply image files. Sample listings use placeholder media.
+- Logo-variant assets (Phase 3) and legal review of Privacy/Terms (Phase 7) still stand.
 
 ## Change log
 

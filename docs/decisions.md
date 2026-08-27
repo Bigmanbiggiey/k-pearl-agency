@@ -187,3 +187,9 @@ all admins when unassigned, **plus** every admin) and sends through a **swappabl
 - The Gmail app password is a server-side secret — never in the frontend
   (`docs/security.md`).
 - Realtime is still not used; the dashboard reads counts on navigation.
+
+### Update (2026-08-27)
+Meta Business verification for +254704061324 is **explicitly deferred to
+post-launch** (owner's decision). MVP ships with `emailSender` + in-dashboard
+badges only; `whatsappSender` is a post-launch enhancement, switched on via
+`activeSenders()` once verification and template approval are done.
