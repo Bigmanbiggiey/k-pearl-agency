@@ -1,48 +1,9 @@
 -- K Pearl Agency — DEVELOPMENT seed data. NOT FOR PRODUCTION.
--- Loaded by `supabase db reset` (config.toml -> [db.seed]).
--- Production seeds only `areas` + `site_settings` (see docs/deployment.md).
-
--- ─────────────────────────────────────────────────────────────────────────
--- Areas (Nairobi metro). Also the real production set.
--- ─────────────────────────────────────────────────────────────────────────
-insert into public.areas (county, name, slug, sort_order) values
-  ('Nairobi',  'Kilimani',        'kilimani',        10),
-  ('Nairobi',  'Kileleshwa',      'kileleshwa',      20),
-  ('Nairobi',  'Lavington',       'lavington',       30),
-  ('Nairobi',  'Westlands',       'westlands',       40),
-  ('Nairobi',  'Parklands',       'parklands',       50),
-  ('Nairobi',  'Karen',           'karen',           60),
-  ('Nairobi',  'Lang''ata',       'langata',         70),
-  ('Nairobi',  'Runda',           'runda',           80),
-  ('Nairobi',  'Kitisuru',        'kitisuru',        90),
-  ('Nairobi',  'Ridgeways',       'ridgeways',      100),
-  ('Nairobi',  'South B',         'south-b',        110),
-  ('Nairobi',  'South C',         'south-c',        120),
-  ('Nairobi',  'Donholm',         'donholm',        130),
-  ('Nairobi',  'Embakasi',        'embakasi',       140),
-  ('Nairobi',  'Roysambu',        'roysambu',       150),
-  ('Nairobi',  'Kasarani',        'kasarani',       160),
-  ('Kajiado',  'Kitengela',       'kitengela',      170),
-  ('Kajiado',  'Ongata Rongai',   'ongata-rongai',  180),
-  ('Kajiado',  'Ngong',           'ngong',          190),
-  ('Machakos', 'Athi River',      'athi-river',     200),
-  ('Machakos', 'Syokimau',        'syokimau',       210),
-  ('Machakos', 'Mlolongo',        'mlolongo',       220),
-  ('Kiambu',   'Kiambu Town',     'kiambu-town',    230),
-  ('Kiambu',   'Kiambu Road',     'kiambu-road',    240),
-  ('Kiambu',   'Ruaka',           'ruaka',          250),
-  ('Kiambu',   'Ruiru',           'ruiru',          260),
-  ('Kiambu',   'Juja',            'juja',           270),
-  ('Kiambu',   'Thika',           'thika',          280);
-
--- ─────────────────────────────────────────────────────────────────────────
--- Site settings (real values from the questionnaire).
--- ─────────────────────────────────────────────────────────────────────────
-insert into public.site_settings
-  (id, phone, whatsapp, email, hours_weekday, hours_weekend, by_appointment)
-values
-  (true, '+254704061324', '+254704061324', 'barakabradley@gmail.com',
-   'Mon–Fri 8:00 AM – 5:00 PM', 'Sat–Sun 9:00 AM – 2:00 PM', true);
+-- Loaded only by local `supabase db reset` (config.toml -> [db.seed]).
+--
+-- Reference data (areas, site_settings) lives in
+-- supabase/migrations/20260827090012_reference_data.sql and is applied to every
+-- environment. This file adds dev-only staff users and sample listings on top.
 
 -- ─────────────────────────────────────────────────────────────────────────
 -- DEV staff users (local only). Password for both: password123
@@ -157,7 +118,8 @@ values
    '["parking","borehole","garden","dsq","solar_water"]'::jsonb,
    false, true, '22222222-2222-2222-2222-222222222222', now());
 
--- placeholder media (paths are not real objects; real photos come in Phase 3/4)
+-- placeholder media (paths are not real objects; real photos are added from the
+-- admin panel during testing)
 insert into public.property_media (property_id, storage_path, alt_text, sort_order, is_cover)
 select p.id,
        'properties/' || p.id || '/placeholder-1.jpg',
