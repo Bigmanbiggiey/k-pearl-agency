@@ -21,13 +21,30 @@ Read `CLAUDE.md` before making development changes.
 
 ## Getting started
 
-Requires Node 24 (see `frontend/.nvmrc`).
+Requires Node 24 (see `frontend/.nvmrc`) and Docker (for the local Supabase stack).
 
 ```bash
+# 1. Local backend (from the repo root) — Docker must be running
+npx supabase start                       # applies migrations + seed
+npx supabase status                      # prints the API URL + anon key
+
+# 2. Frontend
 cd frontend
 npm install
-cp .env.example .env      # then fill in VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
-npm run dev               # http://localhost:5173
+cp .env.example .env                     # set:
+#   VITE_SUPABASE_URL=http://127.0.0.1:55321
+#   VITE_SUPABASE_ANON_KEY=<anon key from `supabase status`>
+npm run dev                              # http://localhost:5173
+```
+
+Local Supabase ports are remapped to the **553xx** range (`supabase/config.toml`)
+so this project can run alongside another local Supabase stack. Supabase Studio:
+http://127.0.0.1:55323
+
+Regenerate DB types after a migration change:
+
+```bash
+npx supabase gen types typescript --local > frontend/src/types/database.types.ts
 ```
 
 Other scripts (run from `frontend/`):
@@ -44,7 +61,8 @@ From the repo root, `npm run <dev|build|lint|typecheck|test>` proxies to `fronte
 
 ## Status
 
-Phase 1 (repository foundation): tooling, brand tokens, and an application shell
-with routing and the layered architecture (`Page → Hook → Service → Repository →
-Supabase`). Pages are navigable stubs. Feature work and the database begin after
-`docs/business-owner-questionnaire.md` is answered — see `docs/project-state.md`.
+Phase 2 (Supabase foundation): schema, migrations, RLS, storage and seed are in
+`supabase/`; `docs/database.md` v2.0 is the contract. The frontend has the
+application shell, the layered architecture (`Page → Hook → Service → Repository →
+Supabase`), and the property **read** paths wired to the public views. Pages are
+still stubs — public/staff feature UIs are Phases 3–6. See `docs/project-state.md`.
