@@ -1,5 +1,11 @@
 # K Pearl Agency — Content Plan
 
+> **Where the copy lives (Phase 3+):** `frontend/src/content/*.ts` — typed modules
+> (`site`, `home`, `services`, `about`, `legal`). There is no CMS. All current copy
+> is a **project draft pending K Pearl approval** and contains no invented facts,
+> figures, awards or history. Legal pages are placeholder scaffolds only —
+> Privacy/Terms need a lawyer before launch (Phase 7).
+
 ## Homepage
 
 Hero:

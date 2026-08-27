@@ -11,7 +11,16 @@ Primary visual language:
 - Charcoal / muted neutrals
 
 The logo asset is:
-`frontend/public/assets/branding/k-pearl-logo.png`
+`frontend/public/assets/branding/k-pearl-logo.png` — gold-on-black raster, used
+as-is on dark surfaces (header, footer, hero). Transparent / vector / horizontal
+lockup / favicon variants are still a designer handoff (decision 25.b).
+
+## Typography (decision 25.a — resolved 2026-08-27)
+
+- **Display / headings:** Fraunces Variable (self-hosted, `@fontsource-variable/fraunces`).
+- **Body / UI:** Inter Variable (self-hosted, `@fontsource-variable/inter`).
+- Wired via `--font-display` / `--font-sans` tokens in `frontend/src/styles/index.css`.
+- No Google Fonts or external font CDN.
 
 ## Design principles
 
@@ -26,30 +35,31 @@ The logo asset is:
 
 ## Public navigation
 
-Recommended MVP navigation:
+MVP navigation (as built, Phase 3):
 - Home
 - Properties
 - Services
+- Areas
 - About
 - Contact
 
-Primary CTA:
-- `Find a Property` or `View Properties`
-
-Secondary CTA:
-- `Contact K Pearl`
+Primary CTA: `View Properties`. Secondary CTA: `Contact K Pearl`.
+Mobile: hamburger → Radix Dialog drawer.
 
 ## Home page sections
 
-1. Hero
-2. Property search
-3. Featured properties
+As built (Phase 3; per `docs/product-definition.md` §17):
+
+1. Hero (dark) with inline property search
+2. Featured properties
+3. Services overview
 4. Why K Pearl
-5. Services
-6. How it works
-7. Selected areas / locations
-8. Contact CTA
-9. Footer
+5. Latest listings
+6. Owner CTA ("List your property")
+7. Footer
+
+("How it works" is folded into the Services page; a dedicated Areas grid lives on
+`/areas` rather than the homepage.)
 
 ## Property card
 

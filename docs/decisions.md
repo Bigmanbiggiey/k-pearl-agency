@@ -193,3 +193,38 @@ Meta Business verification for +254704061324 is **explicitly deferred to
 post-launch** (owner's decision). MVP ships with `emailSender` + in-dashboard
 badges only; `whatsappSender` is a post-launch enhancement, switched on via
 `activeSenders()` once verification and template approval are done.
+
+## ADR-011 — Client-side SEO metadata + build-time sitemap; no SSR
+
+**Status:** Accepted — 2026-08-27 (formalises the SEO approach under ADR-008)
+
+### Context
+Public property and content pages need SEO, but the MVP stays a Vite SPA
+(ADR-008). React 19 hoists `<title>`, `<meta>` and `<link>` rendered anywhere in
+the tree into `<head>`, so a helmet library is unnecessary.
+
+### Decision
+- A `<Seo>` component (`src/components/Seo.tsx`) renders title / description /
+  canonical / Open Graph / Twitter tags per route, plus optional JSON-LD.
+- Property detail pages emit `schema.org` `RealEstateListing` JSON-LD
+  (`src/lib/seo.ts`).
+- `public/robots.txt` is static; `sitemap.xml` is generated **at build time**
+  (`scripts/generate-sitemap.mjs`, run after `vite build`) by querying the
+  `public_properties` view for published slugs. It degrades to static-route-only
+  when the database is unreachable (e.g. CI).
+- No `react-helmet`, no SSR, no prerendering in MVP. Prerendering stays a
+  post-launch evaluation (ADR-008).
+
+### Consequences
+- Zero SEO dependencies; metadata lives with each page.
+- The sitemap is a build artifact — it refreshes on every deploy, which is
+  sufficient at MVP listing volumes.
+- If Search Console shows weak indexing after launch, revisit prerendering
+  (a new ADR), not a framework change.
+
+## ADR note — Typefaces (decision 25.a resolved)
+
+**2026-08-27.** Self-hosted **Fraunces Variable** (display serif) + **Inter
+Variable** (body), both SIL OFL, via `@fontsource-variable/*` (no Google Fonts /
+external CDN). Wired through the `--font-display` / `--font-sans` tokens in
+`src/styles/index.css`, so a later rebrand is a token change.

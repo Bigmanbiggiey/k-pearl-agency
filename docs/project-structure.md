@@ -45,31 +45,36 @@ k-pearl-agency/
 │   ├── vite.config.ts                ✓  React + Tailwind v4 plugins; inline Vitest config
 │   ├── eslint.config.js              ✓  flat config
 │   ├── .prettierrc / .prettierignore ✓
+│   ├── scripts/generate-sitemap.mjs  ✓  build-time sitemap (ADR-011)
 │   ├── public/
+│   │   ├── robots.txt                ✓
 │   │   └── assets/branding/k-pearl-logo.png  ✓
 │   └── src/
-│       ├── main.tsx                  ✓  entry; StrictMode; fail-fast env
+│       ├── main.tsx                  ✓  entry; StrictMode; env; fonts; styles
 │       ├── vite-env.d.ts             ✓  typed import.meta.env
-│       ├── app/                      ✓  App.tsx, router.tsx, queryClient.ts
+│       ├── app/                      ✓  App.tsx (+ <Analytics/>), router.tsx (lazy), queryClient.ts
 │       ├── components/
-│       │   ├── layout/               ✓  Header, Footer, PublicLayout, StaffLayout, StaffAuthGuard
-│       │   ├── ui/                   ✓  Button, Card, Badge, Container
+│       │   ├── layout/               ✓  Header (+drawer), Footer, PublicLayout, StaffLayout, RouteFallback, StaffAuthGuard
+│       │   ├── ui/                   ✓  Button/ButtonLink/ButtonAnchor, Card, Badge, Container, Section, PageHeader, Prose
+│       │   ├── property/             ✓  PropertyCard, PropertyGrid, PropertyImage, PropertyGallery, HeroSearch
+│       │   ├── Seo.tsx               ✓  React 19 metadata + JSON-LD
 │       │   └── RootErrorBoundary.tsx ✓
+│       ├── content/                  ✓  site, home, services, about, legal (draft copy; no CMS)
 │       ├── pages/
-│       │   ├── PagePlaceholder.tsx   ✓  shared Phase-1 stub
-│       │   ├── public/               ✓  Home, Properties, PropertyDetail, Services, About,
-│       │   │                            Contact, ListYourProperty, Privacy, Terms, NotFound
-│       │   └── admin/                ✓  StaffDashboard, StaffLogin
-│       ├── repositories/             ✓  property / inquiry / viewingRequest (stubs)
-│       ├── services/                 ✓  property / inquiry / viewingRequest (stubs)
-│       ├── lib/                      ✓  env, supabase, errors, queryKeys
-│       ├── hooks/                    ✓  barrel only (populated per feature, Phase 3+)
-│       ├── schemas/                  ✓  barrel only (populated per feature)
-│       ├── types/                    ✓  domain.ts, database.types.ts (placeholder), index.ts
-│       ├── styles/                   ✓  index.css — Tailwind v4 + @theme brand tokens
-│       ├── test/                     ✓  setup.ts, smoke.test.tsx
-│       ├── entities/                    property/, agency/  (Phase 3+)
-│       ├── features/                    property-search/, property-inquiry/, auth/, admin/ (Phase 3+)
+│       │   ├── PagePlaceholder.tsx   ✓  shared stub (Phase 4/5/6 pages)
+│       │   ├── public/               ✓  Home, Properties*, PropertyDetail, Services, About,
+│       │   │                            Contact, Areas, ListYourProperty*, Privacy, Terms, NotFound
+│       │   └── admin/                ✓  StaffDashboard*, StaffLogin*   (* = still stubs)
+│       ├── repositories/             ✓  property, area, siteSettings (read); inquiry/viewingRequest (stubs)
+│       ├── services/                 ✓  property (read); inquiry/viewingRequest (stubs)
+│       ├── hooks/                    ✓  useSiteSettings, useAreas, useFeatured/Latest/useProperty
+│       ├── lib/                      ✓  env, supabase, errors, queryKeys, seo, format, media, contact
+│       ├── schemas/                  ✓  common, propertySearch, inquiry, viewingRequest, propertySubmission
+│       ├── types/                    ✓  domain, property, siteSettings, database.types (generated), index
+│       ├── styles/                   ✓  index.css — Tailwind v4 @theme + Fraunces/Inter
+│       ├── test/                     ✓  setup, utils, smoke, *.integration.test
+│       ├── entities/                    (still unused — feature domain concepts, later)
+│       ├── features/                    (still unused — grouped workflows, Phase 4+)
 │       └── assets/                      component-imported assets (as needed)
 ├── supabase/
 │   ├── migrations/                      (Phase 2 — after docs/database.md is approved)

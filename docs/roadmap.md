@@ -44,27 +44,30 @@
 - [ ] Hand off: owner creates the hosted Supabase project; `supabase link` + `db push`
 
 ## Phase 3 — Public website
-- [ ] Home (hero + search + featured + latest + services + contact CTA)
-- [ ] About
-- [ ] Services (4 sections: marketing/sales, letting, property search, relocation)
-- [ ] Contact (real phone/WhatsApp/email from `site_settings`, "by appointment", hours)
-- [ ] Areas we serve (from the `areas` table)
-- [ ] Privacy / Terms shells
-- [ ] Responsive navigation/footer (no social links)
-- [ ] SEO foundations (meta, OG, canonical, robots, sitemap, JSON-LD)
-- [ ] Vercel Web Analytics
-- [ ] Logo-variant assets (transparent, horizontal lockup, favicon, light-surface)
-- [ ] Per-route code splitting
-- [ ] Draft site copy for owner approval
+*(complete — branch `feat/public-website`; all gates green, 25/25 tests)*
+- [x] Home (hero + search + featured + latest + services + why-us + owner CTA)
+- [x] About
+- [x] Services (4 sections: marketing/sales, letting, property search, relocation)
+- [x] Contact (real phone/WhatsApp/email from `site_settings`, "by appointment", hours)
+- [x] Areas we serve (from the `areas` table, grouped by county)
+- [x] Privacy / Terms scaffolds (with "awaiting legal review" banner)
+- [x] Property detail page + gallery lightbox *(pulled in from Phase 4)*
+- [x] Responsive navigation/footer (mobile drawer; no social links)
+- [x] SEO foundations (per-route meta, OG, canonical, robots.txt, build-time sitemap.xml, JSON-LD) — ADR-011
+- [x] Vercel Web Analytics (`@vercel/analytics`)
+- [x] Self-hosted fonts — Fraunces + Inter (decision 25.a)
+- [x] Per-route code splitting + vendor chunks
+- [x] Draft site copy in `frontend/src/content/*` for owner approval
+- [ ] Logo-variant assets (transparent, horizontal lockup, favicon, light-surface) — designer handoff (25.b)
 
 ## Phase 4 — Property catalogue
 - [ ] Property list + pagination
 - [ ] Search (keyword)
 - [ ] Filters: listing type (rent/sale/short_let), property type (9), area, price range, bedrooms, verified-only
-- [ ] Property detail + gallery
-- [ ] "Price on request" + short-let price-period rendering
-- [ ] Featured properties
-- [ ] Real property photography (owner-supplied)
+- [x] Property detail + gallery *(built in Phase 3)*
+- [x] "Price on request" + short-let price-period rendering *(built in Phase 3)*
+- [x] Featured / latest properties *(built in Phase 3)*
+- [ ] Real property photography (entered via the admin panel in Phase 6 testing)
 
 ## Phase 5 — Lead generation
 - [ ] Property enquiry form
