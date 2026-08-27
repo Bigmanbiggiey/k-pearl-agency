@@ -115,13 +115,15 @@ export default tseslint.config(
     },
   },
 
-  // Plain-JS config files: no type-aware linting.
+  // Plain-JS config + build scripts: Node globals, no type-aware linting.
   {
-    files: ['**/*.js'],
+    files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
+    ...tseslint.configs.disableTypeChecked,
     languageOptions: {
       globals: { ...globals.node },
+      sourceType: 'module',
+      ecmaVersion: 2023,
     },
-    ...tseslint.configs.disableTypeChecked,
   },
 
   prettier,

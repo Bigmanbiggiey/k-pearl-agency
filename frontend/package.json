@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node --env-file-if-exists=.env scripts/generate-sitemap.mjs",
     "preview": "vite preview",
     "lint": "eslint . --max-warnings=0",
     "format": "prettier --write .",
@@ -17,8 +17,12 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@fontsource-variable/fraunces": "5.3.0",
+    "@fontsource-variable/inter": "5.3.0",
+    "@radix-ui/react-dialog": "1.1.23",
     "@supabase/supabase-js": "2.112.4",
     "@tanstack/react-query": "5.102.7",
+    "@vercel/analytics": "2.0.1",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-hook-form": "7.86.0",
