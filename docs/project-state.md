@@ -2,21 +2,23 @@
 
 ## Current status
 
-**Phase:** 2 — Supabase foundation *(in progress)*
+**Phase:** 2 — Supabase foundation *(complete locally; hosted-project handoff pending)*
 
-**State:** Phase 0 approved; Phase 1 foundation built (branch
-`chore/phase-1-foundation`, gates green). Business-owner questionnaire returned
-2026-08-27 and every open decision resolved (`docs/phase-0-decision-register.md`
-Resolutions; ADR-009 / ADR-010 added). `docs/database.md` finalised to **v2.0**.
-Phase 2 now unblocked — building the local Supabase stack, migrations, RLS, seed,
-types and the property read paths.
+**State:** Phase 0 approved; Phase 1 foundation built; questionnaire resolved
+(`docs/phase-0-decision-register.md` v2.0; ADR-009 / ADR-010 added);
+`docs/database.md` finalised to **v2.0** and implemented. Local Supabase stack
+(migrations, RLS, storage, seed), generated types, property read paths, Zod
+schemas and the `notify-lead` scaffold are done on branch
+`chore/phase-1-foundation`. All five quality gates green; 11/11 tests pass.
 
 ```
 Phase 0  ── approved 2026-08-27
   ↓
-Phase 1 (Repository foundation)   ── shell + tooling done
+Phase 1 (Repository foundation)   ── done
   ↓
-Phase 2 (Supabase foundation)     ← in progress (local-first; hosted project is an owner handoff)
+Phase 2 (Supabase foundation)     ── done locally; owner to create the hosted project + db push
+  ↓
+Phase 3 (Public website)          ← next
 ```
 
 ## Completed
@@ -51,16 +53,18 @@ Phase 2 (Supabase foundation)     ← in progress (local-first; hosted project i
 
 ## Current next task
 
-**Phase 2 execution** (plan: `C:\Users\PCMF\.claude\plans\bubbly-plotting-gray.md`):
-1. `supabase init` + migrations + RLS + seed + storage against the local Docker stack.
-2. Generate `frontend/src/types/database.types.ts`.
-3. Wire property **read** paths (list/detail/featured) + author the Zod schemas.
-4. Integration test against local Supabase; keep all gates green.
-5. `notify-lead` Edge Function scaffold (wiring is Phase 5).
+**Next: Phase 3 — Public website.** Home, About, Services (4 sections), Contact,
+Areas, Privacy/Terms shells; wire `site_settings`; SEO foundations; Vercel Web
+Analytics; logo-variant assets; per-route code splitting; draft copy for owner
+approval. (Needs a plan + approval before execution.)
 
-**Owner handoffs (parallel):** create the GitHub remote + push the branch;
-create the hosted Supabase project; begin Meta Business verification for
-+254704061324; brief a designer / supply photography; line up legal review.
+**Owner handoffs (parallel, none block Phase 3):**
+- Create the GitHub remote and push `chore/phase-1-foundation`; confirm CI is green.
+- Create the hosted Supabase project → `supabase link` + `db push` (seed only
+  `areas` + `site_settings` in production), then set the first admin.
+- Begin Meta Business verification for +254704061324 (WhatsApp, needed for Phase 7).
+- Supply property photography; brief a designer for the logo variants.
+- Line up legal review of the Privacy/Terms drafts (Phase 7).
 
 ## Change log
 
@@ -78,3 +82,6 @@ Project owner accepted ADR-002 … ADR-008. Initialised git. Built the Phase 1 r
 
 ### 2026-08-27 (questionnaire returned · Phase 2 started)
 Business owner returned the questionnaire. Resolved every open decision (`docs/phase-0-decision-register.md` v2.0). Net new scope: short-let listing type + `price_period`; `areas` reference table; `property_submissions` review queue (ADR-009); agents edit only assigned properties (ADR-007 refined); custom `notify-lead` Edge Function, email-first, WhatsApp later (ADR-010); launch on `K-Pearl-Agency.vercel.app`; Vercel Web Analytics. Finalised `docs/database.md` to v2.0 and synced product-definition / requirements / roadmap / deployment / security / content-plan. Began Phase 2 (Supabase foundation).
+
+### 2026-08-27 (Phase 2 — Supabase foundation complete locally)
+`supabase init` + 11 migrations implementing `docs/database.md` v2.0 (tables, `public_*` views, RLS, storage, auth trigger, KP-#### sequence). Local ports remapped to 553xx to coexist with another local Supabase stack. Seed: 28 Nairobi-metro areas, real `site_settings`, 2 dev staff, 8 sample properties. Generated `frontend/src/types/database.types.ts`. Wired the property **read** paths (`propertyService`/`propertyRepository` → `public_properties`/`public_property_media`) + `areaRepository` + the four Zod schemas. `notify-lead` Edge Function scaffolded. 11/11 tests pass (3 smoke + 8 local-Supabase integration); RLS also verified via psql (agent assigned-only, admin any, admin-only featured/verified, anon sees only published). All five gates green. **Remaining Phase 2 handoff:** owner creates the hosted Supabase project, then `supabase link` + `db push`.

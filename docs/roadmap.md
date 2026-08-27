@@ -30,17 +30,18 @@
 - [ ] Per-route code splitting (moved here from Phase 3 backlog)
 
 ## Phase 2 — Supabase foundation
-*(in progress — schema finalised in `docs/database.md` v2.0)*
-- [ ] `supabase init` + local stack (Docker)
-- [ ] Migrations: profiles+trigger, areas, properties, property_media, inquiries, viewing_requests, property_submissions, site_settings, public views, RLS, storage
-- [ ] Seed data (areas, site_settings, dev staff, sample properties)
-- [ ] RLS policies (anon read via public views; agent = assigned-only; admin = all)
-- [ ] Storage bucket `property-media`
-- [ ] Staff auth config (email/password, invite-only, profile trigger)
-- [ ] Generate `frontend/src/types/database.types.ts`
-- [ ] Wire property **read** paths (list/detail/featured) + Zod schemas
-- [ ] `notify-lead` Edge Function scaffold (sender interface; wiring is Phase 5)
-- [ ] Hand off: owner creates the hosted Supabase project; `db push`
+*(complete locally — schema `docs/database.md` v2.0; branch `chore/phase-1-foundation`)*
+- [x] `supabase init` + local stack (Docker); ports remapped to 553xx
+- [x] Migrations: profiles+trigger, areas, properties, property_media, inquiries, viewing_requests, property_submissions, site_settings, public views, RLS, storage
+- [x] Seed data (28 areas, site_settings, dev staff, 8 sample properties)
+- [x] RLS policies (anon read via public views; agent = assigned-only; admin = all; admin-only featured/verified trigger)
+- [x] Storage bucket `property-media`
+- [x] Staff auth config (email/password, signup disabled, profile trigger)
+- [x] Generate `frontend/src/types/database.types.ts`
+- [x] Wire property **read** paths (list/detail/featured/media) + Zod schemas
+- [x] `notify-lead` Edge Function scaffold (sender interface; wiring is Phase 5)
+- [x] Integration tests (11/11 green: read paths + RLS boundary)
+- [ ] Hand off: owner creates the hosted Supabase project; `supabase link` + `db push`
 
 ## Phase 3 — Public website
 - [ ] Home (hero + search + featured + latest + services + contact CTA)
