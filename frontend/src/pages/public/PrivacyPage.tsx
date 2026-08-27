@@ -1,12 +1,31 @@
-import { PagePlaceholder } from '@/pages/PagePlaceholder';
+import { Seo } from '@/components/Seo';
+import { PageHeader, Prose, Section } from '@/components/ui';
+import { LEGAL_REVIEW_BANNER, PRIVACY } from '@/content/legal';
 
-export function PrivacyPage() {
+export default function PrivacyPage() {
   return (
-    <PagePlaceholder title="Privacy Policy" phase="Phase 3 · Public website">
-      <p>
-        Reviewed policy copy is required before launch (decision 16.a; Kenya Data Protection Act
-        2019). Supplied by K Pearl.
-      </p>
-    </PagePlaceholder>
+    <>
+      <Seo
+        title={PRIVACY.title}
+        description="How K Pearl Agency handles personal information submitted through this website."
+        path="/privacy"
+      />
+      <PageHeader eyebrow="Legal" title={PRIVACY.title} />
+
+      <Section>
+        <p className="mb-6 rounded-md border border-warning/40 bg-warning/10 p-3 text-sm text-charcoal">
+          {LEGAL_REVIEW_BANNER}
+        </p>
+        <Prose>
+          <p>{PRIVACY.intro}</p>
+          {PRIVACY.sections.map((section) => (
+            <div key={section.heading}>
+              <h2>{section.heading}</h2>
+              <p>{section.body}</p>
+            </div>
+          ))}
+        </Prose>
+      </Section>
+    </>
   );
 }

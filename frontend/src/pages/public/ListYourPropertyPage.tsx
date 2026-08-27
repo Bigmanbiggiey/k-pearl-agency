@@ -1,12 +1,20 @@
+import { Seo } from '@/components/Seo';
 import { PagePlaceholder } from '@/pages/PagePlaceholder';
 
-export function ListYourPropertyPage() {
+export default function ListYourPropertyPage() {
   return (
-    <PagePlaceholder title="List your property" phase="Phase 5 · Lead generation">
-      <p>
-        A lead-capture form (ADR-004 — no owner portal). Submissions become an inquiry of type
-        <code> owner_listing</code>; staff follow up and create the listing.
-      </p>
-    </PagePlaceholder>
+    <>
+      <Seo
+        title="List your property"
+        description="Have a property to let or sell in Nairobi? Submit the details and K Pearl Agency will follow up to prepare and market the listing."
+        path="/list-your-property"
+      />
+      <PagePlaceholder title="List your property" phase="Phase 5 · Lead generation">
+        <p>
+          A short form to tell us about your property. Submissions go to our team’s review queue —
+          nothing is published automatically — and an agent follows up to prepare the listing.
+        </p>
+      </PagePlaceholder>
+    </>
   );
 }

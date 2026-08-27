@@ -1,7 +1,9 @@
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
+import { RouteFallback } from '@/components/layout/RouteFallback';
 
 export function PublicLayout() {
   return (
@@ -14,7 +16,9 @@ export function PublicLayout() {
       </a>
       <Header />
       <main id="main-content" className="flex-1">
-        <Outlet />
+        <Suspense fallback={<RouteFallback />}>
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
     </div>

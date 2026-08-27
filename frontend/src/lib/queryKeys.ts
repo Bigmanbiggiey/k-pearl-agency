@@ -6,8 +6,16 @@ export const queryKeys = {
   properties: {
     all: ['properties'] as const,
     list: (filters: unknown) => ['properties', 'list', filters] as const,
+    latest: (limit: number) => ['properties', 'latest', limit] as const,
     detail: (slug: string) => ['properties', 'detail', slug] as const,
     featured: (limit: number) => ['properties', 'featured', limit] as const,
+  },
+  areas: {
+    all: ['areas'] as const,
+    active: () => ['areas', 'active'] as const,
+  },
+  siteSettings: {
+    all: ['siteSettings'] as const,
   },
   inquiries: {
     all: ['inquiries'] as const,

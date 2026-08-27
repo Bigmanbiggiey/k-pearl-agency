@@ -1,24 +1,29 @@
+import { lazy } from 'react';
 import { createBrowserRouter, type RouteObject } from 'react-router-dom';
 
 import { PublicLayout } from '@/components/layout/PublicLayout';
 import { StaffLayout } from '@/components/layout/StaffLayout';
-import { StaffDashboardPage } from '@/pages/admin/StaffDashboardPage';
-import { StaffLoginPage } from '@/pages/admin/StaffLoginPage';
-import { AboutPage } from '@/pages/public/AboutPage';
-import { ContactPage } from '@/pages/public/ContactPage';
-import { HomePage } from '@/pages/public/HomePage';
-import { ListYourPropertyPage } from '@/pages/public/ListYourPropertyPage';
-import { NotFoundPage } from '@/pages/public/NotFoundPage';
-import { PrivacyPage } from '@/pages/public/PrivacyPage';
-import { PropertiesPage } from '@/pages/public/PropertiesPage';
-import { PropertyDetailPage } from '@/pages/public/PropertyDetailPage';
-import { ServicesPage } from '@/pages/public/ServicesPage';
-import { TermsPage } from '@/pages/public/TermsPage';
 
 /**
  * Route table. Public routes under `/`, staff routes under `/staff`
- * (docs/architecture.md §4). Per-route code splitting is a Phase 3 task.
+ * (docs/architecture.md §4). Pages are lazily loaded — the layouts provide the
+ * <Suspense> boundary.
  */
+
+const HomePage = lazy(() => import('@/pages/public/HomePage'));
+const PropertiesPage = lazy(() => import('@/pages/public/PropertiesPage'));
+const PropertyDetailPage = lazy(() => import('@/pages/public/PropertyDetailPage'));
+const ServicesPage = lazy(() => import('@/pages/public/ServicesPage'));
+const AboutPage = lazy(() => import('@/pages/public/AboutPage'));
+const ContactPage = lazy(() => import('@/pages/public/ContactPage'));
+const AreasPage = lazy(() => import('@/pages/public/AreasPage'));
+const ListYourPropertyPage = lazy(() => import('@/pages/public/ListYourPropertyPage'));
+const PrivacyPage = lazy(() => import('@/pages/public/PrivacyPage'));
+const TermsPage = lazy(() => import('@/pages/public/TermsPage'));
+const NotFoundPage = lazy(() => import('@/pages/public/NotFoundPage'));
+const StaffDashboardPage = lazy(() => import('@/pages/admin/StaffDashboardPage'));
+const StaffLoginPage = lazy(() => import('@/pages/admin/StaffLoginPage'));
+
 export const routes: RouteObject[] = [
   {
     element: <PublicLayout />,
@@ -29,6 +34,7 @@ export const routes: RouteObject[] = [
       { path: 'services', element: <ServicesPage /> },
       { path: 'about', element: <AboutPage /> },
       { path: 'contact', element: <ContactPage /> },
+      { path: 'areas', element: <AreasPage /> },
       { path: 'list-your-property', element: <ListYourPropertyPage /> },
       { path: 'privacy', element: <PrivacyPage /> },
       { path: 'terms', element: <TermsPage /> },

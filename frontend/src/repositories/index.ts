@@ -1,6 +1,7 @@
 export { propertyRepository } from './property.repository';
 export { areaRepository } from './area.repository';
 export type { Area } from './area.repository';
+export { siteSettingsRepository } from './siteSettings.repository';
 export { inquiryRepository } from './inquiry.repository';
 export type { InquiryListFilters } from './inquiry.repository';
 export { viewingRequestRepository } from './viewingRequest.repository';

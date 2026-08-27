@@ -1,12 +1,15 @@
+import { Seo } from '@/components/Seo';
 import { PagePlaceholder } from '@/pages/PagePlaceholder';
 
-export function StaffDashboardPage() {
+export default function StaffDashboardPage() {
   return (
-    <PagePlaceholder title="Dashboard" phase="Phase 6 · Staff dashboard">
-      <p>
-        Property counts, new inquiries and viewing requests, and recent activity. Built in Phase 6
-        once the schema is approved.
-      </p>
-    </PagePlaceholder>
+    <>
+      <Seo title="Dashboard" description="K Pearl Agency staff dashboard." path="/staff" noindex />
+      <PagePlaceholder title="Dashboard" phase="Phase 6 · Staff dashboard">
+        <p>
+          Property counts, new inquiries and viewing requests, recent activity. Built in Phase 6.
+        </p>
+      </PagePlaceholder>
+    </>
   );
 }

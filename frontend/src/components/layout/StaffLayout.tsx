@@ -1,5 +1,7 @@
+import { Suspense } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 
+import { RouteFallback } from '@/components/layout/RouteFallback';
 import { StaffAuthGuard } from '@/components/layout/StaffAuthGuard';
 import { Container } from '@/components/ui';
 
@@ -18,7 +20,9 @@ export function StaffLayout() {
           </Container>
         </header>
         <main className="flex-1">
-          <Outlet />
+          <Suspense fallback={<RouteFallback />}>
+            <Outlet />
+          </Suspense>
         </main>
       </div>
     </StaffAuthGuard>
