@@ -74,6 +74,34 @@ describe.skipIf(!reachable)('property read paths (local Supabase)', () => {
     expect(areas.length).toBe(28);
     expect(areas.some((a) => a.slug === 'kilimani')).toBe(true);
   });
+
+  it('search() filters by minBedrooms and maxPrice', async () => {
+    const big = await propertyService.search({ minBedrooms: 3, pageSize: 48 });
+    expect(big.items.every((p) => (p.bedrooms ?? 0) >= 3)).toBe(true);
+
+    const cheap = await propertyService.search({ maxPrice: 100_000, pageSize: 48 });
+    expect(cheap.items.every((p) => p.price != null && p.price <= 100_000)).toBe(true);
+  });
+
+  it('search() matches a keyword and sorts by price ascending', async () => {
+    const kw = await propertyService.search({ keyword: 'kilimani', pageSize: 48 });
+    expect(kw.items.length).toBeGreaterThan(0);
+
+    const asc = await propertyService.search({ sort: 'price_asc', pageSize: 48 });
+    const prices = asc.items.map((p) => p.price ?? Number.POSITIVE_INFINITY);
+    const sorted = [...prices].sort((a, b) => a - b);
+    expect(prices).toEqual(sorted);
+  });
+
+  it('search() paginates', async () => {
+    const page1 = await propertyService.search({ pageSize: 4, page: 1 });
+    const page2 = await propertyService.search({ pageSize: 4, page: 2 });
+    expect(page1.total).toBe(6);
+    expect(page1.items).toHaveLength(4);
+    expect(page2.items).toHaveLength(2);
+    const overlap = page1.items.filter((a) => page2.items.some((b) => b.id === a.id));
+    expect(overlap).toHaveLength(0);
+  });
 });
 
 describe.skipIf(!reachable)('RLS boundary (local Supabase)', () => {
