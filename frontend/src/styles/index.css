@@ -1,0 +1,67 @@
+@import 'tailwindcss';
+
+/*
+ * K Pearl Agency — brand design tokens.
+ * Values are PROVISIONAL pending decision J-3 (docs/phase-0-decision-register.md).
+ * Direction: premium black + gold, ivory content surface, gold as accent only.
+ * See docs/ui-guidelines.md and docs/product-definition.md §25.
+ */
+@theme {
+  /* Brand palette */
+  --color-ink: #111114;
+  --color-charcoal: #2a2a2e;
+  --color-muted: #6b6b72;
+  --color-line: #e6e0d4;
+  --color-surface: #faf7f0;
+  --color-ivory: #ffffff;
+  --color-gold: #c8a15a;
+  --color-gold-deep: #a9863f;
+
+  /* Semantic */
+  --color-success: #2e7d5b;
+  --color-warning: #b7791f;
+  --color-danger: #b3261e;
+  --color-info: #2f6fb0;
+
+  /* Typography — real faces deferred to decision 25.a; system fallbacks for now. */
+  --font-display:
+    'Iowan Old Style', 'Palatino Linotype', 'Palatino', 'Georgia', 'Cambria', 'Times New Roman',
+    serif;
+  --font-sans:
+    system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-surface);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  /* Visible focus for keyboard users (docs/ui-guidelines.md — accessibility). */
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+}

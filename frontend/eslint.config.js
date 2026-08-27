@@ -1,0 +1,117 @@
+import js from '@eslint/js';
+import importPlugin from 'eslint-plugin-import';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+import prettier from 'eslint-config-prettier';
+
+export default tseslint.config(
+  {
+    ignores: ['dist/**', 'coverage/**', 'node_modules/**'],
+  },
+
+  js.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+
+  // TypeScript + React source.
+  {
+    files: ['src/**/*.{ts,tsx}', 'vite.config.ts'],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+      globals: {
+        ...globals.browser,
+      },
+    },
+    settings: {
+      react: { version: 'detect' },
+    },
+    plugins: {
+      react,
+      'react-hooks': reactHooks,
+      'jsx-a11y': jsxA11y,
+      import: importPlugin,
+    },
+    rules: {
+      ...react.configs.flat.recommended.rules,
+      ...react.configs.flat['jsx-runtime'].rules,
+      ...reactHooks.configs['recommended-latest'].rules,
+      ...jsxA11y.flatConfigs.recommended.rules,
+
+      // TypeScript already resolves modules and catches undefined names.
+      'import/no-unresolved': 'off',
+      'import/named': 'off',
+      'import/order': [
+        'warn',
+        {
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+          'newlines-between': 'always',
+          alphabetize: { order: 'asc', caseInsensitive: true },
+        },
+      ],
+      'import/no-duplicates': 'error',
+
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
+      ],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+      '@typescript-eslint/no-explicit-any': 'error',
+
+      // Enforce the layered architecture: Supabase access lives only in
+      // repositories (CLAUDE.md §5). The client module itself is exempted below.
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: '@supabase/supabase-js',
+              message:
+                'Import the shared client from "@/lib/supabase", and only inside src/repositories/**.',
+            },
+          ],
+          patterns: [
+            {
+              group: ['@/lib/supabase', '**/lib/supabase'],
+              message: 'Supabase access is only allowed inside src/repositories/**.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+
+  // The Supabase client module and the repositories may reach the database.
+  {
+    files: ['src/lib/supabase.ts', 'src/repositories/**/*.ts'],
+    rules: {
+      'no-restricted-imports': 'off',
+    },
+  },
+
+  // Test files also run under Node globals.
+  {
+    files: ['src/**/*.{test,spec}.{ts,tsx}', 'src/test/**/*.{ts,tsx}'],
+    languageOptions: {
+      globals: { ...globals.node },
+    },
+  },
+
+  // Plain-JS config files: no type-aware linting.
+  {
+    files: ['**/*.js'],
+    languageOptions: {
+      globals: { ...globals.node },
+    },
+    ...tseslint.configs.disableTypeChecked,
+  },
+
+  prettier,
+);
