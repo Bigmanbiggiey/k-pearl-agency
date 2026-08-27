@@ -30,69 +30,87 @@
 - [ ] Per-route code splitting (moved here from Phase 3 backlog)
 
 ## Phase 2 — Supabase foundation
-- [ ] Create project
-- [ ] Create migrations
-- [ ] Create seed data
-- [ ] Create RLS policies
-- [ ] Configure storage
-- [ ] Configure staff auth
-- [ ] Generate database types
+*(in progress — schema finalised in `docs/database.md` v2.0)*
+- [ ] `supabase init` + local stack (Docker)
+- [ ] Migrations: profiles+trigger, areas, properties, property_media, inquiries, viewing_requests, property_submissions, site_settings, public views, RLS, storage
+- [ ] Seed data (areas, site_settings, dev staff, sample properties)
+- [ ] RLS policies (anon read via public views; agent = assigned-only; admin = all)
+- [ ] Storage bucket `property-media`
+- [ ] Staff auth config (email/password, invite-only, profile trigger)
+- [ ] Generate `frontend/src/types/database.types.ts`
+- [ ] Wire property **read** paths (list/detail/featured) + Zod schemas
+- [ ] `notify-lead` Edge Function scaffold (sender interface; wiring is Phase 5)
+- [ ] Hand off: owner creates the hosted Supabase project; `db push`
 
 ## Phase 3 — Public website
-- [ ] Home
+- [ ] Home (hero + search + featured + latest + services + contact CTA)
 - [ ] About
-- [ ] Services
-- [ ] Contact
-- [ ] Responsive navigation/footer
-- [ ] SEO foundations
+- [ ] Services (4 sections: marketing/sales, letting, property search, relocation)
+- [ ] Contact (real phone/WhatsApp/email from `site_settings`, "by appointment", hours)
+- [ ] Areas we serve (from the `areas` table)
+- [ ] Privacy / Terms shells
+- [ ] Responsive navigation/footer (no social links)
+- [ ] SEO foundations (meta, OG, canonical, robots, sitemap, JSON-LD)
+- [ ] Vercel Web Analytics
+- [ ] Logo-variant assets (transparent, horizontal lockup, favicon, light-surface)
+- [ ] Per-route code splitting
+- [ ] Draft site copy for owner approval
 
 ## Phase 4 — Property catalogue
-- [ ] Property list
-- [ ] Search
-- [ ] Filters
-- [ ] Pagination
-- [ ] Property detail
-- [ ] Gallery
+- [ ] Property list + pagination
+- [ ] Search (keyword)
+- [ ] Filters: listing type (rent/sale/short_let), property type (9), area, price range, bedrooms, verified-only
+- [ ] Property detail + gallery
+- [ ] "Price on request" + short-let price-period rendering
 - [ ] Featured properties
+- [ ] Real property photography (owner-supplied)
 
 ## Phase 5 — Lead generation
-- [ ] Property enquiry
-- [ ] Viewing request
+- [ ] Property enquiry form
+- [ ] Viewing request form
 - [ ] General contact form
-- [ ] WhatsApp/contact CTAs
+- [ ] "List your property" structured submission form
+- [ ] `notify-lead` full wiring: Gmail SMTP + in-dashboard badges (assigned agent + admin)
+- [ ] WhatsApp/phone CTAs (tap-to-call, wa.me prefilled with reference code)
 - [ ] Success/error states
-- [ ] Spam/abuse protections
+- [ ] Spam/abuse protections (honeypot + rate limit)
+- [ ] Consent checkbox (ties to legal)
 
 ## Phase 6 — Staff dashboard
-- [ ] Staff authentication
-- [ ] Dashboard shell
-- [ ] Property CRUD
-- [ ] Media management
-- [ ] Publish/archive
-- [ ] Featured/verified controls
-- [ ] Enquiry management
+- [ ] Staff authentication (invite-based, no signup)
+- [ ] Dashboard shell (counts + recent leads)
+- [ ] Property CRUD (assigned-agent RLS; admin any)
+- [ ] Media management (upload, reorder, cover, alt text)
+- [ ] Lifecycle: draft/publish/unpublish/unavailable/let_or_sold/archive
+- [ ] Featured/verified controls (admin only)
+- [ ] Property submissions review + convert-to-draft panel
+- [ ] Inquiry + viewing-request management (status, assignment, notes)
+- [ ] `site_settings` editor (admin)
 
 ## Phase 7 — Quality and launch
 - [ ] Unit tests
 - [ ] Integration/RLS tests
-- [ ] E2E critical flows
-- [ ] Lighthouse
+- [ ] E2E critical flows (Playwright)
+- [ ] Draft Privacy/Terms from a Kenya-appropriate template → owner legal review
+- [ ] Kenya Data Protection Act 2019 checklist
+- [ ] Lighthouse (Perf ≥90, A11y ≥95)
 - [ ] Accessibility audit
 - [ ] SEO audit
-- [ ] Security review
-- [ ] Production deployment
+- [ ] Security review (RLS, storage policies, Edge Function secrets)
+- [ ] Production deployment to Vercel (`K-Pearl-Agency.vercel.app`)
+- [ ] WhatsApp Cloud API sender (after owner's Meta Business verification)
 - [ ] Backup/recovery verification
 
 ## Post-MVP candidates
 
-- Favorites
-- Saved searches
-- Map view
-- Agent profiles
+- Custom domain (`.co.ke` / `.com`) — recommended early
+- Favorites (localStorage, no account)
+- Saved searches / email alerts
+- Map view (Leaflet)
+- Agent profile pages
 - More advanced viewing scheduling
-- Property-owner portal
-- Analytics
-- Notifications
+- Property-owner portal (login, submission status)
+- Proper vector logo redraw
 - AI-assisted property discovery
 
 Post-MVP work requires explicit approval.

@@ -10,7 +10,7 @@ before the plan is approved.
 - Please don't feel you need technical knowledge. If a question doesn't make sense,
   write "not sure" and we'll follow up.
 
-**Your name:** ______________________  **Date:** ______________
+**Your name:** __BIG POPPA____________________  **Date:** 27/08/2026
 
 ---
 
@@ -19,7 +19,7 @@ before the plan is approved.
 **1. Does K Pearl help people with:**
 - [ ] Renting property (tenants / landlords)
 - [ ] Buying and selling property
-- [ ] Both
+- [ yes ] Both
 
 **2. Which kinds of property does K Pearl deal with?** (tick all that apply)
 - [ ] Apartments / flats
@@ -29,10 +29,10 @@ before the plan is approved.
 - [ ] Office space
 - [ ] Shops / retail units
 - [ ] Land / plots
-- [ ] Other: ______________________________
+- [  yes ] Other: All of the above
 
 **3. Does K Pearl deal in short-stay / furnished lets** (nightly or weekly, like a holiday rental)?
-- [ ] Yes
+- [ yes ] Yes - include that option
 - [ ] No
 
 **4. Which areas does K Pearl cover?** Please list the counties, towns, and
@@ -40,7 +40,7 @@ neighbourhoods where you currently have or expect to have properties. Be as
 specific as you can — these become the choices people pick from when they search.
 
 ```
-_______________________________________________________________________
+________Nairobi and its environs: Kitengela, Athi-river, Rongai, Kiambu Rd etc etc_______________________________________________________________
 _______________________________________________________________________
 _______________________________________________________________________
 ```
@@ -50,12 +50,12 @@ _______________________________________________________________________
 ## Part 2 — Services to advertise
 
 **5. Which services should the website describe?** (tick all that apply)
-- [ ] Selling / marketing properties for owners
-- [ ] Finding tenants / letting support
-- [ ] Helping buyers or tenants find a property (property search on their behalf)
+- [ yes ] Selling / marketing properties for owners
+- [ yes ] Finding tenants / letting support
+- [ yes ] Helping buyers or tenants find a property (property search on their behalf)
 - [ ] Representing landlords / property owners
 - [ ] Property management (collecting rent, handling maintenance)
-- [ ] Relocation help for companies or individuals
+- [ yes ] Relocation help for companies or individuals
 - [ ] Property valuation
 - [ ] Other: ______________________________
 
@@ -74,20 +74,20 @@ _______________________________________________________________________
 
 ## Part 3 — How customers reach K Pearl
 
-**7. What phone number should customers call?**  ______________________
+**7. What phone number should customers call?**  +254704061324
 
-**8. What WhatsApp number should customers message?**  ______________________
+**8. What WhatsApp number should customers message?** same as above
 (Write "same as above" if it's the same line.)
 
-**9. What email address should be shown on the website?**  ______________________
+**9. What email address should be shown on the website?**  barakabradley@gmail.com
 (One is fine. Add more if you want separate addresses, e.g. for landlords.)
 
 **10. Does K Pearl have an office address to show publicly?**
 - [ ] Yes — address: ______________________________________________
-- [ ] No — show "viewings and meetings by appointment"
+- [ yes ] No — show "viewings and meetings by appointment"
 
 **11. What are your business hours?** (or write "not shown")
-______________________________________________
+Monday - Friday: 8:00 AM to 5:00 PM, Weekends: 9:00 AM to 2:00 PM
 
 **12. Which social media accounts should appear in the website footer?**
 - [ ] Facebook: ____________________
@@ -96,41 +96,41 @@ ______________________________________________
 - [ ] LinkedIn: ____________________
 - [ ] TikTok: ____________________
 - [ ] YouTube: ____________________
-- [ ] None
+- [ yes ] None
 
 ---
 
 ## Part 4 — How the property listings work
 
 **13. Should customers be able to:**
-- [ ] Send an enquiry about a specific property (via a form)
-- [ ] Request a viewing (they pick a preferred day/time, your team arranges it — no automatic calendar)
-- [ ] Send a general message (not about a specific property)
-- [ ] Submit their own property for K Pearl to market ("List your property" form)
+- [ yes ] Send an enquiry about a specific property (via a form)
+- [ yes ] Request a viewing (they pick a preferred day/time, your team arranges it — no automatic calendar)
+- [ yes ] Send a general message (not about a specific property)
+- [ yes ] Submit their own property for K Pearl to market ("List your property" form) - listed properties should not be automatically uploaded to the site rather queued in admins cutomer properties submission panel. Admin should also be able to tweak the customer entered info before submission.
 
 **14. For a property that is temporarily off the market** (e.g. a deal is pending),
 should it:
-- [ ] Disappear from the website until it's available again
+- [ yes ] Disappear from the website until it's available again
 - [ ] Stay visible with a "temporarily unavailable" label
 
 **15. Should some listings be allowed to show "Price on request"** instead of a
 number?
-- [ ] Yes
+- [ yes ] Yes
 - [ ] No — every listing shows a price
 
 **16. On a property page, how much location detail should the public see?**
-- [ ] Neighbourhood / area only (exact address kept private)
+- [ yes ] Neighbourhood / area only (exact address kept private)
 - [ ] Full street address
 
 **17. Should your team be able to record the property owner's contact details
 against each listing** (private, only staff can see them)?
-- [ ] Yes
+- [ yes ] Yes but not mandatory
 - [ ] No
 
 **18. When your team is chasing an enquiry, roughly what stages does a lead go
 through?** (We'll offer: New → Contacted → In progress → Closed. Tick if that works,
 or describe your own.)
-- [ ] That works
+- [ yes ] That works
 - [ ] We use different stages: ______________________________________
 
 ---
@@ -138,26 +138,26 @@ or describe your own.)
 ## Part 5 — Your team
 
 **19. Roughly how many people will manage the website** (adding properties,
-answering enquiries)?  ______
+answering enquiries)?  3 to 4
 
 **20. Do you need two levels of access:**
 - **Administrator** — can do everything, including managing staff accounts and the
   "Featured" / "Verified" badges.
 - **Agent** — can add and edit properties and handle enquiries, but not manage
   staff or badges.
-- [ ] Yes, those two levels are right
+- [ yes ] Yes, those two levels are right
 - [ ] Everyone should have the same full access
 - [ ] We need something different: ______________________________________
 
 **21. Should agents be able to edit any property, or only the ones assigned to
 them?**
 - [ ] Any property
-- [ ] Only their own assigned properties
+- [ yes ] Only their own assigned properties
 
 **22. Should staff logins require a second security step** (a code from a phone app)
 in addition to a password?
 - [ ] Yes
-- [ ] No — password only for now
+- [ yes ] No — password only for now
 
 ---
 
@@ -166,13 +166,13 @@ in addition to a password?
 **23. Who will provide the Privacy Policy and Terms of Use for the website?**
 - [ ] K Pearl's lawyer will provide them
 - [ ] K Pearl will adapt a reviewed template
-- [ ] We need help sourcing these
+- [ yes ] We need help sourcing these
 
 > The website collects people's names and phone numbers through its forms, so
 > these two pages must be in place before it goes live. K Pearl may also have
 > obligations under Kenya's Data Protection Act 2019 (for example, publishing a
 > privacy notice and possibly registering as a data handler). Please confirm you
-> will get legal advice on this: **[ ] Yes**
+> will get legal advice on this: **[ yes ] Yes**
 
 ---
 
@@ -184,18 +184,18 @@ the top of the page, a small icon version (just the pearl-in-shell) for browser
 tabs, and a version that works on white backgrounds. Can you provide these (or put
 us in touch with your designer)?
 - [ ] Yes, we'll provide the logo files
-- [ ] We need help creating them from the existing logo
+- [ yes ] We need help creating them from the existing logo
 
 **25. Do you have professional photographs** of your properties (and of the brand /
 team) that K Pearl owns or is licensed to use?
-- [ ] Yes
+- [ yes ] Yes
 - [ ] Some — we'll need more
 - [ ] No — we need a plan for this
 
 **26. Who will write the words** for the Home, About, and Services pages, and the
 descriptions for each property?
 - [ ] K Pearl will write / supply them
-- [ ] Please draft them for K Pearl to review and approve
+- [ yes ] Please draft them for K Pearl to review and approve
 
 > We will not invent facts about K Pearl — no made-up years of experience, client
 > numbers, awards, or testimonials. Anything like that has to come from you.
@@ -203,24 +203,24 @@ descriptions for each property?
 **27. Do you have real client testimonials** (with the client's permission to
 publish)?
 - [ ] Yes — we can supply them later
-- [ ] Not yet
+- [ yes ] Not yet
 
 ---
 
 ## Part 8 — Practical setup
 
-**28. What web address (domain) will the site use?**  ______________________
+**28. What web address (domain) will the site use?**  ___K-Pearl-Agency.vercel.app___________________
 (e.g. `kpearlagency.co.ke`. If you don't have one yet, note that here.)
 
 **29. Should visitors to the website be counted** so you can see how many people
 visit and which properties are popular?
-- [ ] Yes
+- [ yes ] Yes
 - [ ] No
 - [ ] Not sure — use your recommendation
 
 **30. Should K Pearl get an email alert** every time someone sends an enquiry or
 requests a viewing?
-- [ ] Yes
+- [  yes ] Yes, implement WhatsApp bot that sends the alert to the specific agent + admin.
 - [ ] No — we'll check the dashboard
 
 ---

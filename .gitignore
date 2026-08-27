@@ -8,3 +8,5 @@ dist/
 *.log
 coverage/
 *.tsbuildinfo
+supabase/.temp/
+supabase/.branches/

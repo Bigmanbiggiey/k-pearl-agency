@@ -1,12 +1,15 @@
 # K Pearl Agency — Requirements
 
-> **Phase 0 note (2026-08-27):** `docs/product-definition.md` refines and extends
-> this document — notably: catalogue covers **rentals and sales**; **two** staff
-> roles (`admin`, `agent`) rather than three; **no public user accounts** in MVP;
-> viewing requests are **capture-only**; owner interest is captured as a lead with
-> **no owner portal**. Where the two documents differ, `product-definition.md` is the
-> current recommendation **pending business approval**. This file is not rewritten
-> until that approval lands.
+> **Approved 2026-08-27.** `docs/product-definition.md`, `docs/decisions.md`
+> (ADR-002 … ADR-010) and `docs/database.md` (v2.0) are the current authority and
+> refine this document: catalogue covers **rent, sale and short-let**; **two**
+> staff roles (`admin`, `agent`), agents edit **only assigned** properties; **no
+> public user accounts**; viewing requests are **capture-only**; "list your
+> property" is a **structured submission queued for staff review** (ADR-009);
+> off-market listings are **hidden**; public sees **area only**, not the exact
+> address; lead alerts via a custom Edge Function — email first, WhatsApp later
+> (ADR-010). Launch on `*.vercel.app`. This file is not being rewritten; follow
+> the documents named above where they differ.
 
 ## MVP functional requirements
 
