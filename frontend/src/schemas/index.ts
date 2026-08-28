@@ -11,3 +11,5 @@ export { viewingRequestSchema } from './viewingRequest.schema';
 export type { ViewingRequestInput } from './viewingRequest.schema';
 export { propertySubmissionSchema } from './propertySubmission.schema';
 export type { PropertySubmissionInput } from './propertySubmission.schema';
+export { staffLoginSchema, forgotPasswordSchema, setPasswordSchema } from './auth.schema';
+export type { StaffLoginInput, ForgotPasswordInput, SetPasswordInput } from './auth.schema';

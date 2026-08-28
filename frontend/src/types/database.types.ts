@@ -598,8 +598,13 @@ export type Database = {
       }
     }
     Functions: {
+      convert_property_submission: {
+        Args: { p_agent_id?: string; p_submission_id: string }
+        Returns: string
+      }
       is_admin: { Args: never; Returns: boolean }
       is_staff: { Args: never; Returns: boolean }
+      staff_dashboard_counts: { Args: never; Returns: Json }
     }
     Enums: {
       [_ in never]: never

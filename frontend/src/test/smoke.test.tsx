@@ -9,6 +9,10 @@ import { routes } from '@/app/router';
 // stay hermetic. Behaviour of the data hooks is covered by their own tests and
 // the integration suite.
 vi.mock('@/hooks/useSiteSettings', () => ({ useSiteSettings: () => ({ data: undefined }) }));
+// Logged-out staff auth so /staff redirects to the login page (real guard kept).
+vi.mock('@/features/auth/useAuth', () => ({
+  useAuth: () => ({ isLoading: false, session: null, isStaff: false, isAdmin: false }),
+}));
 vi.mock('@/hooks', () => ({
   useSiteSettings: () => ({ data: undefined }),
   useAreas: () => ({ data: [] }),
@@ -42,8 +46,8 @@ describe('application shell', () => {
     expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent('Page not found');
   });
 
-  it('renders the staff dashboard shell under /staff', async () => {
+  it('redirects /staff to the sign-in page when logged out', async () => {
     renderAt('/staff');
-    expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent('Dashboard');
+    expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent('Staff sign in');
   });
 });
