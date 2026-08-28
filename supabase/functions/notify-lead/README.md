@@ -1,34 +1,41 @@
 # notify-lead
 
-Lead-alert fan-out for K Pearl Agency (ADR-010).
+Emails the assigned agent + all admins when a new lead is submitted (ADR-010).
 
-**Status: scaffold (Phase 2).** The `Sender` interface and the handler shape are
-in place; nothing is sent yet.
+**Status: live (email path).** WhatsApp is deferred to post-launch.
 
-## Phase 5 — wire it up
+## How it's triggered
 
-1. **Database Webhooks** (Supabase dashboard → Database → Webhooks): one per
-   table, on `INSERT`, pointing at this function:
-   - `public.inquiries`
-   - `public.viewing_requests`
-   - `public.property_submissions`
-2. In `index.ts`, resolve recipients with a service-role client:
-   - the row's `assigned_to` agent → `profiles.email` + `profiles.whatsapp`
-   - **plus** every `profiles` row where `role = 'admin'`
-   - if `assigned_to` is null, notify all admins only.
-3. Implement `emailSender` in `senders.ts` (Gmail SMTP, `smtp.gmail.com:465`).
+The repositories (`src/repositories/notifyLead.ts`) call
+`supabase.functions.invoke('notify-lead', { body: { type: 'INSERT', table, record } })`
+after a successful insert into `inquiries` / `viewing_requests` /
+`property_submissions`. The call is fire-and-forget — a notification failure never
+blocks the visitor's submission. `verify_jwt = false` (config.toml) so anonymous
+submissions can trigger it; the function itself uses the service-role key.
 
-## Phase 7+ — WhatsApp
+A database webhook (Database → Webhooks, INSERT → this function) can replace the
+invoke later if resilience to a client disconnecting mid-submit matters — the
+payload shape is already `{ type, table, record }`.
 
-Add `whatsappSender` to `activeSenders()` once the owner has completed Meta
-Business verification for +254704061324 and an alert template is approved.
+## Hosted-project setup (owner)
 
-## Secrets
-
-```
-supabase secrets set GMAIL_USER=... GMAIL_APP_PASSWORD=...
-# later:
-supabase secrets set WHATSAPP_TOKEN=... WHATSAPP_PHONE_ID=...
+```bash
+supabase functions deploy notify-lead
+supabase secrets set GMAIL_USER=you@gmail.com GMAIL_APP_PASSWORD=xxxxxxxxxxxxxxxx
 ```
 
-Never place these in the frontend or in `.env` files that ship to the browser.
+`GMAIL_APP_PASSWORD` is a Google **App Password** (Google Account → Security →
+2-Step Verification → App passwords), not the account password.
+
+Without the secrets the function logs the intended email instead of sending —
+which is the local-dev behaviour.
+
+## Local test
+
+```bash
+npx supabase functions serve notify-lead
+# then submit a form on the site, or:
+curl -X POST http://127.0.0.1:55321/functions/v1/notify-lead \
+  -H 'Content-Type: application/json' \
+  -d '{"type":"INSERT","table":"inquiries","record":{"name":"Test","phone":"+254704061324","message":"hi","preferred_contact_method":"phone"}}'
+```
