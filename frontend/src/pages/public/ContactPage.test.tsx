@@ -19,6 +19,11 @@ vi.mock('@/hooks', () => ({
   }),
 }));
 
+// The enquiry form has its own tests; stub it here.
+vi.mock('@/features/lead-forms', () => ({
+  EnquiryForm: () => <form aria-label="enquiry" />,
+}));
+
 describe('ContactPage', () => {
   it('renders tap-to-call, WhatsApp and mailto links from site settings', () => {
     renderWithProviders(<ContactPage />);

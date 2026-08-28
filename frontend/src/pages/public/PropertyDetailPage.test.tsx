@@ -42,6 +42,15 @@ vi.mock('@/hooks', () => ({
   }),
 }));
 
+// The lead forms/dialogs have their own tests; stub them here.
+vi.mock('@/features/lead-forms', () => ({
+  LeadDialog: ({ triggerLabel }: { triggerLabel: string }) => (
+    <button type="button">{triggerLabel}</button>
+  ),
+  EnquiryForm: () => null,
+  ViewingRequestForm: () => null,
+}));
+
 function renderDetail(slug: string) {
   return renderWithProviders(
     <Routes>
@@ -57,7 +66,11 @@ describe('PropertyDetailPage', () => {
     renderDetail('kilimani-apartment');
 
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Kilimani Apartment');
-    const wa = screen.getByRole('link', { name: /enquire on whatsapp/i });
+    expect(
+      screen.getByRole('button', { name: /enquire about this property/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /request a viewing/i })).toBeInTheDocument();
+    const wa = screen.getByRole('link', { name: /message us on whatsapp/i });
     expect(wa.getAttribute('href')).toContain('KP-0007');
   });
 
