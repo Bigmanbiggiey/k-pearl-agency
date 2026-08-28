@@ -401,6 +401,13 @@ deno_version = 2
 enabled = true
 verify_jwt = false
 
+# Staff invite function (decision 19.c — invite-only, no public signup). The
+# platform verifies the caller's JWT; the function additionally checks the
+# caller is an admin, then uses the service-role key to invite + set the role.
+[functions.invite-staff]
+enabled = true
+verify_jwt = true
+
 [analytics]
 enabled = true
 port = 55327

@@ -20,4 +20,25 @@ export const siteSettingsRepository = {
       byAppointment: data.by_appointment,
     };
   },
+
+  /** Admin-only (RLS). The table is a single row keyed `id = true`. */
+  async update(patch: Partial<SiteSettings>): Promise<void> {
+    const row: {
+      phone?: string;
+      whatsapp?: string;
+      email?: string;
+      hours_weekday?: string;
+      hours_weekend?: string;
+      by_appointment?: boolean;
+    } = {};
+    if (patch.phone !== undefined) row.phone = patch.phone;
+    if (patch.whatsapp !== undefined) row.whatsapp = patch.whatsapp;
+    if (patch.email !== undefined) row.email = patch.email;
+    if (patch.hoursWeekday !== undefined) row.hours_weekday = patch.hoursWeekday;
+    if (patch.hoursWeekend !== undefined) row.hours_weekend = patch.hoursWeekend;
+    if (patch.byAppointment !== undefined) row.by_appointment = patch.byAppointment;
+
+    const { error } = await supabase.from('site_settings').update(row).eq('id', true);
+    if (error) throw normalizeSupabaseError(error);
+  },
 };

@@ -6,7 +6,7 @@ export type {
 } from './property.repository';
 export { propertyMediaRepository } from './propertyMedia.repository';
 export { areaRepository } from './area.repository';
-export type { Area } from './area.repository';
+export type { Area, AreaInput } from './area.repository';
 export { siteSettingsRepository } from './siteSettings.repository';
 export { inquiryRepository } from './inquiry.repository';
 export type { InquiryListFilters, CreateInquiryInput } from './inquiry.repository';

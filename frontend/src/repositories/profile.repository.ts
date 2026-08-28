@@ -1,4 +1,4 @@
-import { normalizeSupabaseError } from '@/lib/errors';
+import { AppError, normalizeSupabaseError } from '@/lib/errors';
 import { supabase } from '@/lib/supabase';
 import type { StaffRole } from '@/types';
 
@@ -65,5 +65,21 @@ export const profileRepository = {
   async setRole(id: string, role: StaffRole): Promise<void> {
     const { error } = await supabase.from('profiles').update({ role }).eq('id', id);
     if (error) throw normalizeSupabaseError(error);
+  },
+
+  /**
+   * Invite a new staff member. Runs the `invite-staff` Edge Function, which
+   * verifies the caller is an admin and uses the service-role key to send the
+   * Supabase invite email and set the new profile's role (decision 19.c).
+   */
+  async invite(input: { email: string; fullName: string; role: StaffRole }): Promise<void> {
+    const response = (await supabase.functions.invoke('invite-staff', {
+      body: input,
+    })) as { error: unknown };
+    if (response.error) {
+      throw new AppError('UNKNOWN_ERROR', 'The invite could not be sent.', {
+        cause: response.error,
+      });
+    }
   },
 };
