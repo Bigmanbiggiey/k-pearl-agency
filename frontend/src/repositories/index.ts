@@ -16,7 +16,10 @@ export type {
   CreateViewingRequestInput,
 } from './viewingRequest.repository';
 export { propertySubmissionRepository } from './propertySubmission.repository';
-export type { CreatePropertySubmissionInput } from './propertySubmission.repository';
+export type {
+  CreatePropertySubmissionInput,
+  PropertySubmissionListFilters,
+} from './propertySubmission.repository';
 export { authRepository } from './auth.repository';
 export type { Session, User } from './auth.repository';
 export { profileRepository } from './profile.repository';

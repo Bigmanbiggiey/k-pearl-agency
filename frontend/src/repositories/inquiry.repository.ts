@@ -1,15 +1,60 @@
 import { fireLeadNotification } from './notifyLead';
 
-import { normalizeSupabaseError, notImplemented } from '@/lib/errors';
+import { normalizeSupabaseError } from '@/lib/errors';
 import { supabase } from '@/lib/supabase';
-import type { InquiryStatus, InquiryType, PreferredContactMethod } from '@/types';
+import type {
+  InquiryStatus,
+  InquiryType,
+  Paginated,
+  PreferredContactMethod,
+  StaffInquiry,
+} from '@/types';
 
 export interface InquiryListFilters {
   type?: InquiryType;
   status?: InquiryStatus;
   assignedTo?: string;
   propertyId?: string;
+  page?: number;
+  pageSize?: number;
 }
+
+interface InquiryJoinRow {
+  id: string;
+  type: string;
+  property_id: string | null;
+  name: string;
+  phone: string;
+  email: string | null;
+  message: string;
+  preferred_contact_method: string;
+  status: string;
+  assigned_to: string | null;
+  internal_notes: string | null;
+  created_at: string;
+  properties: { title: string; reference_code: string } | null;
+}
+
+function mapInquiry(row: InquiryJoinRow): StaffInquiry {
+  return {
+    id: row.id,
+    type: row.type as InquiryType,
+    propertyId: row.property_id,
+    propertyTitle: row.properties?.title ?? null,
+    propertyReference: row.properties?.reference_code ?? null,
+    name: row.name,
+    phone: row.phone,
+    email: row.email,
+    message: row.message,
+    preferredContactMethod: row.preferred_contact_method as PreferredContactMethod,
+    status: row.status as InquiryStatus,
+    assignedTo: row.assigned_to,
+    internalNotes: row.internal_notes,
+    createdAt: row.created_at,
+  };
+}
+
+const SELECT = '*, properties(title, reference_code)';
 
 export interface CreateInquiryInput {
   type: InquiryType;
@@ -38,20 +83,59 @@ export const inquiryRepository = {
     fireLeadNotification('inquiries', row);
   },
 
-  // ─── staff — Phase 6 ────────────────────────────────────────────────────
-  list(_filters: InquiryListFilters): Promise<never> {
-    return notImplemented('inquiryRepository.list');
+  // ─── staff (Phase 6) ───────────────────────────────────────────────────
+  async list(filters: InquiryListFilters): Promise<Paginated<StaffInquiry>> {
+    const page = filters.page ?? 1;
+    const pageSize = filters.pageSize ?? 25;
+    const from = (page - 1) * pageSize;
+
+    let query = supabase.from('inquiries').select(SELECT, { count: 'exact' });
+    if (filters.type) query = query.eq('type', filters.type);
+    if (filters.status) query = query.eq('status', filters.status);
+    if (filters.assignedTo) query = query.eq('assigned_to', filters.assignedTo);
+    if (filters.propertyId) query = query.eq('property_id', filters.propertyId);
+
+    const { data, error, count } = await query
+      .order('created_at', { ascending: false })
+      .range(from, from + pageSize - 1);
+    if (error) throw normalizeSupabaseError(error);
+
+    return {
+      items: ((data ?? []) as InquiryJoinRow[]).map(mapInquiry),
+      total: count ?? 0,
+      page,
+      pageSize,
+    };
   },
-  getById(_id: string): Promise<never> {
-    return notImplemented('inquiryRepository.getById');
+
+  async getById(id: string): Promise<StaffInquiry | null> {
+    const { data, error } = await supabase
+      .from('inquiries')
+      .select(SELECT)
+      .eq('id', id)
+      .maybeSingle();
+    if (error) throw normalizeSupabaseError(error);
+    return data ? mapInquiry(data) : null;
   },
-  updateStatus(_id: string, _status: InquiryStatus): Promise<never> {
-    return notImplemented('inquiryRepository.updateStatus');
+
+  async updateStatus(id: string, status: InquiryStatus): Promise<void> {
+    const { error } = await supabase.from('inquiries').update({ status }).eq('id', id);
+    if (error) throw normalizeSupabaseError(error);
   },
-  assign(_id: string, _staffId: string | null): Promise<never> {
-    return notImplemented('inquiryRepository.assign');
+
+  async assign(id: string, staffId: string | null): Promise<void> {
+    const { error } = await supabase
+      .from('inquiries')
+      .update({ assigned_to: staffId })
+      .eq('id', id);
+    if (error) throw normalizeSupabaseError(error);
   },
-  updateNotes(_id: string, _notes: string): Promise<never> {
-    return notImplemented('inquiryRepository.updateNotes');
+
+  async updateNotes(id: string, notes: string): Promise<void> {
+    const { error } = await supabase
+      .from('inquiries')
+      .update({ internal_notes: notes || null })
+      .eq('id', id);
+    if (error) throw normalizeSupabaseError(error);
   },
 };

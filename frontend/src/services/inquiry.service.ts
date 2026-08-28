@@ -1,4 +1,4 @@
-import { AppError, notImplemented } from '@/lib/errors';
+import { AppError } from '@/lib/errors';
 import { inquiryRepository, type CreateInquiryInput } from '@/repositories';
 import { inquirySchema, type InquiryInput } from '@/schemas';
 
@@ -23,9 +23,5 @@ export const inquiryService = {
       preferredContactMethod: v.preferredContactMethod,
     };
     await inquiryRepository.create(payload);
-  },
-
-  updateStatus(_id: string, _status: unknown): Promise<never> {
-    return notImplemented('inquiryService.updateStatus');
   },
 };
