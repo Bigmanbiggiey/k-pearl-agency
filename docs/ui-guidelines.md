@@ -77,6 +77,22 @@ As built (Phase 3; per `docs/product-definition.md` §17):
 - SEO: canonical is always `/properties`; any active filter or `page > 1` sets
   `noindex` (avoids thin duplicate pages).
 
+## Forms (Phase 5)
+
+- Built with `react-hook-form` + `zodResolver` against the schemas in
+  `src/schemas/`. Primitives: `FormField` (label + control + error, wired for
+  a11y), `TextInput` / `TextArea` / `SelectInput` / `Checkbox` in
+  `components/ui/form.tsx`.
+- Field labels must be distinct from radio/option labels in the same form
+  (e.g. "Phone number" field vs. a "Phone" contact-method radio).
+- Every public form: an off-screen honeypot (`Honeypot`), a consent checkbox
+  linking to `/privacy` (`ConsentField`), inline field errors, a disabled
+  "Sending…" button state, and on success the form is replaced by a
+  `LeadFormSuccess` panel. `useLeadSubmit` owns that lifecycle and the silent
+  bot-drop.
+- Property enquiry + viewing request open from the detail page in a `LeadDialog`
+  (Radix Dialog). The general contact form sits inline on `/contact`.
+
 ## Property card
 
 Show:

@@ -194,6 +194,19 @@ post-launch** (owner's decision). MVP ships with `emailSender` + in-dashboard
 badges only; `whatsappSender` is a post-launch enhancement, switched on via
 `activeSenders()` once verification and template approval are done.
 
+### Update (2026-08-28 — implemented in Phase 5)
+`supabase/functions/notify-lead/` is fully implemented for the email path:
+resolves recipients (assigned agent + all admins) with the service-role key and
+sends via Gmail SMTP (`denomailer`); when `GMAIL_USER` / `GMAIL_APP_PASSWORD` are
+unset it logs the intended email instead (local-dev behaviour). It is invoked
+**fire-and-forget by the repositories** (`src/repositories/notifyLead.ts`) after a
+successful insert, rather than via a database webhook — simpler and identical
+across local/prod; the payload shape (`{ type, table, record }`) is
+webhook-compatible so a DB webhook can replace it later. `config.toml` sets
+`[functions.notify-lead] verify_jwt = false`. In-dashboard unread badges move to
+Phase 6 (no dashboard yet). Owner bootstrap: `functions deploy` +
+`secrets set GMAIL_USER GMAIL_APP_PASSWORD` (`docs/supabase-setup.md` §9).
+
 ## ADR-011 — Client-side SEO metadata + build-time sitemap; no SSR
 
 **Status:** Accepted — 2026-08-27 (formalises the SEO approach under ADR-008)

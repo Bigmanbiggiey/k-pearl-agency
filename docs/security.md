@@ -27,12 +27,21 @@
 
 ## Abuse prevention
 
-Public forms (enquiry, viewing request, general contact, property submission):
-- honeypot field + minimum submit-time (MUST, Phase 5)
-- per-IP / per-phone rate limiting on inserts (SHOULD)
-- Cloudflare Turnstile / hCaptcha if spam becomes material
-- Kenyan phone-format validation; email validated when present
-- consent checkbox referencing the privacy notice
+Public forms (enquiry, viewing request, general contact, property submission) —
+**implemented in Phase 5**:
+- Off-screen honeypot field + a minimum submit-time (< 2 s = silent drop, so bots
+  don't learn they were caught). `src/features/lead-forms/useLeadSubmit.ts`.
+- Per-phone rate limit: a `BEFORE INSERT` trigger
+  (`enforce_lead_rate_limit`, migration `20260828090001`) rejects a second row
+  with the same phone in the same lead table within 45 s. Anonymous inserts only;
+  staff-entered rows are exempt.
+- Kenyan phone-format validation + email validated when present (Zod).
+- Consent checkbox linking to `/privacy` (schema `consent: z.literal(true)`).
+- Cloudflare Turnstile / hCaptcha remain conditional — add only if spam becomes
+  material.
+- Anon has **no `SELECT`** on `inquiries` / `viewing_requests` /
+  `property_submissions`; column-level INSERT grants block `status` / `assigned_to`
+  / `internal_notes`.
 
 Uploads (`property-media`, staff only): MIME allowlist, 8 MB cap, path convention;
 image optimisation via responsive `srcset` + lazy-load.

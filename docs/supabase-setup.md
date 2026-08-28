@@ -166,18 +166,27 @@ For local development now, keep `frontend/.env` pointed at the local stack
 
 ---
 
-## 9. Edge Function — later (Phase 5)
+## 9. Edge Function — `notify-lead`
 
-`notify-lead` is scaffolded only. When Phase 5 wires it:
+Implemented in Phase 5 (email path). It emails the assigned agent + all admins on
+every new enquiry / viewing request / property submission. The frontend invokes
+it fire-and-forget after a successful insert — **no database webhook needed**.
+
+**On the hosted project (once, after `db push`):**
 
 ```bash
 npx supabase functions deploy notify-lead
-npx supabase secrets set GMAIL_USER=... GMAIL_APP_PASSWORD=...
+
+# A Gmail App Password (Google Account → Security → 2-Step Verification →
+# App passwords) — NOT the account password.
+npx supabase secrets set GMAIL_USER=you@gmail.com GMAIL_APP_PASSWORD=xxxxxxxxxxxxxxxx
 ```
 
-Then add Database Webhooks (Database → Webhooks) on INSERT into `inquiries`,
-`viewing_requests`, `property_submissions` → the function. WhatsApp is deferred
-to post-launch (Meta Business verification for +254704061324).
+Until the secrets are set, the function logs the intended email instead of
+sending (same as local dev) — the visitor's submission still succeeds either way.
+
+WhatsApp notifications are deferred to post-launch (Meta Business verification for
++254704061324); `whatsappSender` is a stub in `senders.ts`.
 
 ---
 

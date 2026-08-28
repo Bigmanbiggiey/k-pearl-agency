@@ -75,15 +75,18 @@
 - [ ] Real property photography (entered via the admin panel in Phase 6 testing)
 
 ## Phase 5 — Lead generation
-- [ ] Property enquiry form
-- [ ] Viewing request form
-- [ ] General contact form
-- [ ] "List your property" structured submission form
-- [ ] `notify-lead` full wiring: Gmail SMTP + in-dashboard badges (assigned agent + admin)
-- [ ] WhatsApp/phone CTAs (tap-to-call, wa.me prefilled with reference code)
-- [ ] Success/error states
-- [ ] Spam/abuse protections (honeypot + rate limit)
-- [ ] Consent checkbox (ties to legal)
+*(complete — branch `feat/lead-generation`; 66/66 tests, gates green)*
+- [x] Property enquiry form (dialog on the detail page)
+- [x] Viewing request form (dialog on the detail page)
+- [x] General contact form (Contact page)
+- [x] "List your property" structured submission form (`property_submissions`, ADR-009)
+- [x] `notify-lead` implemented: resolves recipients (assigned agent + admins) with the service-role key, emails via Gmail SMTP (`denomailer`); logs when secrets are absent. Invoked fire-and-forget by the repositories (a DB webhook can replace it later)
+- [x] WhatsApp/phone CTAs (built Phase 3)
+- [x] Success / error states + friendly rate-limit message
+- [x] Spam/abuse: honeypot + min-submit-time (app) + per-phone 45 s DB rate-limit trigger (`20260828090001_lead_rate_limit`)
+- [x] Consent checkbox linking to `/privacy`
+- [ ] In-dashboard "unread lead" badges → **Phase 6** (needs the dashboard)
+- [ ] Gmail secrets + `functions deploy` on the hosted project → owner (`docs/supabase-setup.md` §9)
 
 ## Phase 6 — Staff dashboard
 - [ ] Staff authentication (invite-based, no signup)

@@ -2,15 +2,17 @@
 
 ## Current status
 
-**Phase:** 4 — Property catalogue *(complete on branch `feat/property-catalogue`)*
+**Phase:** 5 — Lead generation *(complete on branch `feat/lead-generation`)*
 
-**State:** Phases 0–3 done. Phase 4 built the `/properties` catalogue: URL-driven
-filters (listing type · property type · area · price · bedrooms · verified),
-debounced keyword search (`ilike`), sort, numbered pagination, a desktop filter
-sidebar + mobile filter sheet, active-filter chips, and empty/loading/error
-states — all on the Phase 2 data layer (no schema changes, no new deps). The Home
-hero search and `/areas` chips now deep-link into it. All five gates green;
-**43/43 tests pass** (12 files, incl. 11 local-Supabase integration).
+**State:** Phases 0–4 done. Phase 5 added the four public lead forms (property
+enquiry + viewing request as dialogs on the detail page; general contact on
+`/contact`; structured "list your property" submission), each RHF + Zod validated,
+submitting through hook → service → repository → Supabase (anon INSERT-only).
+Anti-abuse: honeypot + min-submit-time in the app, plus a per-phone 45 s DB
+rate-limit trigger. `notify-lead` Edge Function fully implemented (service-role
+recipient resolution → Gmail SMTP; logs when unconfigured) and invoked
+fire-and-forget by the repositories. All five gates green; **66/66 tests pass**
+(17 files, incl. local-Supabase integration for the forms + rate limit).
 
 ```
 Phase 0  ── approved 2026-08-27
@@ -18,7 +20,8 @@ Phase 1 (Repository foundation)   ── done
 Phase 2 (Supabase foundation)     ── done locally; owner to create the hosted project + db push
 Phase 3 (Public website)          ── done (feat/public-website)
 Phase 4 (Property catalogue)      ── done (feat/property-catalogue)
-Phase 5 (Lead generation)         ← next: enquiry / viewing / contact / "list your property" forms + notify-lead wiring
+Phase 5 (Lead generation)         ── done (feat/lead-generation)
+Phase 6 (Staff dashboard)         ← next: auth, dashboard, property CRUD, media, submissions review, lead management
 ```
 
 ## Completed
@@ -45,11 +48,11 @@ Phase 5 (Lead generation)         ← next: enquiry / viewing / contact / "list 
 
 ## Current next task
 
-**Next: Phase 5 — Lead generation.** The four public forms (property enquiry,
-viewing request, general contact, structured "list your property" submission),
-`notify-lead` full wiring (Gmail SMTP + in-dashboard), honeypot + rate limit,
-consent checkbox. The Contact page and property-detail CTAs currently point at
-tap-to-call / WhatsApp and a "form coming soon" note. (Needs a plan + approval.)
+**Next: Phase 6 — Staff dashboard.** Invite-based auth, dashboard (counts +
+recent leads + unread badges), property CRUD under assigned-agent RLS, media
+manager, property-submissions review/convert panel, inquiry + viewing-request
+management (status / assignment / notes), `site_settings` editor. This is the
+first phase that builds behind `/staff` auth. (Needs a plan + approval.)
 
 **Status of handoffs:**
 - ✅ GitHub: `github.com/Bigmanbiggiey/k-pearl-agency`. Branches: `main` (scaffold),
@@ -86,6 +89,9 @@ Business owner returned the questionnaire. Resolved every open decision (`docs/p
 
 ### 2026-08-27 (Phase 2 — Supabase foundation complete locally)
 `supabase init` + 11 migrations implementing `docs/database.md` v2.0 (tables, `public_*` views, RLS, storage, auth trigger, KP-#### sequence). Local ports remapped to 553xx to coexist with another local Supabase stack. Seed: 28 Nairobi-metro areas, real `site_settings`, 2 dev staff, 8 sample properties. Generated `frontend/src/types/database.types.ts`. Wired the property **read** paths (`propertyService`/`propertyRepository` → `public_properties`/`public_property_media`) + `areaRepository` + the four Zod schemas. `notify-lead` Edge Function scaffolded. 11/11 tests pass (3 smoke + 8 local-Supabase integration); RLS also verified via psql (agent assigned-only, admin any, admin-only featured/verified, anon sees only published). All five gates green. Later: pushed to `github.com/Bigmanbiggiey/k-pearl-agency`; moved `areas`+`site_settings` into `20260827090012_reference_data` so `db push` needs no manual SQL; added `docs/supabase-setup.md`.
+
+### 2026-08-28 (Phase 5 — Lead generation)
+Branch `feat/lead-generation`. Added `@hookform/resolvers`. New `src/features/lead-forms/` (EnquiryForm, ViewingRequestForm, ListPropertyForm, LeadDialog, useLeadSubmit, Honeypot, ConsentField) + form UI primitives in `components/ui/form.tsx`. Implemented the `inquiry` / `viewingRequest` / `propertySubmission` repositories (anon INSERT, no select-back) + services (Zod validate → map → repo) + `useCreate*` mutation hooks; `repositories/notifyLead.ts` fires the function. New migration `20260828090001_lead_rate_limit` (per-phone 45 s `BEFORE INSERT` trigger on the three lead tables, anon-only). `notify-lead` function fully written (jsr `@supabase/supabase-js`, `denomailer`) + `config.toml` `[functions.notify-lead] verify_jwt=false`. Placed the forms: Contact page, property detail dialogs, `/list-your-property` (+ `content/listProperty.ts`). Schema `z.uuid()` → `z.guid()` for id fields (seed/DB ids aren't v4). Verified: `functions serve` + POST → resolves the admin recipient and composes the email (logs, no secrets). 66/66 tests (17 files). **Owner step:** `supabase functions deploy notify-lead` + `supabase secrets set GMAIL_USER GMAIL_APP_PASSWORD` on the hosted project.
 
 ### 2026-08-27 (Phase 4 — Property catalogue)
 Branch `feat/property-catalogue`. Built the `/properties` page on the existing data layer: `src/features/property-search/` (`filterParams` URL↔filters, `usePropertyFilters`, `PropertyFilters`, `ActiveFilterChips`, `SortSelect`, `Pagination`, `FiltersSheet`), `useProperties(filters)` hook with `keepPreviousData`, `useDebouncedCallback`, and `LISTING_TYPES`/`PROPERTY_TYPES` in `lib/format.ts`. `propertySearch.schema.ts` refactored to expose `propertySearchFields.shape` for lenient per-field URL parsing. `PropertiesPage` replaces the stub. Canonical stays `/properties`; filtered/paged views are `noindex`. 18 new tests (filterParams, usePropertyFilters, Pagination, PropertiesPage + 3 integration assertions) — 43/43 pass. No schema changes, no new dependencies.

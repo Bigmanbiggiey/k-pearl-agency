@@ -68,8 +68,9 @@ k-pearl-agency/
 │       ├── repositories/             ✓  property, area, siteSettings (read); inquiry/viewingRequest (stubs)
 │       ├── services/                 ✓  property (read); inquiry/viewingRequest (stubs)
 │       ├── features/
-│       │   └── property-search/      ✓  filterParams, usePropertyFilters, PropertyFilters, ActiveFilterChips, SortSelect, Pagination, FiltersSheet
-│       ├── hooks/                    ✓  useSiteSettings, useAreas, useProperties/Featured/Latest/Property, useDebouncedCallback
+│       │   ├── property-search/      ✓  filterParams, usePropertyFilters, PropertyFilters, ActiveFilterChips, SortSelect, Pagination, FiltersSheet
+│       │   └── lead-forms/           ✓  EnquiryForm, ViewingRequestForm, ListPropertyForm, LeadDialog, useLeadSubmit, Honeypot, ConsentField
+│       ├── hooks/                    ✓  useSiteSettings, useAreas, useProperties/Featured/Latest/Property, useDebouncedCallback, useCreate{Inquiry,ViewingRequest,PropertySubmission}
 │       ├── lib/                      ✓  env, supabase, errors, queryKeys, seo, format, media, contact
 │       ├── schemas/                  ✓  common, propertySearch (+ fields), inquiry, viewingRequest, propertySubmission
 │       ├── types/                    ✓  domain, property, siteSettings, database.types (generated), index
