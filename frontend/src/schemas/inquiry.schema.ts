@@ -6,7 +6,7 @@ import { honeypot, kenyanPhone, optionalEmail, preferredContactMethod } from './
 export const inquirySchema = z
   .object({
     type: z.enum(['property_enquiry', 'general']),
-    propertyId: z.uuid().optional(),
+    propertyId: z.guid().optional(),
     name: z.string().trim().min(2).max(120),
     phone: kenyanPhone,
     email: optionalEmail,

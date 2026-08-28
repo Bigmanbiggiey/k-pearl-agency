@@ -1,5 +1,6 @@
 import { Seo } from '@/components/Seo';
 import { Container, PageHeader, Section } from '@/components/ui';
+import { EnquiryForm } from '@/features/lead-forms';
 import { useSiteSettings } from '@/hooks';
 import { mailtoHref, telHref, whatsappHref } from '@/lib/contact';
 
@@ -79,10 +80,15 @@ export default function ContactPage() {
             </dl>
           ) : null}
 
-          <p className="mt-8 rounded-md border border-line bg-ivory p-4 text-sm text-muted">
-            An online enquiry form is coming soon. For now, please use the phone, WhatsApp or email
-            options above.
-          </p>
+          <div className="mt-10 border-t border-line pt-8">
+            <h2 className="text-2xl">Send us a message</h2>
+            <p className="mt-2 text-sm text-muted">
+              Prefer to write? Fill this in and we&rsquo;ll get back to you.
+            </p>
+            <div className="mt-6 max-w-lg">
+              <EnquiryForm type="general" />
+            </div>
+          </div>
         </Container>
       </Section>
     </>

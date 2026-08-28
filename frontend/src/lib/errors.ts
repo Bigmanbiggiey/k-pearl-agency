@@ -42,6 +42,12 @@ function isPostgrestLikeError(error: unknown): error is PostgrestLikeError {
   );
 }
 
+function messageOf(error: unknown): string {
+  return typeof error === 'object' && error !== null && 'message' in error
+    ? String(error.message)
+    : '';
+}
+
 /**
  * Normalise a Supabase/PostgREST error into an `AppError`. Structural check so
  * this module needs no `@supabase/*` import (kept out of the layered-import ban).
@@ -50,6 +56,16 @@ export function normalizeSupabaseError(error: unknown): AppError {
   if (error instanceof AppError) {
     return error;
   }
+
+  // Our own rate-limit trigger (docs/security.md) raises this prefix.
+  if (messageOf(error).includes('lead_rate_limited')) {
+    return new AppError(
+      'CONFLICT',
+      'You are sending messages too quickly. Please wait a moment and try again.',
+      { cause: error },
+    );
+  }
+
   if (isPostgrestLikeError(error)) {
     switch (error.code) {
       case 'PGRST116': // no rows for .single()

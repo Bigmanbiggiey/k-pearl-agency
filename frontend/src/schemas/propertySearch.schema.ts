@@ -9,7 +9,7 @@ export type PropertySort = z.infer<typeof propertySortSchema>;
 export const propertySearchFields = z.object({
   listingType: listingType.optional(),
   propertyType: propertyType.optional(),
-  areaId: z.uuid().optional(),
+  areaId: z.guid().optional(),
   county: z.string().trim().min(1).optional(),
   minPrice: z.number().nonnegative().optional(),
   maxPrice: z.number().nonnegative().optional(),

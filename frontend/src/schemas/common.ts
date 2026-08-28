@@ -23,5 +23,9 @@ export const propertyType = z.enum([
 ]);
 export const preferredContactMethod = z.enum(['phone', 'whatsapp', 'email']);
 
-/** Anti-spam honeypot: a hidden field that must stay empty. */
-export const honeypot = z.literal('').optional();
+/**
+ * Anti-spam honeypot: a hidden field a human never sees. The schema accepts any
+ * value; the form/service silently drops the submission when it is non-empty
+ * (so bots don't learn they were detected).
+ */
+export const honeypot = z.string().optional();

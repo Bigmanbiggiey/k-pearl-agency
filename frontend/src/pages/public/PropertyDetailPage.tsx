@@ -3,7 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import { RouteFallback } from '@/components/layout/RouteFallback';
 import { PropertyGallery } from '@/components/property/PropertyGallery';
 import { Seo } from '@/components/Seo';
-import { ButtonAnchor, ButtonLink, Container, Section } from '@/components/ui';
+import { Container, Section } from '@/components/ui';
+import { EnquiryForm, LeadDialog, ViewingRequestForm } from '@/features/lead-forms';
 import { useProperty, useSiteSettings } from '@/hooks';
 import { telHref, whatsappHref } from '@/lib/contact';
 import { amenityLabel, formatPrice, listingTypeLabel, propertyTypeLabel } from '@/lib/format';
@@ -121,23 +122,41 @@ export default function PropertyDetailPage() {
                 Quote reference {property.referenceCode} when you get in touch.
               </p>
               <div className="mt-5 flex flex-col gap-3">
+                <LeadDialog
+                  triggerLabel="Enquire about this property"
+                  title={`Enquire — ${property.referenceCode}`}
+                >
+                  <EnquiryForm
+                    type="property_enquiry"
+                    propertyId={property.id}
+                    reference={property.referenceCode}
+                  />
+                </LeadDialog>
+                <LeadDialog
+                  triggerLabel="Request a viewing"
+                  triggerVariant="secondary"
+                  title={`Request a viewing — ${property.referenceCode}`}
+                >
+                  <ViewingRequestForm propertyId={property.id} reference={property.referenceCode} />
+                </LeadDialog>
                 {settings ? (
-                  <>
-                    <ButtonAnchor
+                  <div className="mt-1 flex flex-col gap-2 border-t border-line pt-3 text-sm">
+                    <a
                       href={whatsappHref(settings.whatsapp, waMessage)}
                       target="_blank"
                       rel="noreferrer"
+                      className="text-gold-deep underline underline-offset-4"
                     >
-                      Enquire on WhatsApp
-                    </ButtonAnchor>
-                    <ButtonAnchor variant="secondary" href={telHref(settings.phone)}>
-                      Call {settings.phone}
-                    </ButtonAnchor>
-                  </>
+                      …or message us on WhatsApp
+                    </a>
+                    <a
+                      href={telHref(settings.phone)}
+                      className="text-gold-deep underline underline-offset-4"
+                    >
+                      …or call {settings.phone}
+                    </a>
+                  </div>
                 ) : null}
-                <ButtonLink variant="ghost" to="/contact">
-                  Send an enquiry →
-                </ButtonLink>
               </div>
             </div>
           </aside>

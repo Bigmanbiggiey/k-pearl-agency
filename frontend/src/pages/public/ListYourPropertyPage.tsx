@@ -1,5 +1,7 @@
 import { Seo } from '@/components/Seo';
-import { PagePlaceholder } from '@/pages/PagePlaceholder';
+import { Container, PageHeader, Section } from '@/components/ui';
+import { LIST_PROPERTY } from '@/content/listProperty';
+import { ListPropertyForm } from '@/features/lead-forms';
 
 export default function ListYourPropertyPage() {
   return (
@@ -9,12 +11,31 @@ export default function ListYourPropertyPage() {
         description="Have a property to let or sell in Nairobi? Submit the details and K Pearl Agency will follow up to prepare and market the listing."
         path="/list-your-property"
       />
-      <PagePlaceholder title="List your property" phase="Phase 5 · Lead generation">
-        <p>
-          A short form to tell us about your property. Submissions go to our team’s review queue —
-          nothing is published automatically — and an agent follows up to prepare the listing.
-        </p>
-      </PagePlaceholder>
+      <PageHeader
+        eyebrow={LIST_PROPERTY.eyebrow}
+        title={LIST_PROPERTY.title}
+        lede={LIST_PROPERTY.lede}
+      />
+
+      <Section>
+        <Container className="grid gap-12 px-0 lg:grid-cols-[1fr_1.4fr]">
+          <div>
+            <ul className="space-y-3">
+              {LIST_PROPERTY.points.map((point) => (
+                <li key={point} className="flex gap-3 text-sm text-charcoal">
+                  <span aria-hidden="true" className="mt-1 text-gold">
+                    ✦
+                  </span>
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-md border border-line bg-ivory p-6">
+            <ListPropertyForm />
+          </div>
+        </Container>
+      </Section>
     </>
   );
 }

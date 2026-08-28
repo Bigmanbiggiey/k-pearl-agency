@@ -16,7 +16,7 @@ export const propertySubmissionSchema = z.object({
   proposedTitle: z.string().trim().min(4).max(160),
   proposedListingType: listingType,
   proposedPropertyType: propertyType,
-  proposedAreaId: z.uuid().optional(),
+  proposedAreaId: z.guid().optional(),
   proposedPrice: z.number().nonnegative().optional(),
   proposedBedrooms: z.number().int().nonnegative().max(50).optional(),
   proposedBathrooms: z.number().nonnegative().max(50).optional(),

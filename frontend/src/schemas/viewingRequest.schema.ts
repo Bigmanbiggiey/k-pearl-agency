@@ -4,7 +4,7 @@ import { honeypot, kenyanPhone, optionalEmail } from './common';
 
 /** Viewing request form (capture-only, ADR-006). docs/database.md `viewing_requests`. */
 export const viewingRequestSchema = z.object({
-  propertyId: z.uuid(),
+  propertyId: z.guid(),
   name: z.string().trim().min(2).max(120),
   phone: kenyanPhone,
   email: optionalEmail,

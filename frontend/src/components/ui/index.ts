@@ -6,3 +6,4 @@ export { Container } from './Container';
 export { PageHeader } from './PageHeader';
 export { Prose } from './Prose';
 export { Section } from './Section';
+export { FormField, TextInput, TextArea, SelectInput, Checkbox } from './form';
