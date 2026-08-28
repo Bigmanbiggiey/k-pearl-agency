@@ -85,19 +85,25 @@
 - [x] Success / error states + friendly rate-limit message
 - [x] Spam/abuse: honeypot + min-submit-time (app) + per-phone 45 s DB rate-limit trigger (`20260828090001_lead_rate_limit`)
 - [x] Consent checkbox linking to `/privacy`
-- [ ] In-dashboard "unread lead" badges → **Phase 6** (needs the dashboard)
+- [x] In-dashboard "unread lead" badges → landed in Phase 6 (dashboard "Needs attention" tiles from `staff_dashboard_counts()`)
 - [ ] Gmail secrets + `functions deploy` on the hosted project → owner (`docs/supabase-setup.md` §9)
 
 ## Phase 6 — Staff dashboard
-- [ ] Staff authentication (invite-based, no signup)
-- [ ] Dashboard shell (counts + recent leads)
-- [ ] Property CRUD (assigned-agent RLS; admin any)
-- [ ] Media management (upload, reorder, cover, alt text)
-- [ ] Lifecycle: draft/publish/unpublish/unavailable/let_or_sold/archive
-- [ ] Featured/verified controls (admin only)
-- [ ] Property submissions review + convert-to-draft panel
-- [ ] Inquiry + viewing-request management (status, assignment, notes)
-- [ ] `site_settings` editor (admin)
+*(complete — branch `feat/staff-dashboard`; 79/79 tests, gates green; 4 tranches)*
+- [x] Staff authentication (invite-based, no signup): `AuthProvider`/context, `RequireStaff`/`RequireAdmin` client guards (RLS is the boundary), login / forgot / reset pages
+- [x] Dashboard shell — `staff_dashboard_counts()` RPC → "Needs attention" + "Properties" tiles
+- [x] Property CRUD against the base `properties` table (assigned-agent RLS; admin any); tabbed editor (Details · Location & owner · Media · Publishing) + sticky save bar
+- [x] Media management (upload to Storage, up/down reorder, set cover, alt text, remove)
+- [x] Lifecycle: draft/publish/unpublish/unavailable/let_or_sold/archive (inline quick actions; `published_at` stamped by DB trigger)
+- [x] Featured/verified controls (admin only; enforced by the `enforce_property_admin_columns` trigger)
+- [x] Property submissions review + convert-to-draft (`convert_property_submission` RPC → opens the new draft editor)
+- [x] Inquiry + viewing-request management (status, assignment, internal notes)
+- [x] `site_settings` editor + minimal areas manager (admin) · Team page + `invite-staff` Edge Function (admin-only; `verify_jwt = true`)
+- [x] Fixed `[auth.email].enable_signup` — was `false`, which disabled **email logins entirely**; now `true` (public signup still blocked by `[auth].enable_signup = false`)
+
+Follow-ups carried to Phase 7: deeper component tests for the editor / media
+manager / submission convert; a "recent leads" list on the dashboard;
+`functions deploy invite-staff` on the hosted project.
 
 ## Phase 7 — Quality and launch
 - [ ] Unit tests

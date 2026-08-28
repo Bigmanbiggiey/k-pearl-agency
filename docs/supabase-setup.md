@@ -190,6 +190,30 @@ WhatsApp notifications are deferred to post-launch (Meta Business verification f
 
 ---
 
+## 9a. Edge Function — `invite-staff` (Phase 6)
+
+Sends a Supabase invite email to a new staff member and sets their profile role.
+`verify_jwt = true`; the function also checks the caller's `profiles.role =
+'admin'` with the service-role key before inviting. Called from the admin
+**Team** page (`/staff/team`).
+
+**On the hosted project (once):**
+
+```bash
+npx supabase functions deploy invite-staff
+```
+
+No extra secrets — `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` are injected by
+the platform. Invite emails need SMTP configured on the project (Auth →
+Providers → Email, or `[auth.email.smtp]`); with local dev they land in Mailpit
+(`http://127.0.0.1:55324`).
+
+**Auth config:** `[auth].enable_signup = false` blocks public signup;
+`[auth.email].enable_signup = true` keeps email logins working (with it `false`
+every staff login fails with `email_provider_disabled`).
+
+---
+
 ## 10. Ongoing workflow
 
 Whenever the schema changes:

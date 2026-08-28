@@ -241,3 +241,40 @@ the tree into `<head>`, so a helmet library is unnecessary.
 Variable** (body), both SIL OFL, via `@fontsource-variable/*` (no Google Fonts /
 external CDN). Wired through the `--font-display` / `--font-sans` tokens in
 `src/styles/index.css`, so a later rebrand is a token change.
+
+## ADR-012 — Staff authentication: Supabase Auth, invite-only, client guards over RLS
+
+**2026-08-28 (Phase 6).**
+
+### Context
+`/staff/**` needs authentication for the first time. Decision 19.c / ADR-005:
+no public signup — staff accounts are created by an administrator only. The
+Phase 2 RLS model already enforces the entire authorization model (staff read
+all; agents mutate only `agent_id = auth.uid()` rows; admin-only
+`featured`/`verified` via the `enforce_property_admin_columns` trigger; admin-only
+`areas` / `site_settings`; no anon SELECT on lead tables).
+
+### Decision
+- **Supabase Auth** (email + password). `AuthProvider` at the app root subscribes
+  to `onAuthStateChange`, loads the caller's `profiles` row, and exposes
+  `{ session, user, profile, isStaff, isAdmin, isLoading, signOut }` via `useAuth`.
+- **Client guards are UX, not security.** `RequireStaff` redirects anon → 
+  `/staff/login`; `RequireAdmin` gates the admin-only pages. The real boundary is
+  RLS — every staff repository call is an ordinary anon-key request carrying the
+  user's JWT.
+- **Invite-only.** New staff are created by the `invite-staff` Edge Function
+  (`verify_jwt = true`; it additionally verifies `profiles.role = 'admin'` with
+  the service-role key, then `auth.admin.inviteUserByEmail(..., { redirectTo:
+  '<SITE_URL>/staff/reset' })`, then sets the new profile's `full_name` + `role`).
+  `/staff/reset` serves both the invite link and the password-recovery link
+  (`detectSessionInUrl` is already on).
+- **`config.toml`:** `[auth].enable_signup = false` blocks public signup;
+  `[auth.email].enable_signup = true` keeps the email provider on so staff can
+  *log in* (setting it `false` returns `email_provider_disabled` for every login).
+
+### Consequences
+- No new auth infrastructure; the browser only ever uses the anon key.
+- A staff member with no `profiles` row (shouldn't happen — `handle_new_user`
+  creates one) is treated as non-staff and shown an "not a staff account" notice.
+- Deploying staff invites requires `supabase functions deploy invite-staff` +
+  the service-role key in the function environment on the hosted project.

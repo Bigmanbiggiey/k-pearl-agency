@@ -225,9 +225,11 @@ web3 = 30
 # secret = ""
 
 [auth.email]
-# Allow/disallow new user signups via email to your project.
-# Staff-only; admins invite. See note at [auth].enable_signup above.
-enable_signup = false
+# Keep the email provider ENABLED so staff can sign in with a password
+# (setting this false disables email logins entirely — `email_provider_disabled`).
+# Public signup is still blocked globally by `[auth].enable_signup = false` above;
+# new staff are created only via the `invite-staff` function (decision 19.c).
+enable_signup = true
 # If enabled, a user will be required to confirm any email change on both the old, and new email
 # addresses. If disabled, only the new email is required to confirm.
 double_confirm_changes = true

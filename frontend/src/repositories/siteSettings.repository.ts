@@ -38,7 +38,15 @@ export const siteSettingsRepository = {
     if (patch.hoursWeekend !== undefined) row.hours_weekend = patch.hoursWeekend;
     if (patch.byAppointment !== undefined) row.by_appointment = patch.byAppointment;
 
-    const { error } = await supabase.from('site_settings').update(row).eq('id', true);
+    const { data, error } = await supabase
+      .from('site_settings')
+      .update(row)
+      .eq('id', true)
+      .select('id');
     if (error) throw normalizeSupabaseError(error);
+    // A non-admin passes RLS's row filter to zero rows rather than erroring.
+    if (!data || data.length === 0) {
+      throw new AppError('FORBIDDEN', 'You do not have permission to change site settings.');
+    }
   },
 };

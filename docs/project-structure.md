@@ -54,7 +54,7 @@ k-pearl-agency/
 │       ├── vite-env.d.ts             ✓  typed import.meta.env
 │       ├── app/                      ✓  App.tsx (+ <Analytics/>), router.tsx (lazy), queryClient.ts
 │       ├── components/
-│       │   ├── layout/               ✓  Header (+drawer), Footer, PublicLayout, StaffLayout, RouteFallback, StaffAuthGuard
+│       │   ├── layout/               ✓  Header (+drawer), Footer, PublicLayout, StaffLayout (role nav, RequireStaff), RouteFallback
 │       │   ├── ui/                   ✓  Button/ButtonLink/ButtonAnchor, Card, Badge, Container, Section, PageHeader, Prose
 │       │   ├── property/             ✓  PropertyCard, PropertyGrid, PropertyImage, PropertyGallery, HeroSearch
 │       │   ├── Seo.tsx               ✓  React 19 metadata + JSON-LD
@@ -64,23 +64,25 @@ k-pearl-agency/
 │       │   ├── PagePlaceholder.tsx   ✓  shared stub (Phase 4/5/6 pages)
 │       │   ├── public/               ✓  Home, Properties*, PropertyDetail, Services, About,
 │       │   │                            Contact, Areas, ListYourProperty*, Privacy, Terms, NotFound
-│       │   └── admin/                ✓  StaffDashboard*, StaffLogin*   (* = still stubs)
-│       ├── repositories/             ✓  property, area, siteSettings (read); inquiry/viewingRequest (stubs)
-│       ├── services/                 ✓  property (read); inquiry/viewingRequest (stubs)
+│       │   └── admin/                ✓  Staff{Login,Forgot,Reset,Dashboard,Properties,PropertyEditor,Submissions,Enquiries,Viewings,Settings,Team}Page, StaffAuthShell
+│       ├── repositories/             ✓  property (+staff), propertyMedia, area, siteSettings, inquiry, viewingRequest, propertySubmission, auth, profile, staff
+│       ├── services/                 ✓  property, inquiry, viewingRequest, propertySubmission, staffProperty, staffLeads
 │       ├── features/
+│       │   ├── auth/                 ✓  AuthContext, AuthProvider, useAuth, RequireStaff/RequireAdmin
+│       │   ├── staff/                ✓  hooks, leadHooks, settingsHooks, coerce, ui/ (StatTile, StatusBadge, SaveBar, MediaManager, ConfirmButton, EmptyState, TableScroll)
 │       │   ├── property-search/      ✓  filterParams, usePropertyFilters, PropertyFilters, ActiveFilterChips, SortSelect, Pagination, FiltersSheet
 │       │   └── lead-forms/           ✓  EnquiryForm, ViewingRequestForm, ListPropertyForm, LeadDialog, useLeadSubmit, Honeypot, ConsentField
 │       ├── hooks/                    ✓  useSiteSettings, useAreas, useProperties/Featured/Latest/Property, useDebouncedCallback, useCreate{Inquiry,ViewingRequest,PropertySubmission}
 │       ├── lib/                      ✓  env, supabase, errors, queryKeys, seo, format, media, contact
-│       ├── schemas/                  ✓  common, propertySearch (+ fields), inquiry, viewingRequest, propertySubmission
-│       ├── types/                    ✓  domain, property, siteSettings, database.types (generated), index
+│       ├── schemas/                  ✓  common, propertySearch (+ fields), inquiry, viewingRequest, propertySubmission, auth, propertyForm, staffSettings
+│       ├── types/                    ✓  domain, property, lead, siteSettings, database.types (generated), index
 │       ├── styles/                   ✓  index.css — Tailwind v4 @theme + Fraunces/Inter
 │       ├── test/                     ✓  setup, utils, smoke, *.integration.test
 │       ├── entities/                    (still unused — feature domain concepts, later)
 │       └── assets/                      component-imported assets (as needed)
 ├── supabase/
 │   ├── migrations/                      (Phase 2 — after docs/database.md is approved)
-│   ├── functions/                       (notify-lead — SHOULD-HAVE, Phase 5)
+│   ├── functions/                       notify-lead (Phase 5), invite-staff (Phase 6)
 │   └── seed/                            (Phase 2)
 └── tasks/
     └── phase-0.md                    ✓

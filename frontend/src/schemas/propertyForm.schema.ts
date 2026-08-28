@@ -24,12 +24,16 @@ export const sizeUnitSchema = z.enum(['sqm', 'sqft', 'acre', 'ha']);
 export const propertyFormSchema = z
   .object({
     title: z.string().trim().min(4, 'Give the listing a clear title').max(160),
-    slug: z
-      .string()
-      .trim()
-      .min(3, 'Slug is too short')
-      .max(160)
-      .regex(SLUG_RE, 'Lowercase letters, numbers and single hyphens only'),
+    // Empty means "generate from the title" (handled in staffPropertyService).
+    slug: z.union([
+      z.literal(''),
+      z
+        .string()
+        .trim()
+        .min(3, 'Slug is too short')
+        .max(160)
+        .regex(SLUG_RE, 'Lowercase letters, numbers and single hyphens only'),
+    ]),
     listingType,
     pricePeriod: pricePeriodSchema.nullable(),
     propertyType,

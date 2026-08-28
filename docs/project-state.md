@@ -2,17 +2,23 @@
 
 ## Current status
 
-**Phase:** 5 — Lead generation *(complete on branch `feat/lead-generation`)*
+**Phase:** 6 — Staff dashboard *(complete on branch `feat/staff-dashboard`)*
 
-**State:** Phases 0–4 done. Phase 5 added the four public lead forms (property
-enquiry + viewing request as dialogs on the detail page; general contact on
-`/contact`; structured "list your property" submission), each RHF + Zod validated,
-submitting through hook → service → repository → Supabase (anon INSERT-only).
-Anti-abuse: honeypot + min-submit-time in the app, plus a per-phone 45 s DB
-rate-limit trigger. `notify-lead` Edge Function fully implemented (service-role
-recipient resolution → Gmail SMTP; logs when unconfigured) and invoked
-fire-and-forget by the repositories. All five gates green; **66/66 tests pass**
-(17 files, incl. local-Supabase integration for the forms + rate limit).
+**State:** Phases 0–5 done. Phase 6 built the whole authenticated admin app
+behind `/staff` in four tranches: (1) real Supabase Auth — `AuthProvider`/context,
+`RequireStaff`/`RequireAdmin` client guards (RLS stays the boundary), login /
+forgot / reset pages, role-aware `StaffLayout`, dashboard tiles from a new
+`staff_dashboard_counts()` RPC; (2) property CRUD against the base `properties`
+table + a Storage-backed media manager (upload, reorder, cover, alt text) with a
+tabbed editor and lifecycle actions; (3) enquiry / viewing-request management
+(status · assign · notes) and the property-submission review flow with
+convert-to-draft via `convert_property_submission`; (4) admin Settings
+(`site_settings` + areas) and Team, plus an `invite-staff` Edge Function
+(`verify_jwt = true`, admin-checked, service-role invite). Also fixed
+`[auth.email].enable_signup` (was `false` → disabled **all** email logins).
+All five gates green; **79/79 tests pass** (20 files, incl. a staff-RLS
+integration suite: agent owns-only, admin-any, featured trigger, submission
+convert, non-admin `site_settings` denied).
 
 ```
 Phase 0  ── approved 2026-08-27
@@ -21,7 +27,8 @@ Phase 2 (Supabase foundation)     ── done locally; owner to create the hoste
 Phase 3 (Public website)          ── done (feat/public-website)
 Phase 4 (Property catalogue)      ── done (feat/property-catalogue)
 Phase 5 (Lead generation)         ── done (feat/lead-generation)
-Phase 6 (Staff dashboard)         ← next: auth, dashboard, property CRUD, media, submissions review, lead management
+Phase 6 (Staff dashboard)         ── done (feat/staff-dashboard)
+Phase 7 (Quality and launch)      ← next: E2E, legal, Lighthouse/a11y/SEO audits, prod deploy
 ```
 
 ## Completed
@@ -48,11 +55,14 @@ Phase 6 (Staff dashboard)         ← next: auth, dashboard, property CRUD, medi
 
 ## Current next task
 
-**Next: Phase 6 — Staff dashboard.** Invite-based auth, dashboard (counts +
-recent leads + unread badges), property CRUD under assigned-agent RLS, media
-manager, property-submissions review/convert panel, inquiry + viewing-request
-management (status / assignment / notes), `site_settings` editor. This is the
-first phase that builds behind `/staff` auth. (Needs a plan + approval.)
+**Next: Phase 7 — Quality and launch.** E2E for the critical flows (search →
+detail → enquiry; staff sign-in → property publish → submission convert), legal
+review of Privacy/Terms, Lighthouse (Perf ≥90, A11y ≥95), accessibility + SEO
+audits, security review (RLS, storage, Edge Function secrets), production deploy
+to `K-Pearl-Agency.vercel.app`. Phase 6 follow-ups fold in here: deeper component
+tests for the property editor / media manager / submission convert; a dashboard
+"recent leads" list; `functions deploy invite-staff` + `notify-lead` on the
+hosted project.
 
 **Status of handoffs:**
 - ✅ GitHub: `github.com/Bigmanbiggiey/k-pearl-agency`. Branches: `main` (scaffold),
@@ -71,6 +81,31 @@ first phase that builds behind `/staff` auth. (Needs a plan + approval.)
 - **Draft site copy** in `frontend/src/content/*` needs owner review/approval.
 
 ## Change log
+
+### 2026-08-28 (Phase 6 — Staff dashboard)
+Branch `feat/staff-dashboard`, four tranches. Added `@radix-ui/react-tabs`,
+`@radix-ui/react-alert-dialog`, `@radix-ui/react-dropdown-menu`. Migration
+`20260828100001_staff_rpcs` (`convert_property_submission`,
+`staff_dashboard_counts`; both `security definer`, `revoke from public`, grant to
+`authenticated`). New `src/features/auth/` (context + provider + `useAuth` +
+`RequireStaff`/`RequireAdmin`) mounted at the app root; `src/features/staff/`
+(hooks + `leadHooks` + `settingsHooks` + `ui/` — `StatTile`, `StatusBadge`,
+`SaveBar`, `MediaManager`, `ConfirmButton`). Repositories gained their staff
+methods: `property` (`listForStaff`/`getForStaff`/`create`/`update`/`slugExists`/
+`setStatus`/`setFeatured`/`setVerified` against the base table), new
+`propertyMedia`, `inquiry`/`viewingRequest` (`list`/`getById`/`updateStatus`/
+`assign`/`updateNotes`), `propertySubmission` (`list`/`getById`/`setStatus`/
+`convert`), `siteSettings.update`, `area` (`listAll`/`create`/`update`/
+`setActive`), `profile.invite`. New services `staffProperty` (slug gen +
+uniqueness; forces featured/verified/agent for non-admins) and `staffLeads`.
+Pages: `pages/admin/Staff{Login,Forgot,Reset,Dashboard,Properties,PropertyEditor,
+Submissions,Enquiries,Viewings,Settings,Team}Page`. Edge Function
+`invite-staff` (`verify_jwt = true` + admin check + service-role
+`inviteUserByEmail` → `/staff/reset`) + `config.toml` entry. **Config fix:**
+`[auth.email].enable_signup` was `false`, which disables email logins entirely
+(`email_provider_disabled`) — set to `true`; public signup stays blocked by
+`[auth].enable_signup = false`. 79/79 tests (20 files), all five gates green.
+**Owner step:** `supabase functions deploy invite-staff` on the hosted project.
 
 ### 2026-08-27
 Initial project foundation created.
