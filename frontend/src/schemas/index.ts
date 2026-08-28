@@ -13,3 +13,10 @@ export { propertySubmissionSchema } from './propertySubmission.schema';
 export type { PropertySubmissionInput } from './propertySubmission.schema';
 export { staffLoginSchema, forgotPasswordSchema, setPasswordSchema } from './auth.schema';
 export type { StaffLoginInput, ForgotPasswordInput, SetPasswordInput } from './auth.schema';
+export {
+  propertyFormSchema,
+  propertyStatusSchema,
+  pricePeriodSchema,
+  sizeUnitSchema,
+} from './propertyForm.schema';
+export type { PropertyFormValues } from './propertyForm.schema';

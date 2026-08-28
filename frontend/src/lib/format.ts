@@ -1,4 +1,4 @@
-import type { ListingType, PricePeriod, PropertyType } from '@/types';
+import type { ListingType, PricePeriod, PropertyStatus, PropertyType } from '@/types';
 
 const LISTING_TYPE_LABEL: Record<ListingType, string> = {
   rent: 'For rent',
@@ -67,3 +67,52 @@ export function amenityLabel(slug: string): string {
     .replace(/\bCctv\b/, 'CCTV')
     .replace(/\b24h\b/, '24h');
 }
+
+/** Amenity vocabulary (docs/database.md v2.0 — owner trims post-launch). */
+export const AMENITIES: readonly string[] = [
+  'parking',
+  'borehole',
+  'mains_water',
+  'backup_power',
+  'solar_water',
+  'lift',
+  'gym',
+  'swimming_pool',
+  'balcony',
+  'furnished',
+  'air_conditioning',
+  'gated_community',
+  'cctv',
+  '24h_security',
+  'pet_friendly',
+  'garden',
+  'dsq',
+  'ensuite',
+  'fibre_internet',
+  'wheelchair_access',
+];
+
+const PROPERTY_STATUS_LABEL: Record<PropertyStatus, string> = {
+  draft: 'Draft',
+  published: 'Published',
+  unavailable: 'Unavailable',
+  let_or_sold: 'Let / sold',
+  archived: 'Archived',
+};
+
+export const PROPERTY_STATUSES: readonly PropertyStatus[] = [
+  'draft',
+  'published',
+  'unavailable',
+  'let_or_sold',
+  'archived',
+];
+
+export function statusLabel(status: PropertyStatus): string {
+  return PROPERTY_STATUS_LABEL[status];
+}
+
+export const PRICE_PERIODS: readonly PricePeriod[] = ['month', 'night', 'week'];
+
+export const SIZE_UNITS = ['sqm', 'sqft', 'acre', 'ha'] as const;
+export type SizeUnit = (typeof SIZE_UNITS)[number];

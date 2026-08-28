@@ -1,4 +1,10 @@
 export { propertyRepository } from './property.repository';
+export type {
+  StaffPropertyFilters,
+  PropertyWriteMeta,
+  PropertyUpdateMeta,
+} from './property.repository';
+export { propertyMediaRepository } from './propertyMedia.repository';
 export { areaRepository } from './area.repository';
 export type { Area } from './area.repository';
 export { siteSettingsRepository } from './siteSettings.repository';
