@@ -82,6 +82,14 @@ hosted project.
 
 ## Change log
 
+### 2026-08-31 (Header wordmark fix)
+Branch `fix/header-wordmark`. The supplied logo is a square full lockup —
+at header render size its baked-in "K.pearl Agency" wordmark is illegible,
+so the public and staff headers showed only an icon. Added
+`BRAND.wordmark` (`content/site.ts`) and a live text wordmark next to the
+mark in `Header.tsx` (desktop + mobile drawer) and `StaffLayout.tsx`
+(replacing a hardcoded string). All five gates green.
+
 ### 2026-08-28 (Phase 6 — Staff dashboard)
 Branch `feat/staff-dashboard`, four tranches. Added `@radix-ui/react-tabs`,
 `@radix-ui/react-alert-dialog`, `@radix-ui/react-dropdown-menu`. Migration
