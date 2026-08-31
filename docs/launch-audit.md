@@ -80,12 +80,49 @@ Diagnosis before treating that as real:
   top of whatever the host is doing; under real contention that compounds
   into scores that don't reflect the app.
 
-**Action before launch sign-off:** re-run `npm run audit:lighthouse` on a
-quiet machine, and — more importantly, since that's the environment the ≥90
-target actually needs to hold for — against the deployed Vercel production
-build once it exists. The step-by-step is in `docs/go-live-runbook.md`
-§5. Do not treat the numbers above as a real regression; do not treat them as
-cleared either.
+### Update — measured against the live Vercel deploy (2026-08-31)
+
+Ran Lighthouse 12 (mobile, simulated throttling) against
+`https://k-pearl-agency.vercel.app` after the first successful deploy
+(commit `fea7df8`).
+
+| Page | Perf | A11y | Best-practices | SEO | LCP | CLS | TBT |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| / | **76** | 100 | 96 | 100 | 3.1 s | 0.30 | 130 ms |
+| /properties | **52** | 100 | 96 | 100 | 6.4 s | 0.37 | 290 ms |
+| /about | **74** | 100 | 96 | 100 | 6.7 s | 0.00 | 150 ms |
+| /contact | **50** | 100 | 96 | 100 | 7.0 s | 0.30 | 400 ms |
+
+- **Accessibility 100 and SEO 100 on every page** — targets met (≥95 / —).
+  The dark-heading fix (`fea7df8`) did not regress a11y.
+- **Best-practices 96** — the −4 is the `GET /_vercel/insights/script.js`
+  404 console error; **enabling Vercel Web Analytics** on the project should
+  clear it.
+- **Performance 50–76 — misses the ≥90 target (CLAUDE.md §10).** This is a
+  real reading (live infra, not the dev-machine noise the section above
+  worried about), and it needs a dedicated pass. Diagnosis from the
+  `/contact` trace (worst page):
+  - **CLS 0.30–0.37** comes from async content inserted without reserved
+    space. Top shift: `<footer>` (score 0.275) — Contact renders its
+    `<dl>`/form only after `useSiteSettings` resolves
+    (`{settings ? … : null}`), so the page grows and the footer jumps.
+    `/about` (all static) has CLS 0. Fix: render the async regions'
+    structure with skeleton/placeholder values, or reserve min-heights, so
+    layout is stable before data arrives — property grids, the Contact
+    details block, filter panels.
+  - **LCP 3–7 s** is SPA cold-start: no meaningful paint until `index.js`
+    (~85 KB gz) + `vendor-supabase` (~57 KB gz) parse and execute, React
+    mounts, data fetches, then the display font swaps. No render-blocking
+    CSS/JS was flagged, and only ~90 KB of unused JS — so the lever is
+    **loading strategy**, not shaving bytes: dynamically import the Supabase
+    client so it's off the public-page critical path; preload the two
+    variable fonts and set `font-display: swap`; consider prerendering the
+    static shell (a Vite prerender plugin, or Vercel's build output) so the
+    hero/`PageHeader` paint from HTML.
+  - Total transfer ~1.08 MB; main-thread script eval ~420 ms.
+
+**Recommendation:** a performance tranche (bundle/loading + CLS) before the
+≥90 gate can be called met. Tracked in `docs/roadmap.md`.
 
 ## Security
 

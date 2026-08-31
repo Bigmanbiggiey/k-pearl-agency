@@ -111,9 +111,11 @@ checklist below. The deeper component tests and the "recent leads" list were
 drop them explicitly.
 
 ## Phase 7 — Quality and launch
-*(engineering complete — 5 tranches, merged to `main` via PR #1; all gates
-green, 79/79 tests + 22 E2E specs. What's left is owner launch execution, not
-development — see "Owner launch checklist" below and `docs/go-live-runbook.md`.)*
+*(5 tranches merged to `main` (PR #1); deployed to Vercel (`fea7df8`).
+Post-deploy Lighthouse against the live site: A11y 100 / SEO 100, but
+**Performance 50–76 — one performance tranche still owed** before the ≥90
+gate. Remaining items — a perf pass plus owner launch execution — are under
+"Remaining before launch" below and in `docs/go-live-runbook.md`.)*
 
 - [x] Unit tests *(already in place from prior phases)*
 - [x] Integration/RLS tests — now actually run in CI (ADR-013), not just
@@ -132,9 +134,12 @@ development — see "Owner launch checklist" below and `docs/go-live-runbook.md`
   verified and enforced by `e2e/seo.spec.ts` in CI; robots + sitemap correct;
   fixed a duplicate-`<title>`/`<meta>` defect. Caveat: OG/social image +
   favicon still the raw logo PNG (designer handoff 25.b). `docs/launch-audit.md` §SEO.
-- [x] Lighthouse — A11y ≥95 on all 4 public pages; script added
-  (`npm run audit:lighthouse`). Real Perf ≥90 reading → owner checklist
-  (needs the live Vercel deploy; local numbers are machine-noise).
+- [~] Lighthouse (against the live Vercel deploy, 2026-08-31) — **A11y 100
+  and SEO 100 on all 4 public pages** (targets met); Best-practices 96
+  (Vercel Analytics 404 — enable it). **Performance 50–76, misses ≥90** —
+  real reading, not machine noise: CLS 0.30–0.37 from async content shifting
+  layout, LCP 3–7 s from SPA cold-start. Needs a performance tranche — see
+  below and `docs/launch-audit.md` §Performance.
 - [x] Security review (RLS, storage policies, Edge Function secrets) —
   repo checks clean; found + fixed the hosted project's schema being 2
   migrations behind (`db push` applied, confirmed current). `docs/launch-audit.md`.
@@ -144,14 +149,31 @@ development — see "Owner launch checklist" below and `docs/go-live-runbook.md`
   git-reproducible vs. must-back-up, Supabase plan trade-offs, manual backup
   commands, a recovery-drill procedure. The drill run → owner checklist.
 
-### Owner launch checklist (not development — `docs/go-live-runbook.md`)
+### Remaining before launch
+
+**Development:**
+
+- [ ] **Performance tranche** — get Lighthouse Perf ≥90 on the live deploy.
+  Levers (from the trace, `docs/launch-audit.md` §Performance): reserve
+  space / skeletons for async regions so CLS ≈ 0 (property grids, Contact
+  details block, filters); dynamically import the Supabase client off the
+  public-page critical path; preload the variable fonts + `font-display:
+  swap`; consider prerendering the static shell.
+- [ ] First deploy done (`fea7df8`); hero/PageHeader/CTA heading-contrast bug
+  found in the post-deploy smoke test and fixed (PR #4). Web Analytics 404
+  still shows — owner toggle (below).
+
+**Owner (not development — `docs/go-live-runbook.md`):**
 
 - [ ] Lawyer sign-off on Privacy/Terms; remove the review banner
   (`docs/legal-review.md` §5) — **LAUNCH-blocking**
-- [ ] Production deployment to Vercel (`K-Pearl-Agency.vercel.app`) — Root
-  Directory `frontend`, env vars, then Supabase console steps (first admin
-  user, auth URLs, `functions deploy notify-lead`/`invite-staff` + secrets)
-- [ ] Post-deploy Lighthouse against the live URL — confirm Perf ≥90
+- [ ] Supabase console: first admin user, auth URLs, `functions deploy
+  notify-lead`/`invite-staff` + secrets
+- [ ] Enable **Vercel Web Analytics** on the project (clears the
+  `/_vercel/insights/script.js` 404 and the Best-practices −4)
+- [ ] Smoke test on the live URL: submit a test enquiry (→ row + notify-lead
+  email), staff sign-in
+- [ ] Re-run Lighthouse after the performance tranche; confirm Perf ≥90
 - [ ] Run the backup recovery drill once; log the date in `docs/backup-recovery.md`
 - [ ] Owner review/approval of draft site copy (`frontend/src/content/*`)
 
