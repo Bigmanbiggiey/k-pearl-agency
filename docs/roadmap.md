@@ -105,44 +105,64 @@ Follow-ups carried to Phase 7: deeper component tests for the editor / media
 manager / submission convert; a "recent leads" list on the dashboard;
 `functions deploy invite-staff` on the hosted project.
 
+_Outcome:_ `functions deploy invite-staff` folded into the owner launch
+checklist below. The deeper component tests and the "recent leads" list were
+**not** picked up in Phase 7 — carry them into a post-launch polish pass or
+drop them explicitly.
+
 ## Phase 7 — Quality and launch
-*(in progress — `feat/quality-launch`)*
+*(engineering complete — 5 tranches, merged to `main` via PR #1; all gates
+green, 79/79 tests + 22 E2E specs. What's left is owner launch execution, not
+development — see "Owner launch checklist" below and `docs/go-live-runbook.md`.)*
+
 - [x] Unit tests *(already in place from prior phases)*
 - [x] Integration/RLS tests — now actually run in CI (ADR-013), not just
   locally
 - [x] E2E critical flows (Playwright) — all 4 minimum journeys
   (docs/testing.md)
-- [~] Draft Privacy/Terms from a Kenya-appropriate template → owner legal
-  review — full drafts shipped (`frontend/src/content/legal.ts`, visible
-  review banner + draft effective date); lawyer sign-off is the remaining,
-  LAUNCH-blocking step (`docs/legal-review.md`)
-- [~] Kenya Data Protection Act 2019 checklist — done
-  (`docs/legal-review.md` §3); owner/lawyer actions itemised there
+- [x] Privacy/Terms drafted from a Kenya-appropriate template — full drafts
+  shipped (`frontend/src/content/legal.ts`, visible review banner + draft
+  effective date). Lawyer sign-off → owner checklist.
+- [x] Kenya Data Protection Act 2019 checklist — `docs/legal-review.md` §3;
+  owner/lawyer actions itemised there.
 - [x] Accessibility audit — automated (axe-core, `e2e/a11y.spec.ts`, enforced
-  in CI); one real AA-contrast bug found and fixed (docs/launch-audit.md)
-- [~] Lighthouse (Perf ≥90, A11y ≥95) — A11y ≥95 achieved on all 4 public
-  pages; Perf not yet reliably measured (local-machine noise, see
-  docs/launch-audit.md) — re-verify against the Vercel deploy
-  (`docs/go-live-runbook.md` §5)
+  in CI); two real bugs found and fixed (AA contrast; unlabelled selects +
+  invalid `<dl>`). `docs/launch-audit.md`.
 - [x] SEO audit — every public route's title/description/canonical/OG/JSON-LD
-  verified and now enforced by `e2e/seo.spec.ts` in CI; robots + sitemap
-  correct. Caveat: OG/social image + favicon still the raw logo PNG
-  (designer handoff 25.b). `docs/launch-audit.md` §SEO
+  verified and enforced by `e2e/seo.spec.ts` in CI; robots + sitemap correct;
+  fixed a duplicate-`<title>`/`<meta>` defect. Caveat: OG/social image +
+  favicon still the raw logo PNG (designer handoff 25.b). `docs/launch-audit.md` §SEO.
+- [x] Lighthouse — A11y ≥95 on all 4 public pages; script added
+  (`npm run audit:lighthouse`). Real Perf ≥90 reading → owner checklist
+  (needs the live Vercel deploy; local numbers are machine-noise).
 - [x] Security review (RLS, storage policies, Edge Function secrets) —
   repo checks clean; found + fixed the hosted project's schema being 2
-  migrations behind (`db push` applied, confirmed current;
-  docs/launch-audit.md)
-- [~] Deployment prep — `frontend/vercel.json` (SPA rewrite + security
-  headers + asset caching), `frontend/.env.example`, and
-  `docs/go-live-runbook.md`. The deploy itself is an owner task (Vercel +
-  Supabase console).
-- [ ] Production deployment to Vercel (`K-Pearl-Agency.vercel.app`) —
-  follow `docs/go-live-runbook.md`
-- [ ] WhatsApp Cloud API sender (after owner's Meta Business verification)
-- [x] Backup/recovery verification — posture documented
-  (`docs/backup-recovery.md`): what's git-reproducible vs. must-back-up,
-  Supabase plan trade-offs, manual backup commands, a recovery-drill
-  procedure. The drill run itself is an owner action (logged in that doc).
+  migrations behind (`db push` applied, confirmed current). `docs/launch-audit.md`.
+- [x] Deployment prep — `frontend/vercel.json` (SPA rewrite + security
+  headers + asset caching), `frontend/.env.example`, `docs/go-live-runbook.md`.
+- [x] Backup/recovery — posture documented (`docs/backup-recovery.md`):
+  git-reproducible vs. must-back-up, Supabase plan trade-offs, manual backup
+  commands, a recovery-drill procedure. The drill run → owner checklist.
+
+### Owner launch checklist (not development — `docs/go-live-runbook.md`)
+
+- [ ] Lawyer sign-off on Privacy/Terms; remove the review banner
+  (`docs/legal-review.md` §5) — **LAUNCH-blocking**
+- [ ] Production deployment to Vercel (`K-Pearl-Agency.vercel.app`) — Root
+  Directory `frontend`, env vars, then Supabase console steps (first admin
+  user, auth URLs, `functions deploy notify-lead`/`invite-staff` + secrets)
+- [ ] Post-deploy Lighthouse against the live URL — confirm Perf ≥90
+- [ ] Run the backup recovery drill once; log the date in `docs/backup-recovery.md`
+- [ ] Owner review/approval of draft site copy (`frontend/src/content/*`)
+
+### Deferred to post-launch
+
+- [ ] WhatsApp Cloud API sender — after the owner's Meta Business
+  verification for +254704061324 (ADR-010); launch ships email +
+  in-dashboard alerts only
+- [ ] Social share image (1200×630) + favicon — designer handoff (25.b)
+- [ ] Content-Security-Policy header in `vercel.json` — add once there's a
+  live deploy to test against
 
 ## Post-MVP candidates
 

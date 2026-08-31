@@ -2,7 +2,9 @@
 
 ## Current status
 
-**Phase:** 6 — Staff dashboard *(complete on branch `feat/staff-dashboard`)*
+**Phase:** 7 — Quality and launch *(engineering complete; merged to `main` via
+PR #1. Remaining work is owner launch execution — see `docs/roadmap.md`
+"Owner launch checklist" and `docs/go-live-runbook.md`.)*
 
 **State:** Phases 0–5 done. Phase 6 built the whole authenticated admin app
 behind `/staff` in four tranches: (1) real Supabase Auth — `AuthProvider`/context,
@@ -55,22 +57,21 @@ Phase 7 (Quality and launch)      ← next: E2E, legal, Lighthouse/a11y/SEO audi
 
 ## Current next task
 
-**In progress: Phase 7 — Quality and launch** (`feat/quality-launch`, not yet
-pushed). Done: tranche 1 (Playwright E2E + CI Supabase / real integration
-runs), tranche 2 (axe-core a11y + Lighthouse script), tranche 3 (security
-review + hosted-schema `db push`), tranche 4 (legal drafts + DPA 2019
-checklist), tranche 5 (deployment prep — `vercel.json`, SEO audit +
-`e2e/seo.spec.ts`, `docs/go-live-runbook.md`, `docs/backup-recovery.md`).
+**Phase 7 engineering is complete** — 5 tranches (E2E + CI Supabase; a11y +
+Lighthouse tooling; security review; legal drafts + DPA 2019 checklist;
+deployment prep + SEO audit), all merged to `main` via **PR #1**. All feature
+branches deleted; `main` (`b9bd441`) is the only branch. Five gates green,
+79/79 tests + 22 E2E specs.
 
-**Remaining Phase 7 is owner-side**, tracked in `docs/go-live-runbook.md`:
-merge `feat/quality-launch` → `main`; the Vercel deploy + env vars; the
-Supabase console steps (first admin user, auth URLs, `functions deploy
-notify-lead`/`invite-staff` + secrets); post-deploy Lighthouse against the
-real URL (Perf ≥90); the backup recovery drill; and **legal sign-off**
-(still LAUNCH-blocking, `docs/legal-review.md`). Deferred post-launch:
-WhatsApp sender, custom domain, social image/favicon. Phase 6 follow-ups not
-yet done: deeper component tests for the property editor / media manager /
-submission convert; a dashboard "recent leads" list.
+**Nothing left is development.** The remaining Phase 7 items are owner launch
+execution, listed in `docs/roadmap.md` "Owner launch checklist" and detailed
+in `docs/go-live-runbook.md`: Vercel deploy + Supabase console steps;
+post-deploy Lighthouse (Perf ≥90); backup recovery drill; site-copy approval;
+and **lawyer sign-off on Privacy/Terms** (LAUNCH-blocking). Deferred
+post-launch: WhatsApp sender, social image/favicon, CSP header, custom domain.
+Not picked up in Phase 7 (carry forward or drop): deeper component tests for
+the property editor / media manager / submission convert; a dashboard "recent
+leads" list.
 
 **Status of handoffs:**
 - ✅ GitHub: `github.com/Bigmanbiggiey/k-pearl-agency`. **PR #1 merged to
@@ -102,6 +103,17 @@ submission convert; a dashboard "recent leads" list.
 - **Draft site copy** in `frontend/src/content/*` needs owner review/approval.
 
 ## Change log
+
+### 2026-08-31 (Phase 7 merged — engineering complete)
+`feat/quality-launch` (tranches 1–5) opened as **PR #1** and merged to `main`
+(merge `9ccb51d`); CI green on the merge head. Follow-up **PR #2** recorded
+the merge in this file. All feature branches — `feat/quality-launch` plus the
+six older phase branches — verified merged and deleted (local + remote);
+`main` (`b9bd441`) is now the only branch. `docs/roadmap.md` Phase 7 marked
+**engineering complete**, with a distinct "Owner launch checklist" (Vercel
+deploy + Supabase console, post-deploy Lighthouse, backup drill, site-copy
+approval, lawyer sign-off) and a "Deferred to post-launch" list. No code
+change.
 
 ### 2026-08-31 (Phase 7 tranche 5 — deployment prep + SEO audit)
 Branch `feat/quality-launch`. Added `frontend/vercel.json`: SPA rewrite
