@@ -160,7 +160,7 @@ the admin panel.
   Vercel → Domains, then update `SITE_URL` in `frontend/src/lib/seo.ts`, the
   sitemap `SITE_URL`, `robots.txt`, and the Supabase auth URLs.
 - **WhatsApp lead alerts** — needs Meta Business verification for
-  +254704061324; `whatsappSender` is a stub (ADR-010). Launch ships email +
+  +254180558075; `whatsappSender` is a stub (ADR-010). Launch ships email +
   in-dashboard alerts only.
 - **Social share image + favicon** — 1200×630 OG card and a small favicon /
   Apple touch icon (designer handoff, decision 25.b). Until then, wire the

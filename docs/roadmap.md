@@ -180,7 +180,7 @@ gate. Remaining items — a perf pass plus owner launch execution — are under
 ### Deferred to post-launch
 
 - [ ] WhatsApp Cloud API sender — after the owner's Meta Business
-  verification for +254704061324 (ADR-010); launch ships email +
+  verification for +254180558075 (ADR-010); launch ships email +
   in-dashboard alerts only
 - [ ] Social share image (1200×630) + favicon — designer handoff (25.b)
 - [ ] Content-Security-Policy header in `vercel.json` — add once there's a

@@ -7,7 +7,7 @@ import { viewingRequestSchema } from './viewingRequest.schema';
 const validInquiry = {
   type: 'general' as const,
   name: 'Jane Doe',
-  phone: '+254704061324',
+  phone: '+254712345678',
   email: '',
   message: 'I would like more information please.',
   preferredContactMethod: 'phone' as const,
@@ -75,7 +75,7 @@ describe('viewingRequestSchema', () => {
 describe('propertySubmissionSchema', () => {
   const base = {
     submitterName: 'Owner Name',
-    submitterPhone: '+254704061324',
+    submitterPhone: '+254712345678',
     proposedTitle: '3-bed apartment in Kilimani',
     proposedListingType: 'rent' as const,
     proposedPropertyType: 'apartment' as const,

@@ -186,7 +186,7 @@ Until the secrets are set, the function logs the intended email instead of
 sending (same as local dev) — the visitor's submission still succeeds either way.
 
 WhatsApp notifications are deferred to post-launch (Meta Business verification for
-+254704061324); `whatsappSender` is a stub in `senders.ts`.
++254180558075); `whatsappSender` is a stub in `senders.ts`.
 
 ---
 

@@ -74,12 +74,14 @@ _______________________________________________________________________
 
 ## Part 3 — How customers reach K Pearl
 
-**7. What phone number should customers call?**  +254704061324
+**7. What phone number should customers call?**  +254180558075
+_(originally +254704061324; owner changed it 2026-08-31)_
 
 **8. What WhatsApp number should customers message?** same as above
 (Write "same as above" if it's the same line.)
 
-**9. What email address should be shown on the website?**  barakabradley@gmail.com
+**9. What email address should be shown on the website?**  k.pearlagency@gmail.com
+_(originally barakabradley@gmail.com; owner changed it 2026-08-31)_
 (One is fine. Add more if you want separate addresses, e.g. for landlords.)
 
 **10. Does K Pearl have an office address to show publicly?**

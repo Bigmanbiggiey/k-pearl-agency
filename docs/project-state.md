@@ -103,7 +103,7 @@ custom domain. Not picked up: deeper staff component tests; a dashboard
   `docs/go-live-runbook.md` (ordered launch steps), `docs/backup-recovery.md`
   (posture + drill). The Vercel project + deploy is an owner task —
   Root Directory must be `frontend`.
-- **Deferred to post-launch:** Meta Business verification for +254704061324
+- **Deferred to post-launch:** Meta Business verification for +254180558075
   (WhatsApp alerts). Launch ships with email + in-dashboard alerts only (ADR-010).
 - **Property photography:** entered via the admin panel during Phase 6 testing —
   no pre-supplied files. Cards/detail show a branded placeholder until then.
@@ -131,8 +131,14 @@ custom domain. Not picked up: deeper staff component tests; a dashboard
   exists (Contact page + property-detail CTAs via
   `whatsappHref(settings.whatsapp)`); this just points it at the new number.
   Docs synced (`database.md`, `go-live-runbook.md`, `supabase-setup.md`,
-  `content-plan.md`); the old number is left in test fixtures and historical
-  decision docs.
+  `content-plan.md`, `decisions.md` ADR-010, `phase-0-decision-register.md`,
+  `business-owner-questionnaire.md`, `roadmap.md`).
+- Purged the old `+254704061324` from the repo: test fixtures that used it as
+  a *visitor's* phone now use a neutral sample (`+254712345678`); tests that
+  mock `site_settings` and the dev `seed.sql` admin profile use the real new
+  number. The only remaining occurrence is the applied migration
+  `20260827090012_reference_data.sql` (never edited; `20260831120000`
+  overrides it).
 
 ### 2026-08-31 (post-deploy smoke test + live Lighthouse)
 First Vercel deploy succeeded (`fea7df8`; an initial failure was Vercel
