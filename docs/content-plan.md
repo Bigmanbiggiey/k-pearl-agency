@@ -3,8 +3,10 @@
 > **Where the copy lives (Phase 3+):** `frontend/src/content/*.ts` — typed modules
 > (`site`, `home`, `services`, `about`, `legal`). There is no CMS. All current copy
 > is a **project draft pending K Pearl approval** and contains no invented facts,
-> figures, awards or history. Legal pages are placeholder scaffolds only —
-> Privacy/Terms need a lawyer before launch (Phase 7).
+> figures, awards or history. Privacy/Terms are now full drafts from a
+> Kenya-appropriate template (Phase 7 tranche 4), shown with a visible review
+> banner; they still need lawyer sign-off before launch. See
+> `docs/legal-review.md`.
 
 ## Homepage
 

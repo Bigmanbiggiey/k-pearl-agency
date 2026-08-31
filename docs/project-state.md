@@ -55,14 +55,16 @@ Phase 7 (Quality and launch)      ← next: E2E, legal, Lighthouse/a11y/SEO audi
 
 ## Current next task
 
-**Next: Phase 7 — Quality and launch.** E2E for the critical flows (search →
-detail → enquiry; staff sign-in → property publish → submission convert), legal
-review of Privacy/Terms, Lighthouse (Perf ≥90, A11y ≥95), accessibility + SEO
-audits, security review (RLS, storage, Edge Function secrets), production deploy
-to `K-Pearl-Agency.vercel.app`. Phase 6 follow-ups fold in here: deeper component
-tests for the property editor / media manager / submission convert; a dashboard
-"recent leads" list; `functions deploy invite-staff` + `notify-lead` on the
-hosted project.
+**In progress: Phase 7 — Quality and launch** (`feat/quality-launch`, not yet
+pushed). Done: tranche 1 (Playwright E2E + CI Supabase / real integration
+runs), tranche 2 (axe-core a11y + Lighthouse script), tranche 3 (security
+review + hosted-schema `db push`), tranche 4 (legal drafts + DPA 2019
+checklist). **Next: tranche 5 — deployment prep:** production deploy to
+`K-Pearl-Agency.vercel.app`, re-run Lighthouse against the real deploy
+(Perf ≥90), SEO audit, backup/recovery check. Phase 6 follow-ups still folded
+in: deeper component tests for the property editor / media manager /
+submission convert; a dashboard "recent leads" list; `functions deploy
+invite-staff` + `notify-lead` on the hosted project.
 
 **Status of handoffs:**
 - ✅ GitHub: `github.com/Bigmanbiggiey/k-pearl-agency`. Branches: `main` (scaffold),
@@ -79,11 +81,38 @@ hosted project.
 - **Property photography:** entered via the admin panel during Phase 6 testing —
   no pre-supplied files. Cards/detail show a branded placeholder until then.
 - **Logo variants** (transparent / vector / lockup / favicon) — designer handoff (25.b).
-- **Legal:** Privacy/Terms are placeholder scaffolds; lawyer review needed before
-  launch (Phase 7).
+- **Legal:** Privacy/Terms are now full drafts from a Kenya-appropriate
+  template (Phase 7 tranche 4), consent wording centralised, DPA 2019
+  checklist written (`docs/legal-review.md`). Remaining: lawyer sign-off +
+  owner actions (ODPC registration check, retention periods, processor
+  agreements, breach/request runbooks) — all itemised in that doc.
+  LAUNCH-blocking until done.
 - **Draft site copy** in `frontend/src/content/*` needs owner review/approval.
 
 ## Change log
+
+### 2026-08-31 (Phase 7 tranche 4 — legal content + DPA 2019 checklist)
+Branch `feat/quality-launch`. Expanded `frontend/src/content/legal.ts` from
+thin scaffolds into full draft Privacy Policy (structured as a Kenya Data
+Protection Act 2019 privacy notice: controller identity, data collected,
+purposes + lawful basis per purpose, recipients, international transfers,
+retention, security, s.26 data-subject rights, ODPC complaint route,
+cookieless analytics, children, changes) and Terms of Use (property-info
+disclaimer, no-agency-agreement, acceptable use, IP, liability, Kenya
+governing law). Kept `LEGAL_REVIEW_BANNER`; added `LEGAL_EFFECTIVE` draft
+marker rendered on both pages. `LegalSection` reshaped to
+`{ heading, body: string[], bullets?: string[] }`; `PrivacyPage`/`TermsPage`
+render paragraphs + bullet lists. Consent-checkbox wording (decision I-3)
+centralised as `CONSENT_STATEMENT` and consumed by `ConsentField.tsx` (Zod
+schema messages untouched, existing form tests still green). New
+`docs/legal-review.md` — the lawyer/owner handoff: what's built, the L1–L8
+blanks to fill, a 17-item DPA 2019 compliance checklist (Done / Owner /
+Lawyer), and a pre-launch sign-off gate. Advances decision-register 16.a,
+22.b, I-3 — legal remains LAUNCH-blocking pending lawyer sign-off. Docs
+synced: `roadmap.md` (two legal items → `[~]`), `content-plan.md`,
+`project-state.md` handoffs. No schema/data-layer changes; integration suite
+not exercised (local Supabase not running — tranche touches only content, one
+component, docs). All five gates green.
 
 ### 2026-08-31 (Phase 7 tranche 3 — security review)
 Branch `feat/quality-launch`. Reviewed `docs/security.md` against the repo

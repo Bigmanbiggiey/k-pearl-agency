@@ -2,6 +2,7 @@ import type { UseFormRegisterReturn } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 import { Checkbox } from '@/components/ui';
+import { CONSENT_STATEMENT } from '@/content/legal';
 
 interface Props {
   field: UseFormRegisterReturn;
@@ -17,11 +18,11 @@ export function ConsentField({ field, error }: Props) {
         {...field}
         label={
           <>
-            I have read the{' '}
+            {CONSENT_STATEMENT.before}{' '}
             <Link to="/privacy" className="text-gold-deep underline underline-offset-2">
-              Privacy Policy
+              {CONSENT_STATEMENT.linkText}
             </Link>{' '}
-            and agree to be contacted about my enquiry.
+            {CONSENT_STATEMENT.after}
           </>
         }
       />

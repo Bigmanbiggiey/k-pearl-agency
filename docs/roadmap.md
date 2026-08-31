@@ -112,8 +112,12 @@ manager / submission convert; a "recent leads" list on the dashboard;
   locally
 - [x] E2E critical flows (Playwright) — all 4 minimum journeys
   (docs/testing.md)
-- [ ] Draft Privacy/Terms from a Kenya-appropriate template → owner legal review
-- [ ] Kenya Data Protection Act 2019 checklist
+- [~] Draft Privacy/Terms from a Kenya-appropriate template → owner legal
+  review — full drafts shipped (`frontend/src/content/legal.ts`, visible
+  review banner + draft effective date); lawyer sign-off is the remaining,
+  LAUNCH-blocking step (`docs/legal-review.md`)
+- [~] Kenya Data Protection Act 2019 checklist — done
+  (`docs/legal-review.md` §3); owner/lawyer actions itemised there
 - [x] Accessibility audit — automated (axe-core, `e2e/a11y.spec.ts`, enforced
   in CI); one real AA-contrast bug found and fixed (docs/launch-audit.md)
 - [~] Lighthouse (Perf ≥90, A11y ≥95) — A11y ≥95 achieved on all 4 public
