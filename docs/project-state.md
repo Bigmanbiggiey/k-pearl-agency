@@ -82,6 +82,25 @@ hosted project.
 
 ## Change log
 
+### 2026-08-31 (Phase 7 tranche 1 — E2E + real CI integration coverage)
+Branch `feat/quality-launch`. Added Playwright (`@playwright/test`, pinned)
+and `frontend/e2e/` with all four `docs/testing.md` minimum journeys;
+`playwright.config.ts` drives the Vite dev server directly. CI
+(`.github/workflows/ci.yml`) now starts a local Supabase stack (`start` +
+`db reset`) before running the unit/integration suite and the new E2E suite —
+the existing `*.integration.test.ts` files had silently `skipIf`'d in CI
+since there was never a Supabase instance for them to reach; this is now a
+real, enforced check for the first time. ADR-013 records the decision.
+**Bug found by real E2E, not caught by any existing test:**
+`src/features/staff/coerce.ts`'s `numberOrNull`/`emptyToNull` assumed their
+RHF `setValueAs` input was always a string; react-hook-form also invokes
+`setValueAs` against the field's raw typed default/reset value — `null` for
+an empty numeric field, or a plain `number` after `reset(toForm(record))` —
+crashing the property editor with "Cannot read properties of null (reading
+'trim')" the moment a saved property's form re-registers. Fixed to handle
+`string | number | null`. All five gates green; 79/79 unit+integration tests
+pass against a live local Supabase; all 4 E2E specs pass.
+
 ### 2026-08-31 (Header wordmark fix)
 Branch `fix/header-wordmark`. The supplied logo is a square full lockup —
 at header render size its baked-in "K.pearl Agency" wordmark is illegible,

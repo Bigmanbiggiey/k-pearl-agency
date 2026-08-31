@@ -106,9 +106,12 @@ manager / submission convert; a "recent leads" list on the dashboard;
 `functions deploy invite-staff` on the hosted project.
 
 ## Phase 7 — Quality and launch
-- [ ] Unit tests
-- [ ] Integration/RLS tests
-- [ ] E2E critical flows (Playwright)
+*(in progress — `feat/quality-launch`)*
+- [x] Unit tests *(already in place from prior phases)*
+- [x] Integration/RLS tests — now actually run in CI (ADR-013), not just
+  locally
+- [x] E2E critical flows (Playwright) — all 4 minimum journeys
+  (docs/testing.md)
 - [ ] Draft Privacy/Terms from a Kenya-appropriate template → owner legal review
 - [ ] Kenya Data Protection Act 2019 checklist
 - [ ] Lighthouse (Perf ≥90, A11y ≥95)

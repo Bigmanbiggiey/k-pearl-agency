@@ -278,3 +278,42 @@ all; agents mutate only `agent_id = auth.uid()` rows; admin-only
   creates one) is treated as non-staff and shown an "not a staff account" notice.
 - Deploying staff invites requires `supabase functions deploy invite-staff` +
   the service-role key in the function environment on the hosted project.
+
+## ADR-013 — E2E via Playwright; local Supabase started in CI
+
+**2026-08-31 (Phase 7, tranche 1).**
+
+### Context
+`docs/testing.md` names four minimum launch journeys with no tooling to run
+them. Separately, the existing `*.integration.test.ts` suite (RLS, lead
+submission, staff dashboard) has always self-skipped in CI via
+`describe.skipIf(!ok)` — `.github/workflows/ci.yml` never started a Supabase
+stack, so that condition was silently false on every CI run and the suite has
+only ever executed on a developer's own machine. Phase 7 is the point where
+this needs to be closed, not just papered over with new tests on top.
+
+### Decision
+- **Playwright** (`@playwright/test`, pinned) for E2E, under `frontend/e2e/`.
+  One spec per `docs/testing.md` journey. `playwright.config.ts` drives the
+  Vite **dev** server directly (not a production build) on a fixed port, so
+  E2E doesn't depend on `npm run build` having already run.
+- Specs talk to the app only through the browser UI, plus one small
+  exception: `e2e/helpers.ts` seeds a single inquiry via a direct anon REST
+  call (same insert path the public contact form uses) so the "update an
+  enquiry's status" journey doesn't depend on another spec having run first,
+  or on row ordering under parallel execution.
+- **CI now starts local Supabase** (`npx supabase@2.116.0 start` +
+  `db reset`) before `npm run test` and `npm run test:e2e`, using the same
+  fixed local URL/anon key/dev-seed credentials the integration suite and
+  `frontend/.env` already use locally. This turns the previously-skipped
+  integration suite into a real, enforced check, not just new E2E coverage.
+- E2E staff journeys sign in as the seeded dev admin
+  (`supabase/seed/seed.sql`) — CI/local only, never production.
+
+### Consequences
+- CI runtime grows (Docker pull + Supabase bring-up + browser install); no
+  attempt made to shard/parallelize further in this phase.
+- A real regression in RLS or a staff flow now fails CI, where before it was
+  silently invisible outside a developer's own `supabase start` session.
+- Accessibility assertions (axe-core) are added into these same specs in the
+  next tranche rather than a separate tool.

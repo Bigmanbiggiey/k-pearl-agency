@@ -11,6 +11,7 @@
     "lint": "npm --prefix frontend run lint",
     "typecheck": "npm --prefix frontend run typecheck",
     "test": "npm --prefix frontend run test",
+    "test:e2e": "npm --prefix frontend run test:e2e",
     "supabase": "supabase"
   },
   "devDependencies": {

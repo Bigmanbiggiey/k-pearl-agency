@@ -8,5 +8,8 @@ dist/
 *.log
 coverage/
 *.tsbuildinfo
+frontend/test-results/
+frontend/playwright-report/
+frontend/blob-report/
 supabase/.temp/
 supabase/.branches/

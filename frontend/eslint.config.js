@@ -115,6 +115,29 @@ export default tseslint.config(
     },
   },
 
+  // Playwright config + E2E specs: TypeScript, Node runtime, no React rules.
+  {
+    files: ['playwright.config.ts', 'e2e/**/*.ts'],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+      globals: { ...globals.node },
+    },
+    rules: {
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
+      ],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+      '@typescript-eslint/no-explicit-any': 'error',
+    },
+  },
+
   // Plain-JS config + build scripts: Node globals, no type-aware linting.
   {
     files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
