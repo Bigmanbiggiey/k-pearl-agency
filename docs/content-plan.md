@@ -34,7 +34,7 @@ Areas (confirmed 2026-08-27):
   Kiambu Road, Ruaka, Ruiru, Juja, Thika). Maintained in the `areas` table.
 
 CTA:
-- Enquire / Call / WhatsApp (+254704061324) / Request viewing.
+- Enquire / Call / WhatsApp (+254180558075) / Request viewing.
 
 No testimonials section (owner has none to publish yet).
 All copy drafted by the project for owner approval — no invented facts, numbers,

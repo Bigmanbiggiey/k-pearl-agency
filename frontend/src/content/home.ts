@@ -1,7 +1,7 @@
 /* DRAFT copy — pending K Pearl Agency approval. No invented facts. */
 
 export const HERO = {
-  heading: 'Property in Nairobi, handled properly.',
+  heading: 'Properties within Nairobi and its environs.',
   subheading:
     'K Pearl Agency helps you find a home or commercial space to rent or buy across Nairobi and its environs — and helps owners market their property with care.',
   primaryCta: { label: 'Browse properties', to: '/properties' },

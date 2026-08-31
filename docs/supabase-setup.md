@@ -125,8 +125,8 @@ select * from public.inquiries;                    -- ERROR / 0 rows: anon canno
 update public.profiles
 set role = 'admin',
     full_name = 'Your Name',
-    phone = '+254704061324',
-    whatsapp = '+254704061324'
+    phone = '+254180558075',
+    whatsapp = '+254180558075'
 where id = (select id from auth.users where email = 'you@example.com');
 ```
 

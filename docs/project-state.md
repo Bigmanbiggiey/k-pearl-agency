@@ -118,6 +118,22 @@ custom domain. Not picked up: deeper staff component tests; a dashboard
 
 ## Change log
 
+### 2026-08-31 (owner content + contact update)
+- Hero headline → "Properties within Nairobi and its environs."
+  (`frontend/src/content/home.ts`); `HomePage.test.tsx` now asserts against
+  `HERO.heading` rather than a hardcoded string.
+- Public contact changed: phone & WhatsApp → `+254180558075`, email →
+  `k.pearlagency@gmail.com`. New migration
+  `20260831120000_update_site_contact.sql` upserts the `site_settings` row
+  (the values originally came from the already-applied
+  `20260827090012_reference_data`). **Needs `supabase db push` to the hosted
+  project** to take effect on the live site. WhatsApp linkage itself already
+  exists (Contact page + property-detail CTAs via
+  `whatsappHref(settings.whatsapp)`); this just points it at the new number.
+  Docs synced (`database.md`, `go-live-runbook.md`, `supabase-setup.md`,
+  `content-plan.md`); the old number is left in test fixtures and historical
+  decision docs.
+
 ### 2026-08-31 (post-deploy smoke test + live Lighthouse)
 First Vercel deploy succeeded (`fea7df8`; an initial failure was Vercel
 building the stale pre-merge commit `1f9df54`). Browser smoke test of

@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import type * as RouterDom from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 
+import { HERO } from '@/content/home';
 import HomePage from '@/pages/public/HomePage';
 import { renderWithProviders } from '@/test/utils';
 import type { PropertySummary } from '@/types';
@@ -43,7 +44,7 @@ vi.mock('@/hooks', () => ({
 describe('HomePage', () => {
   it('renders the hero heading and a featured property card', () => {
     renderWithProviders(<HomePage />);
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/property in nairobi/i);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(HERO.heading);
     expect(screen.getByText('Featured Apartment')).toBeInTheDocument();
   });
 
