@@ -1,14 +1,59 @@
 # K Pearl Agency — Phase 0 Decision Register
 
-> Version: 1.0
-> Status: **OPEN — awaiting business-owner decisions**
+> Version: 2.0
+> Status: **RESOLVED — questionnaire returned 2026-08-27 by the business owner ("BIG POPPA")**
 > Source: converts the open decisions in `docs/product-definition.md` §31 into an approval questionnaire.
-> Companion: `docs/business-owner-questionnaire.md` (plain-language version for the owner).
+> Companion: `docs/business-owner-questionnaire.md` (answered).
 
-This document does **not** decide anything. It records every decision that Phase 0
-surfaced, a recommendation, and space for the owner's answer. Nothing here is
-approved until the **Owner decision** and **Status** columns are filled in and
-`docs/project-state.md` is moved to "Phase 0 approved" **by a human**.
+The resolutions below supersede the "Owner decision" / "Status" columns in the
+group tables further down (those tables are retained for the rationale/impact
+context). Where an answer changed a prior recommendation it is called out.
+
+---
+
+## Resolutions (2026-08-27)
+
+| ID(s) | Decision | Outcome |
+|---|---|---|
+| 2.a / ADR-002 / ADR-003 | Rent, sale, or both | **Both.** Agency-first model accepted. |
+| 2.c | Commercial / land | **Yes — all property types** (residential + office + shop + land). |
+| 2.d | Short-term / furnished lets | **INCLUDE.** Changes the earlier recommendation. `listing_type` gains `short_let`; add `price_period`. → ADR-003 amended. |
+| 8.b | Property type list | apartment, house, townhouse, maisonette, studio, bedsitter, office, shop, land. |
+| 8.c | "Price on request" | **Allowed** — `properties.price` nullable. |
+| 8.d | Amenities vocabulary | Not specified by the owner. Project proposes a starter list in `docs/database.md`; owner trims during Phase 3/4 content review. Still tracked as open-detail. |
+| 8.e / 16 | Public address detail | **Area/neighbourhood only**; exact address staff-only (via public view). |
+| 6.a | Areas served | **Nairobi + environs** (Kitengela, Athi River, Ongata Rongai, Kiambu Rd, "etc"). Implemented as an admin-managed `areas` reference table, seeded, extensible. |
+| 2.b / 7.a / 7.b | Services to advertise | Property marketing/selling, letting support, property search for clients, **relocation**. **Not** landlord representation, property management, or valuation. |
+| 9.a | Off-market properties | **Hidden** until available again. |
+| 9.b | "Under offer" state | No — `unavailable` covers it. |
+| 10.a | Owner contact on listings | **Yes, optional** — nullable staff-only fields. |
+| 13.a | Enquiry "closed" outcome | Not requested — plain status only (`new → contacted → in_progress → closed`). |
+| 11.a | Pagination | Default (numbered) — unchanged. |
+| G-1 / ADR-007 / 19.a / 19.b | Staff roles & scope | Two roles (`admin`, `agent`). **Agents edit only their assigned properties** (tightens the earlier "any property" default). Admin edits all. |
+| 19.c | Staff onboarding | Admin invite (default). |
+| 21.a | Staff MFA | **No** — password only for now. |
+| ADR-004 → **ADR-009** | "List your property" | Structured submission → admin queue → staff edit → convert to a `draft` listing. Not auto-published. Still no owner account. → ADR-004 amended. |
+| 15.a–d | Contact details | Phone/WhatsApp **+254704061324**; email **barakabradley@gmail.com**; no office → "by appointment". |
+| 15.f | Business hours | Mon–Fri 08:00–17:00; weekends 09:00–14:00. |
+| 15.e | Social media | **None.** |
+| 16.a / 22.b | Legal | Owner needs help sourcing Privacy/Terms and **will take legal advice**. → Phase 7: project drafts from a Kenya-appropriate template; owner's lawyer reviews; DPA 2019 checklist. |
+| 25.b | Logo assets | Owner needs help creating variants from the single raster. → Phase 3 project/designer task. |
+| 25.a / J-3 | Fonts / colours | Not specified — provisional tokens stand; revisit with the logo work. |
+| N-1 / N-2 | Copy / photography | Project drafts copy for owner approval; **owner has professional photography**. |
+| N-3 | Homepage Featured + Latest | Both (default). |
+| N-4 / 27 | Testimonials | **None** — no testimonials section. |
+| G.1 / G.2 | Hosting / domain | **Launch on `K-Pearl-Agency.vercel.app`** (Vercel). Custom domain deferred post-launch (SEO tradeoff accepted). |
+| G.3 | Supabase project | Owner to create/own the hosted project (handoff). Local-first development. |
+| G.4 / L-3 | Analytics | **Yes** → Vercel Web Analytics (privacy-friendly, no cookie banner). Added Phase 3. |
+| 20.a / K-1 / 26.a | Lead notifications | **ADR-010** — custom `notify-lead` Edge Function, swappable sender. Launch: email (Gmail SMTP app-password) + in-dashboard badges, to the **assigned agent + admin**. WhatsApp Cloud API sender added later, after the owner completes Meta Business verification for the number. Error monitoring: Sentry default stands. |
+| 23.a | Sitemap | Build-time (technical default). |
+| 28.a | Lead FK on property delete | `SET NULL` (technical default). |
+| O-1 … O-8 | Technical preferences | Defaults stand (Radix primitives, Playwright for E2E, Prettier, npm/Node 24, Supabase image handling, 8 MB uploads, react-helmet-async, api-design.md updated in Phase 1 ✓). |
+
+**Net new scope from the answers:** short-let listing type + price period; an
+`areas` reference table; a `property_submissions` queue with a staff review/convert
+flow; assigned-agent RLS; a custom notification Edge Function (email-first). See
+`docs/decisions.md` ADR-009 / ADR-010 and the reworked `docs/database.md`.
 
 ---
 

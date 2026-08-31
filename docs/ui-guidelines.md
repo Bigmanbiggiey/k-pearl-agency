@@ -11,7 +11,16 @@ Primary visual language:
 - Charcoal / muted neutrals
 
 The logo asset is:
-`frontend/public/assets/branding/k-pearl-logo.png`
+`frontend/public/assets/branding/k-pearl-logo.png` — gold-on-black raster, used
+as-is on dark surfaces (header, footer, hero). Transparent / vector / horizontal
+lockup / favicon variants are still a designer handoff (decision 25.b).
+
+## Typography (decision 25.a — resolved 2026-08-27)
+
+- **Display / headings:** Fraunces Variable (self-hosted, `@fontsource-variable/fraunces`).
+- **Body / UI:** Inter Variable (self-hosted, `@fontsource-variable/inter`).
+- Wired via `--font-display` / `--font-sans` tokens in `frontend/src/styles/index.css`.
+- No Google Fonts or external font CDN.
 
 ## Design principles
 
@@ -26,30 +35,63 @@ The logo asset is:
 
 ## Public navigation
 
-Recommended MVP navigation:
+MVP navigation (as built, Phase 3):
 - Home
 - Properties
 - Services
+- Areas
 - About
 - Contact
 
-Primary CTA:
-- `Find a Property` or `View Properties`
-
-Secondary CTA:
-- `Contact K Pearl`
+Primary CTA: `View Properties`. Secondary CTA: `Contact K Pearl`.
+Mobile: hamburger → Radix Dialog drawer.
 
 ## Home page sections
 
-1. Hero
-2. Property search
-3. Featured properties
+As built (Phase 3; per `docs/product-definition.md` §17):
+
+1. Hero (dark) with inline property search
+2. Featured properties
+3. Services overview
 4. Why K Pearl
-5. Services
-6. How it works
-7. Selected areas / locations
-8. Contact CTA
-9. Footer
+5. Latest listings
+6. Owner CTA ("List your property")
+7. Footer
+
+("How it works" is folded into the Services page; a dedicated Areas grid lives on
+`/areas` rather than the homepage.)
+
+## Property catalogue (`/properties`, Phase 4)
+
+- Filters live in the URL query string (shareable links). `usePropertyFilters` +
+  `filterParams` are the only place that maps URL ↔ filter state; defaults are
+  omitted from the URL.
+- Desktop (`lg+`): sticky filter sidebar. Below `lg`: a "Filters (n)" button opens
+  a Radix Dialog bottom sheet.
+- Above the grid: result count, keyword search (debounced ~350 ms), sort select,
+  and removable active-filter chips.
+- Pagination: numbered + windowed on `sm+`, `‹ Prev · Page X of Y · Next ›` on
+  mobile (decision 11.a).
+- States: skeleton grid while loading; "No properties match these filters." +
+  Clear-filters action when empty.
+- SEO: canonical is always `/properties`; any active filter or `page > 1` sets
+  `noindex` (avoids thin duplicate pages).
+
+## Forms (Phase 5)
+
+- Built with `react-hook-form` + `zodResolver` against the schemas in
+  `src/schemas/`. Primitives: `FormField` (label + control + error, wired for
+  a11y), `TextInput` / `TextArea` / `SelectInput` / `Checkbox` in
+  `components/ui/form.tsx`.
+- Field labels must be distinct from radio/option labels in the same form
+  (e.g. "Phone number" field vs. a "Phone" contact-method radio).
+- Every public form: an off-screen honeypot (`Honeypot`), a consent checkbox
+  linking to `/privacy` (`ConsentField`), inline field errors, a disabled
+  "Sending…" button state, and on success the form is replaced by a
+  `LeadFormSuccess` panel. `useLeadSubmit` owns that lifecycle and the silent
+  bot-drop.
+- Property enquiry + viewing request open from the detail page in a `LeadDialog`
+  (Radix Dialog). The general contact form sits inline on `/contact`.
 
 ## Property card
 

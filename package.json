@@ -2,15 +2,19 @@
   "name": "k-pearl-agency",
   "private": true,
   "version": "0.1.0",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "npm --prefix frontend run dev",
     "build": "npm --prefix frontend run build",
     "lint": "npm --prefix frontend run lint",
     "typecheck": "npm --prefix frontend run typecheck",
     "test": "npm --prefix frontend run test",
+    "test:e2e": "npm --prefix frontend run test:e2e",
     "supabase": "supabase"
   },
   "devDependencies": {
-    "supabase": "^2.0.0"
+    "supabase": "2.116.0"
   }
 }

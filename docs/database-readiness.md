@@ -1,7 +1,10 @@
 # K Pearl Agency — Database Readiness Check
 
 > Version: 1.0
-> Status: **NOT READY — blocked on business decisions**
+> Status: **SUPERSEDED (2026-08-27).** The questionnaire is answered, every open
+> item below is resolved in `docs/phase-0-decision-register.md`, and the schema is
+> finalised in `docs/database.md` v2.0 and implemented as migrations under
+> `supabase/migrations/`. Kept for history.
 > Purpose: assess how close `docs/database.md` is to a schema that can be turned
 > into migrations, by cross-checking it against `docs/product-definition.md`.
 > **No SQL and no migrations are produced here.** This is a readiness assessment only.

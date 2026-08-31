@@ -1,9 +1,43 @@
 # K Pearl Agency — Product Definition & Requirements Baseline
 
-> Version: 1.0 (Phase 0 discovery output)
-> Status: **DISCOVERY COMPLETE — AWAITING HUMAN APPROVAL**
+> Version: 1.1
+> Status: **APPROVED 2026-08-27** (ADR-002 … ADR-010). Business-owner questionnaire returned 2026-08-27.
 > Date: 2026-08-27
-> Owner of approval: K Pearl Agency business owner / project sponsor
+> Owner of approval: K Pearl Agency business owner ("BIG POPPA")
+
+---
+
+## Post-questionnaire updates (2026-08-27)
+
+The questionnaire answers resolve every §31 open decision — see
+`docs/phase-0-decision-register.md` (Resolutions) and the finalised
+`docs/database.md`. Deltas to the body below:
+
+- **§2 / §7** — Catalogue is rent + sale **+ short-let** (ADR-003 amended). Services
+  advertised: property marketing/selling, letting support, property search for
+  clients, **relocation** — *not* landlord representation, management, or valuation.
+- **§9** — Off-market (`unavailable`) properties are **hidden** from the public.
+- **§10 / §13** — "List your property" is a **structured submission → staff review
+  queue → convert to draft listing** (ADR-009), not a plain lead form. `inquiries`
+  carries only `property_enquiry` and `general`.
+- **§11 / §12** — Public location detail is **area only**; exact address, map
+  coords and owner contact are staff-only (served via `public_properties` view).
+  "Price on request" is allowed.
+- **§16 / §17** — No testimonials section. Homepage keeps both Featured and Latest.
+- **§19** — Agents edit **only their assigned properties** (ADR-007 refined).
+  No staff MFA.
+- **§20** — Lead alerts via a custom `notify-lead` Edge Function (ADR-010):
+  email (Gmail SMTP) + in-dashboard at launch, WhatsApp Cloud API later.
+- **§22 / §28** — New `areas` reference table; new `property_submissions` table;
+  `profiles.whatsapp`; nullable staff-only `owner_*` fields on `properties`.
+- **§25** — Launch host is `K-Pearl-Agency.vercel.app`; custom domain post-launch.
+  Owner has professional photography; project drafts copy for approval; the logo
+  asset pack is a Phase 3 project/designer task.
+- **Legal** — project drafts Privacy/Terms from a Kenya-appropriate template for
+  the owner's lawyer; DPA 2019 checklist in Phase 7.
+
+The sections below are the Phase 0 reasoning and remain valid except where the
+above overrides them.
 
 ---
 
