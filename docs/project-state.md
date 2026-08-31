@@ -2,8 +2,10 @@
 
 ## Current status
 
-**Phase:** 7 — Quality and launch *(engineering complete; merged to `main` via
-PR #1. Remaining work is owner launch execution — see `docs/roadmap.md`
+**Phase:** 7 — Quality and launch *(5 tranches merged to `main` (PR #1),
+deployed to Vercel. One **performance tranche** still owed — live Lighthouse
+is A11y 100 / SEO 100 but Perf 50–76. Then owner launch execution — see
+`docs/roadmap.md`
 "Owner launch checklist" and `docs/go-live-runbook.md`.)*
 
 **State:** Phases 0–5 done. Phase 6 built the whole authenticated admin app
@@ -57,21 +59,33 @@ Phase 7 (Quality and launch)      ← next: E2E, legal, Lighthouse/a11y/SEO audi
 
 ## Current next task
 
-**Phase 7 engineering is complete** — 5 tranches (E2E + CI Supabase; a11y +
-Lighthouse tooling; security review; legal drafts + DPA 2019 checklist;
-deployment prep + SEO audit), all merged to `main` via **PR #1**. All feature
-branches deleted; `main` (`b9bd441`) is the only branch. Five gates green,
-79/79 tests + 22 E2E specs.
+Phase 7's 5 tranches (E2E + CI Supabase; a11y + Lighthouse tooling; security
+review; legal drafts + DPA 2019 checklist; deployment prep + SEO audit) are
+merged to `main` via **PR #1**, and the site is deployed to
+`k-pearl-agency.vercel.app`. Post-deploy work since:
 
-**Nothing left is development.** The remaining Phase 7 items are owner launch
-execution, listed in `docs/roadmap.md` "Owner launch checklist" and detailed
-in `docs/go-live-runbook.md`: Vercel deploy + Supabase console steps;
-post-deploy Lighthouse (Perf ≥90); backup recovery drill; site-copy approval;
-and **lawyer sign-off on Privacy/Terms** (LAUNCH-blocking). Deferred
-post-launch: WhatsApp sender, social image/favicon, CSP header, custom domain.
-Not picked up in Phase 7 (carry forward or drop): deeper component tests for
-the property editor / media manager / submission convert; a dashboard "recent
-leads" list.
+- **PR #4** — smoke test found every heading on a dark band (hero,
+  `PageHeader` ×7 pages, home CTA) rendering near-black on near-black
+  (invisible on the live site); fixed with one base CSS rule + a
+  contrast-ratio E2E guard. `main` head `fea7df8`.
+- **Live Lighthouse (mobile):** A11y **100** / SEO **100** on all 4 public
+  pages (targets met); Best-practices 96 (Vercel Analytics 404).
+  **Performance 50–76 — misses ≥90.** CLS 0.30–0.37 from async content
+  shifting layout; LCP 3–7 s from SPA cold-start. Full trace +
+  recommendations in `docs/launch-audit.md` §Performance.
+
+**Still owed — development:** a **performance tranche** (reserve space for
+async regions → CLS ≈ 0; dynamic-import the Supabase client; preload fonts +
+`font-display: swap`; consider prerendering the shell), then re-run
+Lighthouse for the ≥90 gate.
+
+**Still owed — owner** (`docs/go-live-runbook.md`): **lawyer sign-off on
+Privacy/Terms** (LAUNCH-blocking); Supabase console steps (first admin user,
+auth URLs, `functions deploy` + secrets); enable Vercel Web Analytics; live
+enquiry + staff-login smoke test; backup recovery drill; site-copy approval.
+Deferred post-launch: WhatsApp sender, social image/favicon, CSP header,
+custom domain. Not picked up: deeper staff component tests; a dashboard
+"recent leads" list.
 
 **Status of handoffs:**
 - ✅ GitHub: `github.com/Bigmanbiggiey/k-pearl-agency`. **PR #1 merged to
@@ -103,6 +117,24 @@ leads" list.
 - **Draft site copy** in `frontend/src/content/*` needs owner review/approval.
 
 ## Change log
+
+### 2026-08-31 (post-deploy smoke test + live Lighthouse)
+First Vercel deploy succeeded (`fea7df8`; an initial failure was Vercel
+building the stale pre-merge commit `1f9df54`). Browser smoke test of
+`k-pearl-agency.vercel.app`: security headers all present, SPA deep-link
+rewrite works, robots/sitemap correct, no crash. **Bug found + fixed (PR
+#4):** headings on dark bands (hero `<h1>`, every `<PageHeader>` `<h1>`, home
+CTA `<h2>`) rendered near-black on `bg-ink` — invisible; base
+`h1..h4 { color: --color-ink }` beat the light `text-surface` inheritance.
+One base rule (`.bg-ink :is(h1..h4) { color: --color-surface }`) + a
+contrast-ratio guard in `e2e/a11y.spec.ts` (26 E2E specs now). **Live
+Lighthouse (mobile):** A11y 100 / SEO 100 all 4 public pages; Best-practices
+96 (Vercel Analytics `/_vercel/insights/script.js` 404 — owner toggle);
+**Performance 50–76, misses ≥90** — CLS 0.30–0.37 (async content shifts
+layout, e.g. Contact's `{settings ? … : null}` grows the page and jumps the
+footer) and LCP 3–7 s (SPA cold-start). Recorded in `docs/launch-audit.md`
+§Performance with a diagnosis; `docs/roadmap.md` now carries a
+**performance tranche** as remaining dev work.
 
 ### 2026-08-31 (Phase 7 merged — engineering complete)
 `feat/quality-launch` (tranches 1–5) opened as **PR #1** and merged to `main`
