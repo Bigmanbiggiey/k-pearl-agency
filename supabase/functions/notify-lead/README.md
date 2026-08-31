@@ -37,5 +37,5 @@ npx supabase functions serve notify-lead
 # then submit a form on the site, or:
 curl -X POST http://127.0.0.1:55321/functions/v1/notify-lead \
   -H 'Content-Type: application/json' \
-  -d '{"type":"INSERT","table":"inquiries","record":{"name":"Test","phone":"+254704061324","message":"hi","preferred_contact_method":"phone"}}'
+  -d '{"type":"INSERT","table":"inquiries","record":{"name":"Test","phone":"+254712345678","message":"hi","preferred_contact_method":"phone"}}'
 ```

@@ -117,7 +117,7 @@ describe.skipIf(!reachable)('RLS boundary (local Supabase)', () => {
     const insert = await anon.from('inquiries').insert({
       type: 'general',
       name: 'Test Visitor',
-      phone: '+254704061324',
+      phone: '+254712345678',
       message: 'Integration test message — please ignore.',
       preferred_contact_method: 'phone',
     });
@@ -131,7 +131,7 @@ describe.skipIf(!reachable)('RLS boundary (local Supabase)', () => {
     const { error } = await anon.from('inquiries').insert({
       type: 'general',
       name: 'Test Visitor',
-      phone: '+254704061324',
+      phone: '+254712345678',
       message: 'Attempting to self-assign.',
       preferred_contact_method: 'phone',
       internal_notes: 'should be rejected',

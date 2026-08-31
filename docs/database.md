@@ -187,9 +187,9 @@ Single row of editable public contact info (Q7–Q12).
 | Column | Type | Notes |
 |---|---|---|
 | `id` | `boolean` PK default `true` | `check (id)` — enforces one row |
-| `phone` | `text` not null | `+254704061324` |
-| `whatsapp` | `text` not null | `+254704061324` |
-| `email` | `text` not null | `barakabradley@gmail.com` |
+| `phone` | `text` not null | `+254180558075` |
+| `whatsapp` | `text` not null | `+254180558075` |
+| `email` | `text` not null | `k.pearlagency@gmail.com` |
 | `hours_weekday` | `text` not null | `Mon–Fri 8:00 AM – 5:00 PM` |
 | `hours_weekend` | `text` not null | `Sat–Sun 9:00 AM – 2:00 PM` |
 | `by_appointment` | `boolean` not null default `true` | no public office address |

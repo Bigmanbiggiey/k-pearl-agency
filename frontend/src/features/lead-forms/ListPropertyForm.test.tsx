@@ -26,7 +26,7 @@ describe('ListPropertyForm', () => {
     renderWithProviders(<ListPropertyForm />);
 
     await user.type(screen.getByLabelText(/your name/i), 'Owner Name');
-    await user.type(screen.getByLabelText(/phone number/i), '+254704061324');
+    await user.type(screen.getByLabelText(/phone number/i), '+254712345678');
     await user.type(screen.getByLabelText(/^title/i), '3-bed apartment in Kilimani');
     await user.selectOptions(screen.getByLabelText(/listing type/i), 'rent');
     await user.selectOptions(screen.getByLabelText(/property type/i), 'apartment');
@@ -52,7 +52,7 @@ describe('ListPropertyForm', () => {
     const user = userEvent.setup();
     renderWithProviders(<ListPropertyForm />);
     await user.type(screen.getByLabelText(/your name/i), 'Owner Name');
-    await user.type(screen.getByLabelText(/phone number/i), '+254704061324');
+    await user.type(screen.getByLabelText(/phone number/i), '+254712345678');
     await user.type(screen.getByLabelText(/^title/i), 'A property');
     await user.click(screen.getByLabelText(/i have read the/i));
     now += 5000;

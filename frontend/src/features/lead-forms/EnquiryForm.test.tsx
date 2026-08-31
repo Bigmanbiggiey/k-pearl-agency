@@ -21,7 +21,7 @@ afterEach(() => vi.restoreAllMocks());
 
 async function fillValid(user: ReturnType<typeof userEvent.setup>) {
   await user.type(screen.getByLabelText(/your name/i), 'Jane Doe');
-  await user.type(screen.getByLabelText(/phone number/i), '+254704061324');
+  await user.type(screen.getByLabelText(/phone number/i), '+254712345678');
   await user.type(screen.getByLabelText(/message/i), 'I would like more information please.');
   await user.click(screen.getByLabelText(/i have read the/i));
 }

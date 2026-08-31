@@ -38,7 +38,7 @@ const hookState = { data: property as PropertyDetail | null, isLoading: false, i
 vi.mock('@/hooks', () => ({
   useProperty: () => hookState,
   useSiteSettings: () => ({
-    data: { phone: '+254704061324', whatsapp: '+254704061324', email: 'x@y.z' },
+    data: { phone: '+254180558075', whatsapp: '+254180558075', email: 'x@y.z' },
   }),
 }));
 

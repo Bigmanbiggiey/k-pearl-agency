@@ -125,8 +125,8 @@ select * from public.inquiries;                    -- ERROR / 0 rows: anon canno
 update public.profiles
 set role = 'admin',
     full_name = 'Your Name',
-    phone = '+254704061324',
-    whatsapp = '+254704061324'
+    phone = '+254180558075',
+    whatsapp = '+254180558075'
 where id = (select id from auth.users where email = 'you@example.com');
 ```
 
@@ -186,7 +186,7 @@ Until the secrets are set, the function logs the intended email instead of
 sending (same as local dev) — the visitor's submission still succeeds either way.
 
 WhatsApp notifications are deferred to post-launch (Meta Business verification for
-+254704061324); `whatsappSender` is a stub in `senders.ts`.
++254180558075); `whatsappSender` is a stub in `senders.ts`.
 
 ---
 

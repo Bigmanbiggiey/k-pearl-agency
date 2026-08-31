@@ -7,8 +7,8 @@ import { renderWithProviders } from '@/test/utils';
 vi.mock('@/hooks', () => ({
   useSiteSettings: () => ({
     data: {
-      phone: '+254704061324',
-      whatsapp: '+254704061324',
+      phone: '+254180558075',
+      whatsapp: '+254180558075',
       email: 'test@example.com',
       hoursWeekday: 'Mon–Fri 8–5',
       hoursWeekend: 'Sat–Sun 9–2',
@@ -28,13 +28,13 @@ describe('ContactPage', () => {
   it('renders tap-to-call, WhatsApp and mailto links from site settings', () => {
     renderWithProviders(<ContactPage />);
 
-    expect(screen.getByRole('link', { name: '+254704061324' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: '+254180558075' })).toHaveAttribute(
       'href',
-      'tel:+254704061324',
+      'tel:+254180558075',
     );
     expect(screen.getByRole('link', { name: /message on whatsapp/i })).toHaveAttribute(
       'href',
-      expect.stringContaining('https://wa.me/254704061324'),
+      expect.stringContaining('https://wa.me/254180558075'),
     );
     expect(screen.getByRole('link', { name: 'test@example.com' })).toHaveAttribute(
       'href',

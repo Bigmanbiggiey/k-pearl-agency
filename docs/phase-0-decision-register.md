@@ -33,7 +33,7 @@ context). Where an answer changed a prior recommendation it is called out.
 | 19.c | Staff onboarding | Admin invite (default). |
 | 21.a | Staff MFA | **No** — password only for now. |
 | ADR-004 → **ADR-009** | "List your property" | Structured submission → admin queue → staff edit → convert to a `draft` listing. Not auto-published. Still no owner account. → ADR-004 amended. |
-| 15.a–d | Contact details | Phone/WhatsApp **+254704061324**; email **barakabradley@gmail.com**; no office → "by appointment". |
+| 15.a–d | Contact details | Phone/WhatsApp **+254180558075**; email **k.pearlagency@gmail.com**; no office → "by appointment". |
 | 15.f | Business hours | Mon–Fri 08:00–17:00; weekends 09:00–14:00. |
 | 15.e | Social media | **None.** |
 | 16.a / 22.b | Legal | Owner needs help sourcing Privacy/Terms and **will take legal advice**. → Phase 7: project drafts from a Kenya-appropriate template; owner's lawyer reviews; DPA 2019 checklist. |

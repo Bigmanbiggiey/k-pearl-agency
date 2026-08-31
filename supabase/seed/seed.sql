@@ -40,7 +40,7 @@ values
 
 -- the handle_new_user trigger created profile rows; set details + roles
 update public.profiles
-  set role = 'admin', full_name = 'K Pearl Admin', phone = '+254704061324', whatsapp = '+254704061324'
+  set role = 'admin', full_name = 'K Pearl Admin', phone = '+254180558075', whatsapp = '+254180558075'
   where id = '11111111-1111-1111-1111-111111111111';
 update public.profiles
   set role = 'agent', full_name = 'K Pearl Agent', phone = '+254700000002', whatsapp = '+254700000002'

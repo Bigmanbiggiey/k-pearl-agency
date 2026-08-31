@@ -103,7 +103,7 @@ custom domain. Not picked up: deeper staff component tests; a dashboard
   `docs/go-live-runbook.md` (ordered launch steps), `docs/backup-recovery.md`
   (posture + drill). The Vercel project + deploy is an owner task —
   Root Directory must be `frontend`.
-- **Deferred to post-launch:** Meta Business verification for +254704061324
+- **Deferred to post-launch:** Meta Business verification for +254180558075
   (WhatsApp alerts). Launch ships with email + in-dashboard alerts only (ADR-010).
 - **Property photography:** entered via the admin panel during Phase 6 testing —
   no pre-supplied files. Cards/detail show a branded placeholder until then.
@@ -117,6 +117,28 @@ custom domain. Not picked up: deeper staff component tests; a dashboard
 - **Draft site copy** in `frontend/src/content/*` needs owner review/approval.
 
 ## Change log
+
+### 2026-08-31 (owner content + contact update)
+- Hero headline → "Properties within Nairobi and its environs."
+  (`frontend/src/content/home.ts`); `HomePage.test.tsx` now asserts against
+  `HERO.heading` rather than a hardcoded string.
+- Public contact changed: phone & WhatsApp → `+254180558075`, email →
+  `k.pearlagency@gmail.com`. New migration
+  `20260831120000_update_site_contact.sql` upserts the `site_settings` row
+  (the values originally came from the already-applied
+  `20260827090012_reference_data`). **Needs `supabase db push` to the hosted
+  project** to take effect on the live site. WhatsApp linkage itself already
+  exists (Contact page + property-detail CTAs via
+  `whatsappHref(settings.whatsapp)`); this just points it at the new number.
+  Docs synced (`database.md`, `go-live-runbook.md`, `supabase-setup.md`,
+  `content-plan.md`, `decisions.md` ADR-010, `phase-0-decision-register.md`,
+  `business-owner-questionnaire.md`, `roadmap.md`).
+- Purged the old `+254704061324` from the repo: test fixtures that used it as
+  a *visitor's* phone now use a neutral sample (`+254712345678`); tests that
+  mock `site_settings` and the dev `seed.sql` admin profile use the real new
+  number. The only remaining occurrence is the applied migration
+  `20260827090012_reference_data.sql` (never edited; `20260831120000`
+  overrides it).
 
 ### 2026-08-31 (post-deploy smoke test + live Lighthouse)
 First Vercel deploy succeeded (`fea7df8`; an initial failure was Vercel

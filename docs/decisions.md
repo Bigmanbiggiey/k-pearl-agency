@@ -164,7 +164,7 @@ visibility to the submitter beyond an on-page "received" confirmation.
 The owner asked for a "WhatsApp bot" that alerts the assigned agent and the admin
 on every new enquiry, viewing request and property submission. Business-initiated
 WhatsApp messages must go through Meta's official WhatsApp Cloud API, which needs
-one-time Meta Business verification of +254704061324 and template approval
+one-time Meta Business verification of +254180558075 and template approval
 (days–weeks). The project is otherwise being kept lean (launch on `*.vercel.app`,
 Gmail contact).
 
@@ -189,7 +189,7 @@ all admins when unassigned, **plus** every admin) and sends through a **swappabl
 - Realtime is still not used; the dashboard reads counts on navigation.
 
 ### Update (2026-08-27)
-Meta Business verification for +254704061324 is **explicitly deferred to
+Meta Business verification for +254180558075 is **explicitly deferred to
 post-launch** (owner's decision). MVP ships with `emailSender` + in-dashboard
 badges only; `whatsappSender` is a post-launch enhancement, switched on via
 `activeSenders()` once verification and template approval are done.

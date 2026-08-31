@@ -50,7 +50,7 @@ Full detail: `docs/supabase-setup.md` §4–§9. Condensed order:
    ```sql
    update public.profiles
    set role = 'admin', full_name = 'Your Name',
-       phone = '+254704061324', whatsapp = '+254704061324'
+       phone = '+254180558075', whatsapp = '+254180558075'
    where id = (select id from auth.users where email = 'you@example.com');
    ```
    Add the other staff the same way, leaving them `role = 'agent'`.
@@ -160,7 +160,7 @@ the admin panel.
   Vercel → Domains, then update `SITE_URL` in `frontend/src/lib/seo.ts`, the
   sitemap `SITE_URL`, `robots.txt`, and the Supabase auth URLs.
 - **WhatsApp lead alerts** — needs Meta Business verification for
-  +254704061324; `whatsappSender` is a stub (ADR-010). Launch ships email +
+  +254180558075; `whatsappSender` is a stub (ADR-010). Launch ships email +
   in-dashboard alerts only.
 - **Social share image + favicon** — 1200×630 OG card and a small favicon /
   Apple touch icon (designer handoff, decision 25.b). Until then, wire the
