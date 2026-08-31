@@ -68,9 +68,12 @@ hosted project.
 - ✅ GitHub: `github.com/Bigmanbiggiey/k-pearl-agency`. Branches: `main` (scaffold),
   `chore/phase-1-foundation` (Phases 0–2), `feat/public-website` (Phase 3).
   Recommend merging the Phase 0–2 → Phase 3 work to `main` via PR.
-- ⏳ Hosted Supabase project — owner to create, then `supabase link` + `db push`
-  (`20260827090012_reference_data` seeds `areas` + `site_settings`; dev `seed.sql`
-  is not applied to production). See `docs/supabase-setup.md`.
+- ✅ Hosted Supabase project (`k-pearl-agency`) created, linked, and fully
+  current — `db push` confirmed all 14 local migrations applied
+  (2026-08-31, Phase 7 tranche 3). Dev `seed.sql` was never applied, as
+  intended. Still owner/console: deploy `invite-staff`/`notify-lead` +
+  their secrets, auth redirect URLs, first admin user. See
+  `docs/supabase-setup.md`.
 - **Deferred to post-launch:** Meta Business verification for +254704061324
   (WhatsApp alerts). Launch ships with email + in-dashboard alerts only (ADR-010).
 - **Property photography:** entered via the admin panel during Phase 6 testing —
@@ -93,9 +96,10 @@ migrations behind local (`20260828090001_lead_rate_limit`,
 lead-form rate limiting and a non-functional staff dashboard
 (`staff_dashboard_counts`/`convert_property_submission` don't exist there).
 Also confirmed no Edge Functions deployed and no secrets set (expected,
-known owner handoff). Full findings in `docs/launch-audit.md`. No writes
-made to the hosted project this pass — pushing the missing migrations is
-queued pending explicit go-ahead.
+known owner handoff). Full findings in `docs/launch-audit.md`. Owner
+confirmed pushing the fix; ran `supabase db push` — hosted project now has
+all 14 local migrations applied, `migration list` confirms local ↔ remote
+match.
 
 ### 2026-08-31 (Phase 7 tranche 2 — accessibility + Lighthouse audit)
 Branch `feat/quality-launch`. Added `e2e/a11y.spec.ts` (axe-core via

@@ -127,10 +127,14 @@ no writes made to the hosted project during this review.
 - Auth redirect URL configuration and first-admin-user creation — both
   owner/console steps per `docs/deployment.md`, not checkable via the CLI.
 
-### Open action
+### Resolved
 
-The missing migrations are additive-only (a rate-limit trigger, two
-`security definer` RPCs) and are the same SQL already proven safe through
-extensive local testing — but pushing them changes live infrastructure, so
-this was left for explicit confirmation rather than done automatically as
-part of the review.
+Owner confirmed pushing the missing migrations. `supabase db push` applied
+`20260828090001_lead_rate_limit` and `20260828100001_staff_rpcs` to the
+hosted project (2026-08-31); `migration list` now shows all 14 local
+migrations matched on remote. Lead-form rate limiting and the staff
+dashboard RPCs are live on production as of this change.
+
+Still open (owner/console, not checkable via CLI): deploy
+`invite-staff`/`notify-lead`, set their secrets, configure auth redirect
+URLs, create the first admin user.
