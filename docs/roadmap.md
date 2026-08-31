@@ -114,8 +114,12 @@ manager / submission convert; a "recent leads" list on the dashboard;
   (docs/testing.md)
 - [ ] Draft Privacy/Terms from a Kenya-appropriate template → owner legal review
 - [ ] Kenya Data Protection Act 2019 checklist
-- [ ] Lighthouse (Perf ≥90, A11y ≥95)
-- [ ] Accessibility audit
+- [x] Accessibility audit — automated (axe-core, `e2e/a11y.spec.ts`, enforced
+  in CI); one real AA-contrast bug found and fixed (docs/launch-audit.md)
+- [~] Lighthouse (Perf ≥90, A11y ≥95) — A11y ≥95 achieved on all 4 public
+  pages; Perf not yet reliably measured (local-machine noise, see
+  docs/launch-audit.md) — re-verify against the Vercel deploy in the
+  deployment tranche
 - [ ] SEO audit
 - [ ] Security review (RLS, storage policies, Edge Function secrets)
 - [ ] Production deployment to Vercel (`K-Pearl-Agency.vercel.app`)

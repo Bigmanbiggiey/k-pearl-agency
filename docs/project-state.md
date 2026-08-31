@@ -82,6 +82,31 @@ hosted project.
 
 ## Change log
 
+### 2026-08-31 (Phase 7 tranche 2 — accessibility + Lighthouse audit)
+Branch `feat/quality-launch`. Added `e2e/a11y.spec.ts` (axe-core via
+`@axe-core/playwright`, zero serious/critical violations required) covering
+Home/Properties/Property detail/Contact/staff Dashboard — runs as part of
+`npm run test:e2e`, so it's enforced in CI alongside the tranche 1 suite.
+**Real bug found:** `--color-gold-deep` (`src/styles/index.css`) was
+`#a9863f`, ~3.4:1 contrast on ivory/white — under the WCAG AA 4.5:1 minimum
+for normal-size text; only visible on the staff dashboard's small nav links,
+since public-page usages happened to be large text (3:1 threshold). Darkened
+to `#866a27` (~5.1:1); also fixed two light-surface wordmarks
+(`StaffLayout.tsx`, `StaffAuthShell.tsx`) that used the lighter `--color-gold`
+meant for dark surfaces, and switched `StaffAuthShell.tsx`'s hardcoded
+`"K.pearl"` to `BRAND.wordmark` for consistency. Added
+`scripts/lighthouse-audit.mjs` + `npm run audit:lighthouse` (production
+build via `vite preview`, not dev — spawns vite's bin directly rather than
+through `npx`/a shell, which was silently swallowing all output on Windows).
+Accessibility ≥95 confirmed on all 4 public pages; Performance was NOT
+reliably measurable on this dev machine (Docker + two local Supabase stacks
++ this session all running concurrently skewed Lighthouse's CPU-throttled
+timing metrics — LCP ~7.5s despite only ~750ms of identified savings and a
+near-perfect CLS of 0.001, the signature of host contention, not an app
+defect). Recorded honestly in new `docs/launch-audit.md`, with a re-verify
+against the real Vercel deploy queued for the deployment tranche. All five
+gates green; 79/79 tests; all 9 E2E specs (4 journeys + 5 a11y) pass.
+
 ### 2026-08-31 (Phase 7 tranche 1 — E2E + real CI integration coverage)
 Branch `feat/quality-launch`. Added Playwright (`@playwright/test`, pinned)
 and `frontend/e2e/` with all four `docs/testing.md` minimum journeys;

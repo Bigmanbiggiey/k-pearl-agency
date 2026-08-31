@@ -1,3 +1,6 @@
+import AxeBuilder from '@axe-core/playwright';
+import { expect, type Page } from '@playwright/test';
+
 /**
  * Shared constants/helpers for E2E specs against the LOCAL Supabase stack
  * (docs/supabase-setup.md). The anon key here is the fixed Supabase CLI demo
@@ -36,4 +39,17 @@ export async function seedInquiry(uniqueName: string): Promise<void> {
   if (!res.ok) {
     throw new Error(`seedInquiry failed: ${res.status} ${await res.text()}`);
   }
+}
+
+/**
+ * Fails the test on any serious/critical axe-core violation on the current
+ * page. Moderate/minor findings are left as a manual-review concern rather
+ * than a hard CI gate (docs/launch-audit.md).
+ */
+export async function expectNoSeriousA11yViolations(page: Page): Promise<void> {
+  const results = await new AxeBuilder({ page }).analyze();
+  const serious = results.violations.filter(
+    (v) => v.impact === 'serious' || v.impact === 'critical',
+  );
+  expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);
 }

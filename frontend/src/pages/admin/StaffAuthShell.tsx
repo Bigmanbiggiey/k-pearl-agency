@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Seo } from '@/components/Seo';
+import { BRAND } from '@/content/site';
 
 export function StaffAuthShell({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -10,7 +11,7 @@ export function StaffAuthShell({ title, children }: { title: string; children: R
       <div className="flex min-h-dvh items-center justify-center bg-ink px-4 py-16">
         <div className="w-full max-w-sm rounded-md bg-surface p-8 shadow-xl">
           <Link to="/" className="mb-6 block text-center font-display text-xl text-ink">
-            K.pearl <span className="text-gold">Staff</span>
+            {BRAND.wordmark} <span className="text-gold-deep">Staff</span>
           </Link>
           <h1 className="text-xl">{title}</h1>
           <div className="mt-6">{children}</div>

@@ -15,7 +15,10 @@
   --color-surface: #faf7f0;
   --color-ivory: #ffffff;
   --color-gold: #c8a15a;
-  --color-gold-deep: #a9863f;
+  /* Darkened past the original brand value so gold-deep text clears WCAG AA
+     (4.5:1) at any size on the ivory/surface light backgrounds it's used
+     against — the lighter --color-gold is for dark surfaces only. */
+  --color-gold-deep: #866a27;
 
   /* Semantic */
   --color-success: #2e7d5b;
