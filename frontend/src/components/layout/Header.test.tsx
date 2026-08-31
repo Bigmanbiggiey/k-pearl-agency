@@ -8,9 +8,8 @@ import { renderWithProviders } from '@/test/utils';
 describe('Header', () => {
   it('renders the logo and primary navigation', () => {
     renderWithProviders(<Header />);
-    expect(
-      screen.getByRole('img', { name: /k pearl agency — marketing real estate/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /k\.pearl agency — home/i })).toBeInTheDocument();
+    expect(screen.getByText('K.pearl')).toBeInTheDocument();
     const primaryNav = screen.getByRole('navigation', { name: 'Primary' });
     expect(primaryNav).toBeInTheDocument();
   });

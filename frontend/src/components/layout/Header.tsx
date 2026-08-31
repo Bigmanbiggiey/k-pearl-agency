@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { Container } from '@/components/ui';
-import { PRIMARY_NAV } from '@/content/site';
+import { BRAND, PRIMARY_NAV } from '@/content/site';
 
 function navLinkClasses({ isActive }: { isActive: boolean }): string {
   return [
@@ -14,14 +14,17 @@ function navLinkClasses({ isActive }: { isActive: boolean }): string {
 
 function Logo() {
   return (
-    <NavLink to="/" className="flex items-center" aria-label="K Pearl Agency — home">
+    <NavLink to="/" className="flex items-center gap-3" aria-label={`${BRAND.name} — home`}>
       <img
         src="/assets/branding/k-pearl-logo.png"
-        alt="K Pearl Agency — marketing real estate, creating value"
-        className="h-12 w-auto"
-        width={48}
-        height={48}
+        alt=""
+        className="h-10 w-auto"
+        width={40}
+        height={40}
       />
+      <span className="font-display text-lg leading-none whitespace-nowrap text-surface">
+        {BRAND.wordmark} <span className="text-gold">Agency</span>
+      </span>
     </NavLink>
   );
 }
@@ -70,8 +73,8 @@ export function Header() {
               aria-label="Site menu"
             >
               <div className="mb-8 flex items-center justify-between">
-                <Dialog.Title className="text-sm uppercase tracking-[0.2em] text-gold">
-                  Menu
+                <Dialog.Title className="font-display text-lg leading-none whitespace-nowrap">
+                  {BRAND.wordmark} <span className="text-gold">Agency</span>
                 </Dialog.Title>
                 <Dialog.Close asChild>
                   <button

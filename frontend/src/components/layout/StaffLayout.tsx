@@ -3,6 +3,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 import { RouteFallback } from '@/components/layout/RouteFallback';
 import { Container } from '@/components/ui';
+import { BRAND } from '@/content/site';
 import { RequireStaff, useAuth } from '@/features/auth';
 
 const NAV = [
@@ -30,7 +31,7 @@ function StaffChrome() {
         <Container className="flex flex-wrap items-center justify-between gap-3 py-3">
           <div className="flex items-center gap-6">
             <NavLink to="/staff" className="font-display text-lg text-ink">
-              K.pearl <span className="text-gold">Staff</span>
+              {BRAND.wordmark} <span className="text-gold">Staff</span>
             </NavLink>
             <nav aria-label="Staff" className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
               {NAV.filter((item) => !item.admin || isAdmin).map((item) => (

@@ -36,7 +36,7 @@ describe('application shell', () => {
   it('renders the branded header and a heading on the home route', async () => {
     renderAt('/');
     expect(
-      await screen.findByRole('img', { name: /k pearl agency — marketing real estate/i }),
+      await screen.findByRole('link', { name: /k\.pearl agency — home/i }),
     ).toBeInTheDocument();
     expect(await screen.findByRole('heading', { level: 1 })).toBeInTheDocument();
   });

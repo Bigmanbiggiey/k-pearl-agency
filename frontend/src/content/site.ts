@@ -6,6 +6,7 @@
 export const BRAND = {
   name: 'K.pearl Agency',
   shortName: 'K Pearl',
+  wordmark: 'K.pearl',
   tagline: 'Marketing Real Estate, Creating Value',
 } as const;
 
