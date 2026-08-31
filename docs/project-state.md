@@ -82,6 +82,21 @@ hosted project.
 
 ## Change log
 
+### 2026-08-31 (Phase 7 tranche 3 — security review)
+Branch `feat/quality-launch`. Reviewed `docs/security.md` against the repo
+(RLS on all 8 tables, public views strip staff-only columns, storage policy,
+no committed secrets, `verify_jwt` config) — all clean — and, read-only, via
+the already-linked Supabase CLI, against the **hosted** project
+(`k-pearl-agency`). **Real finding:** the hosted project's schema is two
+migrations behind local (`20260828090001_lead_rate_limit`,
+`20260828100001_staff_rpcs` never pushed) — production currently has no
+lead-form rate limiting and a non-functional staff dashboard
+(`staff_dashboard_counts`/`convert_property_submission` don't exist there).
+Also confirmed no Edge Functions deployed and no secrets set (expected,
+known owner handoff). Full findings in `docs/launch-audit.md`. No writes
+made to the hosted project this pass — pushing the missing migrations is
+queued pending explicit go-ahead.
+
 ### 2026-08-31 (Phase 7 tranche 2 — accessibility + Lighthouse audit)
 Branch `feat/quality-launch`. Added `e2e/a11y.spec.ts` (axe-core via
 `@axe-core/playwright`, zero serious/critical violations required) covering

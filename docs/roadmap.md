@@ -121,7 +121,9 @@ manager / submission convert; a "recent leads" list on the dashboard;
   docs/launch-audit.md) — re-verify against the Vercel deploy in the
   deployment tranche
 - [ ] SEO audit
-- [ ] Security review (RLS, storage policies, Edge Function secrets)
+- [x] Security review (RLS, storage policies, Edge Function secrets) —
+  repo checks clean; found the hosted project's schema is 2 migrations
+  behind (docs/launch-audit.md) — pending explicit go-ahead to push
 - [ ] Production deployment to Vercel (`K-Pearl-Agency.vercel.app`)
 - [ ] WhatsApp Cloud API sender (after owner's Meta Business verification)
 - [ ] Backup/recovery verification

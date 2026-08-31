@@ -66,4 +66,71 @@ numbers above as a real regression; do not treat them as cleared either.
 
 ## Security
 
-Covered separately in tranche 3.
+Phase 7 tranche 3. Reviewed `docs/security.md` line by line against both the
+repo (migrations, config, git history) and the **hosted** Supabase project
+(`k-pearl-agency`, ref `nhfrmeicavehrkwqfpgc`) via the linked Supabase CLI —
+read-only checks only (`migration list`, `functions list`, `secrets list`);
+no writes made to the hosted project during this review.
+
+### Verified — repo
+
+- **RLS enabled on every table.** All 8 application tables (`profiles`,
+  `areas`, `properties`, `property_media`, `inquiries`, `viewing_requests`,
+  `property_submissions`, `site_settings`) have a matching
+  `alter table ... enable row level security` — no gaps.
+- **Public views correctly hide staff-only data.** `public_properties`
+  (`20260827090009_public_views.sql`) omits `address_line`, `latitude`,
+  `longitude`, `owner_name`, `owner_phone`, `owner_email` and filters to
+  `status = 'published'` — matches docs/security.md.
+- **Storage policy matches spec**
+  (`20260827090011_storage.sql`): `property-media` bucket is public-read,
+  staff-only insert/update/delete (`public.is_staff()`), 8 MiB cap, MIME
+  allowlist (`jpeg`/`png`/`webp`/`avif`).
+- **No secrets ever committed.** Only `.env.example` is tracked (blank
+  values); no `.env` in git history; no hardcoded service-role key, Gmail
+  password, or JWT secret anywhere in the repo — Edge Functions only read
+  `Deno.env.get(...)` at runtime.
+- **`verify_jwt` config is correct**: `notify-lead` = `false` (anon lead
+  forms must reach it), `invite-staff` = `true` (plus an internal
+  admin-role check) — matches docs/security.md's model.
+
+### Verified — hosted project (read-only)
+
+- **Schema is stale — real finding.** `supabase migration list` shows the
+  hosted project has migrations through `20260827090012_reference_data`
+  applied, but is **missing the two most recent local migrations**:
+  `20260828090001_lead_rate_limit` and `20260828100001_staff_rpcs`.
+  Concretely, right now, against production: public lead forms (enquiry,
+  viewing request, property submission) have **no anti-spam rate limiting**,
+  and the entire staff dashboard is broken —
+  `staff_dashboard_counts()` and `convert_property_submission()` don't exist
+  on the hosted database yet. This resolves the open question from
+  `docs/project-state.md` about whether `db push` had landed: partially —
+  the initial push happened, but it was never re-run after Phase 5/6 added
+  these two migrations.
+- **No Edge Functions deployed** (`functions list` → empty) and **no
+  secrets set** (`secrets list` → empty). Matches the known owner handoffs
+  in `docs/project-state.md` — `invite-staff` and `notify-lead` need
+  `supabase functions deploy` + `GMAIL_USER`/`GMAIL_APP_PASSWORD` secrets
+  before they'll work.
+
+### Not verified this pass
+
+- Live RLS behavior on the hosted project's *already-pushed* migrations
+  (1–12) wasn't independently re-tested against the real REST API — the
+  Claude Code permission classifier blocked fetching the hosted anon key
+  (reasonable; credential-adjacent even for a public-safe key). Confidence
+  is still high: it's the identical SQL already exercised by the local
+  integration suite (`staff.integration.test.ts`,
+  `lead-forms.integration.test.ts`) across many runs this session — but
+  that's local-equivalence, not a live-verified fact.
+- Auth redirect URL configuration and first-admin-user creation — both
+  owner/console steps per `docs/deployment.md`, not checkable via the CLI.
+
+### Open action
+
+The missing migrations are additive-only (a rate-limit trigger, two
+`security definer` RPCs) and are the same SQL already proven safe through
+extensive local testing — but pushing them changes live infrastructure, so
+this was left for explicit confirmation rather than done automatically as
+part of the review.
