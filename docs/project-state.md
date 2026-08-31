@@ -59,12 +59,18 @@ Phase 7 (Quality and launch)      ← next: E2E, legal, Lighthouse/a11y/SEO audi
 pushed). Done: tranche 1 (Playwright E2E + CI Supabase / real integration
 runs), tranche 2 (axe-core a11y + Lighthouse script), tranche 3 (security
 review + hosted-schema `db push`), tranche 4 (legal drafts + DPA 2019
-checklist). **Next: tranche 5 — deployment prep:** production deploy to
-`K-Pearl-Agency.vercel.app`, re-run Lighthouse against the real deploy
-(Perf ≥90), SEO audit, backup/recovery check. Phase 6 follow-ups still folded
-in: deeper component tests for the property editor / media manager /
-submission convert; a dashboard "recent leads" list; `functions deploy
-invite-staff` + `notify-lead` on the hosted project.
+checklist), tranche 5 (deployment prep — `vercel.json`, SEO audit +
+`e2e/seo.spec.ts`, `docs/go-live-runbook.md`, `docs/backup-recovery.md`).
+
+**Remaining Phase 7 is owner-side**, tracked in `docs/go-live-runbook.md`:
+merge `feat/quality-launch` → `main`; the Vercel deploy + env vars; the
+Supabase console steps (first admin user, auth URLs, `functions deploy
+notify-lead`/`invite-staff` + secrets); post-deploy Lighthouse against the
+real URL (Perf ≥90); the backup recovery drill; and **legal sign-off**
+(still LAUNCH-blocking, `docs/legal-review.md`). Deferred post-launch:
+WhatsApp sender, custom domain, social image/favicon. Phase 6 follow-ups not
+yet done: deeper component tests for the property editor / media manager /
+submission convert; a dashboard "recent leads" list.
 
 **Status of handoffs:**
 - ✅ GitHub: `github.com/Bigmanbiggiey/k-pearl-agency`. Branches: `main` (scaffold),
@@ -75,7 +81,12 @@ invite-staff` + `notify-lead` on the hosted project.
   (2026-08-31, Phase 7 tranche 3). Dev `seed.sql` was never applied, as
   intended. Still owner/console: deploy `invite-staff`/`notify-lead` +
   their secrets, auth redirect URLs, first admin user. See
-  `docs/supabase-setup.md`.
+  `docs/supabase-setup.md` and `docs/go-live-runbook.md` §1.
+- **Deploy prep done (tranche 5):** `frontend/vercel.json` (SPA rewrite +
+  security headers + asset caching), `frontend/.env.example`,
+  `docs/go-live-runbook.md` (ordered launch steps), `docs/backup-recovery.md`
+  (posture + drill). The Vercel project + deploy is an owner task —
+  Root Directory must be `frontend`.
 - **Deferred to post-launch:** Meta Business verification for +254704061324
   (WhatsApp alerts). Launch ships with email + in-dashboard alerts only (ADR-010).
 - **Property photography:** entered via the admin panel during Phase 6 testing —
@@ -90,6 +101,45 @@ invite-staff` + `notify-lead` on the hosted project.
 - **Draft site copy** in `frontend/src/content/*` needs owner review/approval.
 
 ## Change log
+
+### 2026-08-31 (Phase 7 tranche 5 — deployment prep + SEO audit)
+Branch `feat/quality-launch`. Added `frontend/vercel.json`: SPA rewrite
+(`/(.*)` → `/index.html`, so deep links survive a hard refresh — Vercel
+serves real `dist/` files first), conservative security headers
+(`X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`,
+`Permissions-Policy`, HSTS), and `immutable` caching for `/assets/*`. CSP
+deferred to post-deploy (needs a live target to test). Added
+`frontend/.env.example` (the two `VITE_` public vars — `lib/env.ts`'s own
+error message pointed at a `frontend/.env.example` that didn't exist; the
+repo-root one is left in place). **SEO audit:** new `frontend/e2e/seo.spec.ts`
+(13 checks, runs in `npm run test:e2e` / CI) verifying per-route
+title/description/canonical/OG/Twitter, `noindex` on filtered & paged
+`/properties` views, one `RealEstateListing` JSON-LD on property detail, and
+`/staff` kept out of the index; plus a manual pass on `robots.txt` /
+`sitemap.xml` / `lang`.
+
+**SEO defect found + fixed:** `index.html` shipped a static `<title>` and
+`<meta name="description">`; React 19 only de-dupes tags it renders, so every
+route had **two** of each (static + `<Seo>`). Removed both from `index.html`
+(every route renders `<Seo>` on mount).
+
+**Two pre-existing a11y bugs found + fixed** — tranche 2's `a11y.spec.ts` ran
+axe before the SPA finished rendering; tranche 5 added a wait-for-`<h1>`
+which surfaced them: `PropertyFilters.tsx` "Property type"/"Area" `<select>`s
+had no accessible name (`select-name`, critical) → added `aria-label`;
+`ContactPage.tsx` had a bare text `<div>` inside the contact `<dl>`
+(`definition-list`, serious) → moved it to a `<p>`.
+
+Real gap recorded (not fixed): `og:image`/favicon are still the 772 KB logo
+PNG — designer handoff 25.b. New `docs/go-live-runbook.md` (ordered launch
+steps: repo pre-flight → Supabase console → Vercel → smoke test → post-deploy
+Lighthouse) and `docs/backup-recovery.md` (git-reproducible vs. must-back-up,
+Supabase plan trade-offs, manual `db dump` + Storage export, a recovery-drill
+procedure with a log table). Docs synced: `launch-audit.md` (§SEO + a11y
+update), `roadmap.md` (SEO + backup ticked, deploy-prep row added),
+`deployment.md` (runbook pointer), `project-state.md`. All five gates green;
+79/79 unit+integration, all 22 E2E specs (4 journeys + 5 a11y + 13 SEO) pass
+against a live local Supabase.
 
 ### 2026-08-31 (Phase 7 tranche 4 — legal content + DPA 2019 checklist)
 Branch `feat/quality-launch`. Expanded `frontend/src/content/legal.ts` from

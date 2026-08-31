@@ -122,16 +122,27 @@ manager / submission convert; a "recent leads" list on the dashboard;
   in CI); one real AA-contrast bug found and fixed (docs/launch-audit.md)
 - [~] Lighthouse (Perf ≥90, A11y ≥95) — A11y ≥95 achieved on all 4 public
   pages; Perf not yet reliably measured (local-machine noise, see
-  docs/launch-audit.md) — re-verify against the Vercel deploy in the
-  deployment tranche
-- [ ] SEO audit
+  docs/launch-audit.md) — re-verify against the Vercel deploy
+  (`docs/go-live-runbook.md` §5)
+- [x] SEO audit — every public route's title/description/canonical/OG/JSON-LD
+  verified and now enforced by `e2e/seo.spec.ts` in CI; robots + sitemap
+  correct. Caveat: OG/social image + favicon still the raw logo PNG
+  (designer handoff 25.b). `docs/launch-audit.md` §SEO
 - [x] Security review (RLS, storage policies, Edge Function secrets) —
   repo checks clean; found + fixed the hosted project's schema being 2
   migrations behind (`db push` applied, confirmed current;
   docs/launch-audit.md)
-- [ ] Production deployment to Vercel (`K-Pearl-Agency.vercel.app`)
+- [~] Deployment prep — `frontend/vercel.json` (SPA rewrite + security
+  headers + asset caching), `frontend/.env.example`, and
+  `docs/go-live-runbook.md`. The deploy itself is an owner task (Vercel +
+  Supabase console).
+- [ ] Production deployment to Vercel (`K-Pearl-Agency.vercel.app`) —
+  follow `docs/go-live-runbook.md`
 - [ ] WhatsApp Cloud API sender (after owner's Meta Business verification)
-- [ ] Backup/recovery verification
+- [x] Backup/recovery verification — posture documented
+  (`docs/backup-recovery.md`): what's git-reproducible vs. must-back-up,
+  Supabase plan trade-offs, manual backup commands, a recovery-drill
+  procedure. The drill run itself is an owner action (logged in that doc).
 
 ## Post-MVP candidates
 

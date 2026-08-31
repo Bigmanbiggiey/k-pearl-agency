@@ -19,6 +19,9 @@ const PUBLIC_PAGES: Array<[name: string, path: string]> = [
 for (const [name, path] of PUBLIC_PAGES) {
   test(`${name} has no serious a11y violations`, async ({ page }) => {
     await page.goto(path);
+    // Wait for the SPA to render before axe runs — document metadata
+    // (incl. <title>) is supplied by <Seo> on mount, not by index.html.
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await expectNoSeriousA11yViolations(page);
   });
 }

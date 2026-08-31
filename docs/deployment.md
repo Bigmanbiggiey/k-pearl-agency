@@ -1,5 +1,13 @@
 # K Pearl Agency — Deployment
 
+> **Doing the launch?** Follow `docs/go-live-runbook.md` — the ordered,
+> copy-pasteable steps. This document is the reference for *why* each choice
+> was made. Backup/recovery: `docs/backup-recovery.md`.
+>
+> `frontend/vercel.json` carries the SPA rewrite (deep links → `index.html`),
+> conservative security headers, and immutable caching for hashed assets. The
+> Vercel project's **Root Directory must be `frontend`**.
+
 ## Target (confirmed 2026-08-27)
 
 Frontend:

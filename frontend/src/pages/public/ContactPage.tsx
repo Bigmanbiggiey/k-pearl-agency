@@ -72,12 +72,13 @@ export default function ContactPage() {
                   {settings.hoursWeekend}
                 </dd>
               </div>
-              {settings.byAppointment ? (
-                <div className="py-4 text-sm text-muted">
-                  Viewings and meetings are arranged by appointment.
-                </div>
-              ) : null}
             </dl>
+          ) : null}
+
+          {settings?.byAppointment ? (
+            <p className="border-t border-line py-4 text-sm text-muted">
+              Viewings and meetings are arranged by appointment.
+            </p>
           ) : null}
 
           <div className="mt-10 border-t border-line pt-8">

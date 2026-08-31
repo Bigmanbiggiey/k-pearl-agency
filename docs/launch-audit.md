@@ -38,6 +38,28 @@ confirmatory, not a separate signal — same rendered pages):
 
 All ≥95 (CLAUDE.md §10 target). Consistent with the axe results above.
 
+### Update — Phase 7 tranche 5
+
+The tranche-2 `a11y.spec.ts` ran axe immediately after `page.goto`, before
+the SPA had finished rendering async content — so on data-dependent pages it
+was scanning an incomplete DOM. Tranche 5 added
+`await expect(page.getByRole('heading', { level: 1 })).toBeVisible()` before
+each scan, which surfaced **two real, pre-existing violations**, both now
+fixed:
+
+- **Properties — `select-name` (critical).** The "Property type" and "Area"
+  `<select>`s in `PropertyFilters.tsx` had an `id` but their visible label
+  was a plain `<p>` (via the local `Fieldset` helper), not associated. Added
+  `aria-label` to each, matching the `aria-label` pattern the price inputs in
+  the same file already use.
+- **Contact — `definition-list` (serious).** The "by appointment" note was a
+  bare text `<div>` directly inside the contact `<dl>`, which only permits
+  `<dt>`/`<dd>`/`<div>`-wrapped groups. Moved it out to a `<p>` after the
+  list.
+
+Re-ran: 5/5 a11y specs green (Home, Properties, Property detail, Contact,
+staff dashboard).
+
 ## Performance
 
 **Not yet a reliable reading.** `npm run audit:lighthouse` against a
@@ -58,11 +80,12 @@ Diagnosis before treating that as real:
   top of whatever the host is doing; under real contention that compounds
   into scores that don't reflect the app.
 
-**Action before launch sign-off (Phase 7 tranche 5):** re-run
-`npm run audit:lighthouse` on a quiet machine, and — more importantly, since
-that's the environment the ≥90 target actually needs to hold for — against
-the deployed Vercel production build once it exists. Do not treat the
-numbers above as a real regression; do not treat them as cleared either.
+**Action before launch sign-off:** re-run `npm run audit:lighthouse` on a
+quiet machine, and — more importantly, since that's the environment the ≥90
+target actually needs to hold for — against the deployed Vercel production
+build once it exists. The step-by-step is in `docs/go-live-runbook.md`
+§5. Do not treat the numbers above as a real regression; do not treat them as
+cleared either.
 
 ## Security
 
@@ -138,3 +161,39 @@ dashboard RPCs are live on production as of this change.
 Still open (owner/console, not checkable via CLI): deploy
 `invite-staff`/`notify-lead`, set their secrets, configure auth redirect
 URLs, create the first admin user.
+
+## SEO
+
+Phase 7 tranche 5. Audited the rendered document metadata of every public
+route against a running app (local Supabase + `vite`), plus the build
+output. Now enforced in CI by `frontend/e2e/seo.spec.ts` (13 checks, part of
+`npm run test:e2e`).
+
+### Verified
+
+| Check | Result |
+| --- | --- |
+| One non-empty `<title>` per route, site-name suffixed | Pass (all 10 public routes) **after a fix**: `index.html` shipped a static `<title>` and `<meta name="description">`, and React 19 only de-dupes among the tags **it** renders — the static ones survived alongside `<Seo>`'s, so every page had **two** of each. Removed both from `index.html` (every route renders `<Seo>` on mount; comment left in `index.html` so they don't get re-added). |
+| One non-empty `meta[name=description]` per route | Pass |
+| One `link[rel=canonical]`, absolute, query-stripped | Pass — always `https://k-pearl-agency.vercel.app<path>`, so filtered/paged `/properties` URLs still point at the clean canonical |
+| Open Graph (`og:title/description/url/image/site_name`) + `twitter:card=summary_large_image` | Pass |
+| Filtered / paged property views are `noindex, nofollow` | Pass — `PropertiesPage` sets `noindex` when any filter is active or `page > 1`; the bare `/properties` has no robots tag |
+| Property detail JSON-LD | Pass — one `application/ld+json` block, `@type: RealEstateListing`, `provider.name: K Pearl Agency` (`propertyJsonLd`, `src/lib/seo.ts`) |
+| `/staff/*` excluded | Pass — `robots.txt` `Disallow: /staff`; `StaffAuthShell` renders `noindex`; sitemap omits staff routes |
+| `robots.txt` | Pass — allows all, disallows `/staff`, points at the sitemap |
+| `sitemap.xml` (build-time, `scripts/generate-sitemap.mjs`) | Pass — 9 static routes always; published property URLs added when the Supabase REST API is reachable at build (6 from the local seed; 0 in CI without a DB, build still succeeds) |
+| `<html lang="en">` | Pass |
+
+### Gaps (not fixed here)
+
+- **Social share image.** `og:image` / `twitter:image` fall back to
+  `/assets/branding/k-pearl-logo.png` — a 772 KB square logo, not a 1200×630
+  card. Belongs to the existing designer handoff (decision 25.b: logo
+  variants + favicon). Until then social unfurls will look poor.
+- **Favicon** is the same 772 KB PNG. A small `.ico`/optimised PNG (and an
+  Apple touch icon) is part of the same handoff.
+- **`*.vercel.app` domain** carries less ranking authority than a custom
+  domain; acquiring one is a recommended early post-launch follow-up
+  (`docs/deployment.md`).
+- **Per-URL `<lastmod>`** is emitted for property URLs but not the static
+  routes — acceptable; revisit if crawl freshness becomes a concern.

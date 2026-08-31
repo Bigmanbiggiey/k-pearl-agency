@@ -101,6 +101,7 @@ export function PropertyFilters({ filters, setFilter, onClear }: Props) {
       <Fieldset label="Property type">
         <select
           id={ids.type}
+          aria-label="Property type"
           className={FIELD}
           value={filters.propertyType ?? ''}
           onChange={(e) =>
@@ -122,6 +123,7 @@ export function PropertyFilters({ filters, setFilter, onClear }: Props) {
       <Fieldset label="Area">
         <select
           id={ids.area}
+          aria-label="Area"
           className={FIELD}
           value={filters.areaId ?? ''}
           onChange={(e) => setFilter('areaId', e.currentTarget.value || undefined)}
