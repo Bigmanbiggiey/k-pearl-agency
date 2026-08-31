@@ -73,10 +73,10 @@ yet done: deeper component tests for the property editor / media manager /
 submission convert; a dashboard "recent leads" list.
 
 **Status of handoffs:**
-- ✅ GitHub: `github.com/Bigmanbiggiey/k-pearl-agency`. `feat/quality-launch`
-  pushed and opened as **PR #1** → `main` (2026-08-31). `main` held only the
-  Phase 0 scaffold, so PR #1 carries **Phases 1–7** (37 commits, ~236 files) —
-  the earlier phase branches were never merged. Awaiting review/merge.
+- ✅ GitHub: `github.com/Bigmanbiggiey/k-pearl-agency`. **PR #1 merged to
+  `main`** (2026-08-31, merge commit `9ccb51d`) — brought **Phases 1–7** onto
+  `main`, which until then held only the Phase 0 scaffold. CI was green on the
+  merge head. `feat/quality-launch` can be deleted.
 - ✅ Hosted Supabase project (`k-pearl-agency`) created, linked, and fully
   current — `db push` confirmed all 14 local migrations applied
   (2026-08-31, Phase 7 tranche 3). Dev `seed.sql` was never applied, as
