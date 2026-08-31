@@ -63,6 +63,17 @@
     font-optical-sizing: auto;
   }
 
+  /*
+   * Headings on a dark surface. The rule above pins every heading to
+   * --color-ink, which beats the light `text-surface` colour that dark
+   * containers (`bg-ink`) set for inheritance — leaving the heading
+   * near-black on near-black. Re-assert the light colour for headings inside
+   * a dark band (hero, PageHeader, Section tone="ink", Footer).
+   */
+  .bg-ink :is(h1, h2, h3, h4) {
+    color: var(--color-surface);
+  }
+
   p {
     text-wrap: pretty;
   }
