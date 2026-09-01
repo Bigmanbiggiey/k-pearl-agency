@@ -37,7 +37,7 @@ context). Where an answer changed a prior recommendation it is called out.
 | 15.f | Business hours | Mon–Fri 08:00–17:00; weekends 09:00–14:00. |
 | 15.e | Social media | **None.** |
 | 16.a / 22.b | Legal | Owner needs help sourcing Privacy/Terms and **will take legal advice**. → Phase 7: project drafts from a Kenya-appropriate template; owner's lawyer reviews; DPA 2019 checklist. |
-| 25.b | Logo assets | Owner needs help creating variants from the single raster. → Phase 3 project/designer task. |
+| 25.b | Logo assets | **RESOLVED 2026-09-01** — owner delivered a PNG asset kit; wired (mark in header, favicon set, OG icon). See row below. |
 | 25.a / J-3 | Fonts / colours | Not specified — provisional tokens stand; revisit with the logo work. |
 | N-1 / N-2 | Copy / photography | Project drafts copy for owner approval; **owner has professional photography**. |
 | N-3 | Homepage Featured + Latest | Both (default). |
@@ -191,7 +191,7 @@ No contradictions were found that block the approval gate. Audit verdict: **PASS
 
 | ID | Question | Why it matters | Recommended answer | Alternative | Impact if changed | Blocks? | Owner decision | Status |
 |---|---|---|---|---|---|---|---|---|
-| 25.b | Provide **additional logo assets**: transparent-background PNG, an SVG/vector master, a **horizontal lockup** for the site header, a **standalone pearl-in-shell mark** for favicon / social / app icons, and a **light-surface-safe** variant. | The only supplied file is a gold-on-black raster square — unusable as a header logo, favicon, or on light backgrounds. | **Owner (or their designer) supplies the asset pack.** | Project derives approximations from the raster (quality-limited, not recommended). | Header, favicon, and social previews depend on this. | **LAUNCH** | ______ | OPEN |
+| 25.b | Provide **additional logo assets**: transparent-background PNG, an SVG/vector master, a **horizontal lockup** for the site header, a **standalone pearl-in-shell mark** for favicon / social / app icons, and a **light-surface-safe** variant. | The only supplied file is a gold-on-black raster square — unusable as a header logo, favicon, or on light backgrounds. | **Owner (or their designer) supplies the asset pack.** | Project derives approximations from the raster (quality-limited, not recommended). | Header, favicon, and social previews depend on this. | **LAUNCH** | Owner delivered a PNG asset kit (2026-09-01) | **RESOLVED** — kit wired: `kpearl-mark.png` in the header, favicon 16/32/180 + `kpearl-icon-512.png` for OG (`frontend/public/assets/branding/`, `docs/ui-guidelines.md`). No SVG in the kit; PNGs are unoptimised (WebP pass is a follow-up). Light-surface variant not needed — all current logo placements are on dark bands. |
 | 25.a | Confirm the **display (serif) and body (sans) typefaces**, with a web licence. | Defines the type system; performance budget. | A refined serif for headings + a clean sans for body, both web-licensed / open. Specific pairing proposed in Phase 1. **DEFAULT — OWNER OVERRIDE OPTIONAL.** | A brand typeface the owner already licenses. | Swapping fonts later is a token change. | NO | ______ | OPEN |
 | J-3 | Confirm exact **brand colour values** (near-black, gold, ivory, charcoal, muted grey). | Design tokens. | Values proposed in `product-definition.md` §25.2 / Phase 1. **DEFAULT — OWNER OVERRIDE OPTIONAL.** | Owner-specified hex values. | Token change. | NO | ______ | OPEN |
 
@@ -260,7 +260,7 @@ No contradictions were found that block the approval gate. Audit verdict: **PASS
 | Category | Count |
 |---|---|
 | **Block development** (must be answered before Phase 1 feature work) | **10** — 2.a, 2.c, 2.d, 6.a, 8.b, 8.c, 8.d, 8.e, 10.a, 19.a (+ accept ADR-002/003/004/005/007, G-1) |
-| **Block launch** (development can start with placeholders) | **10** — 15.a, 15.b, 15.c, 15.d, 16.a, 22.b, G.2, G.3, G.5, G.6, 25.b *(11 lines; 15.a–d count as the "contact pack")* |
+| **Block launch** (development can start with placeholders) | **10** — 15.a, 15.b, 15.c, 15.d, 16.a, 22.b, G.2, G.3, G.5, G.6, ~~25.b~~ *(25.b resolved 2026-09-01; 15.a–d count as the "contact pack")* |
 | **Quick confirmations** (default applied; ~1 line each) | ~10 — 2.b, 7.a, 9.a, 9.b, 13.a, 11.a, 19.b, 19.c, 21.a, 17.a, 15.e, 15.f, K-1, ADR-006, ADR-008 |
 | **Technical defaults** (no owner input) | ~12 — 8.a, 28.a, 23.a, 26.a, G.4, 25.a, J-3, 20.a, G.1, O-1…O-8 |
 

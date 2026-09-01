@@ -58,7 +58,10 @@
 - [x] Self-hosted fonts — Fraunces + Inter (decision 25.a)
 - [x] Per-route code splitting + vendor chunks
 - [x] Draft site copy in `frontend/src/content/*` for owner approval
-- [ ] Logo-variant assets (transparent, horizontal lockup, favicon, light-surface) — designer handoff (25.b)
+- [x] Logo assets (25.b) — owner PNG asset kit delivered 2026-09-01 and wired:
+  `kpearl-mark.png` in the header, favicon 16/32/180 + `kpearl-icon-512.png`
+  for OG (`docs/ui-guidelines.md`). Follow-up: WebP/optimise the PNGs; a
+  purpose-built 1200×630 social card.
 
 ## Phase 4 — Property catalogue
 *(complete — branch `feat/property-catalogue`; 43/43 tests, gates green)*
@@ -132,8 +135,9 @@ gate. Remaining items — a perf pass plus owner launch execution — are under
   invalid `<dl>`). `docs/launch-audit.md`.
 - [x] SEO audit — every public route's title/description/canonical/OG/JSON-LD
   verified and enforced by `e2e/seo.spec.ts` in CI; robots + sitemap correct;
-  fixed a duplicate-`<title>`/`<meta>` defect. Caveat: OG/social image +
-  favicon still the raw logo PNG (designer handoff 25.b). `docs/launch-audit.md` §SEO.
+  fixed a duplicate-`<title>`/`<meta>` defect. Favicon + OG image now use the
+  25.b asset kit; a purpose-built 1200×630 card is still a nice-to-have.
+  `docs/launch-audit.md` §SEO.
 - [~] Lighthouse (against the live Vercel deploy, 2026-08-31) — **A11y 100
   and SEO 100 on all 4 public pages** (targets met); Best-practices 96
   (Vercel Analytics 404 — enable it). **Performance 50–76, misses ≥90** —
@@ -182,7 +186,8 @@ gate. Remaining items — a perf pass plus owner launch execution — are under
 - [ ] WhatsApp Cloud API sender — after the owner's Meta Business
   verification for +254180558075 (ADR-010); launch ships email +
   in-dashboard alerts only
-- [ ] Social share image (1200×630) + favicon — designer handoff (25.b)
+- [ ] Purpose-built 1200×630 social card, and a WebP/optimiser pass on the
+  25.b logo PNGs (favicon + header mark are already wired)
 - [ ] Content-Security-Policy header in `vercel.json` — add once there's a
   live deploy to test against
 

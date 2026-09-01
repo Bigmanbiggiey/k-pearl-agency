@@ -48,7 +48,7 @@ k-pearl-agency/
 │   ├── scripts/generate-sitemap.mjs  ✓  build-time sitemap (ADR-011)
 │   ├── public/
 │   │   ├── robots.txt                ✓
-│   │   └── assets/branding/k-pearl-logo.png  ✓
+│   │   └── assets/branding/       ✓  25.b asset kit — kpearl-mark, favicon 16/32/180, kpearl-icon-512, lockups; k-pearl-logo.png (original, unused)
 │   └── src/
 │       ├── main.tsx                  ✓  entry; StrictMode; env; fonts; styles
 │       ├── vite-env.d.ts             ✓  typed import.meta.env

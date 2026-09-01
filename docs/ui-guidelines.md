@@ -10,10 +10,22 @@ Primary visual language:
 - White / ivory
 - Charcoal / muted neutrals
 
-The logo asset is:
-`frontend/public/assets/branding/k-pearl-logo.png` — gold-on-black raster, used
-as-is on dark surfaces (header, footer, hero). Transparent / vector / horizontal
-lockup / favicon variants are still a designer handoff (decision 25.b).
+Logo assets — owner asset kit in `frontend/public/assets/branding/`
+(decision 25.b, delivered 2026-09-01):
+
+| File | Use |
+| --- | --- |
+| `kpearl-mark.png` | pearl-in-shell emblem, transparent — the header mark (rendered 40px next to the text wordmark) |
+| `kpearl-lockup-header.png` | mark + "K.pearl AGENCY", transparent, gold-on-dark — full header lockup (available; not wired — 354 KB PNG, would hurt LCP) |
+| `kpearl-lockup-full.png` | as above + tagline — larger uses |
+| `kpearl-favicon-16.png` / `-32.png` | browser tab |
+| `kpearl-apple-touch-icon.png` (180) | iOS home screen |
+| `kpearl-icon-512.png` | OG / social card fallback (`Seo.tsx`) |
+| `k-pearl-logo.png` | original supplied raster; kept for reference, no longer used |
+
+All PNG (no SVG/vector in the kit). They're unoptimised exports — a pass
+through an image optimiser / WebP conversion is a worthwhile follow-up,
+especially for the lockups.
 
 ## Typography (decision 25.a — resolved 2026-08-27)
 
