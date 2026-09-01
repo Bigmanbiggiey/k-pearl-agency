@@ -16,9 +16,9 @@ function Logo() {
   return (
     <NavLink to="/" className="flex items-center gap-3" aria-label={`${BRAND.name} — home`}>
       <img
-        src="/assets/branding/k-pearl-logo.png"
+        src="/assets/branding/kpearl-mark.png"
         alt=""
-        className="h-10 w-auto"
+        className="h-10 w-10"
         width={40}
         height={40}
       />

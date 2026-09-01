@@ -83,9 +83,9 @@ Lighthouse for the ≥90 gate.
 Privacy/Terms** (LAUNCH-blocking); Supabase console steps (first admin user,
 auth URLs, `functions deploy` + secrets); enable Vercel Web Analytics; live
 enquiry + staff-login smoke test; backup recovery drill; site-copy approval.
-Deferred post-launch: WhatsApp sender, social image/favicon, CSP header,
-custom domain. Not picked up: deeper staff component tests; a dashboard
-"recent leads" list.
+Deferred post-launch: WhatsApp sender, CSP header, custom domain, a
+purpose-built 1200×630 social card + WebP pass on the logo PNGs. Not picked
+up: deeper staff component tests; a dashboard "recent leads" list.
 
 **Status of handoffs:**
 - ✅ GitHub: `github.com/Bigmanbiggiey/k-pearl-agency`. **PR #1 merged to
@@ -107,7 +107,10 @@ custom domain. Not picked up: deeper staff component tests; a dashboard
   (WhatsApp alerts). Launch ships with email + in-dashboard alerts only (ADR-010).
 - **Property photography:** entered via the admin panel during Phase 6 testing —
   no pre-supplied files. Cards/detail show a branded placeholder until then.
-- **Logo variants** (transparent / vector / lockup / favicon) — designer handoff (25.b).
+- **Logo assets (25.b) — done.** Owner PNG asset kit delivered 2026-09-01;
+  wired: `kpearl-mark.png` in the header, favicon 16/32/180 +
+  `kpearl-icon-512.png` for OG. `frontend/public/assets/branding/`,
+  `docs/ui-guidelines.md`. Follow-up: WebP/optimise; a 1200×630 social card.
 - **Legal:** Privacy/Terms are now full drafts from a Kenya-appropriate
   template (Phase 7 tranche 4), consent wording centralised, DPA 2019
   checklist written (`docs/legal-review.md`). Remaining: lawyer sign-off +
@@ -117,6 +120,26 @@ custom domain. Not picked up: deeper staff component tests; a dashboard
 - **Draft site copy** in `frontend/src/content/*` needs owner review/approval.
 
 ## Change log
+
+### 2026-09-01 (logo asset kit — decision 25.b)
+Owner delivered a PNG logo asset kit (Claude artifact). Extracted to
+`frontend/public/assets/branding/` and wired:
+- **Header** — `k-pearl-logo.png` icon → `kpearl-mark.png` (transparent
+  pearl-in-shell emblem); text wordmark kept alongside.
+- **Favicon** — `index.html` now links `kpearl-favicon-16/32.png` +
+  `kpearl-apple-touch-icon.png` (was the single 772 KB square).
+- **OG / social** — `Seo.tsx` + `lib/seo.ts` fallback → `kpearl-icon-512.png`
+  (self-contained dark square; background-independent).
+- Also kept in the folder, not wired: `kpearl-lockup-header.png` /
+  `kpearl-lockup-full.png` (354 / 574 KB — too heavy for a per-page header).
+- `k-pearl-logo.png` retained for reference; no longer referenced by code.
+
+Kit is **PNG only** (no SVG/vector) and unoptimised — WebP/optimiser pass +
+a purpose-built 1200×630 social card are follow-ups. Decision 25.b marked
+**RESOLVED**; docs synced (`CLAUDE.md` §8, `ui-guidelines.md`,
+`phase-0-decision-register.md`, `roadmap.md`, `launch-audit.md` §SEO,
+`project-structure.md`). No light-surface variant needed — all logo
+placements are on dark bands.
 
 ### 2026-08-31 (owner content + contact update)
 - Hero headline → "Properties within Nairobi and its environs."

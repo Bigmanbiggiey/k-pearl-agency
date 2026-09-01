@@ -30,7 +30,7 @@ export function Seo({
 }: SeoProps) {
   const fullTitle = buildTitle(title);
   const url = absoluteUrl(path);
-  const imageUrl = image ? absoluteUrl(image) : absoluteUrl('/assets/branding/k-pearl-logo.png');
+  const imageUrl = image ? absoluteUrl(image) : absoluteUrl('/assets/branding/kpearl-icon-512.png');
 
   return (
     <>

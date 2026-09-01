@@ -120,8 +120,15 @@ Components focus on presentation and interaction.
 
 K Pearl branding is premium black + gold.
 
-The supplied logo is stored at:
-`frontend/public/assets/branding/k-pearl-logo.png`
+Logo assets are in `frontend/public/assets/branding/` (owner asset kit,
+decision 25.b — delivered 2026-09-01):
+- `kpearl-mark.png` — pearl-in-shell emblem, transparent (used in the header)
+- `kpearl-lockup-header.png` / `kpearl-lockup-full.png` — horizontal lockups,
+  transparent, gold-on-dark (available; not loaded by default — large PNGs)
+- `kpearl-favicon-16/32.png`, `kpearl-apple-touch-icon.png`, `kpearl-icon-512.png`
+  (icon / social)
+- `k-pearl-logo.png` — the original supplied raster square (kept for reference;
+  no longer used in the app)
 
 Brand direction:
 - Primary: near-black / black.

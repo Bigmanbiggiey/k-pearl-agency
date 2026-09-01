@@ -223,12 +223,13 @@ output. Now enforced in CI by `frontend/e2e/seo.spec.ts` (13 checks, part of
 
 ### Gaps (not fixed here)
 
-- **Social share image.** `og:image` / `twitter:image` fall back to
-  `/assets/branding/k-pearl-logo.png` — a 772 KB square logo, not a 1200×630
-  card. Belongs to the existing designer handoff (decision 25.b: logo
-  variants + favicon). Until then social unfurls will look poor.
-- **Favicon** is the same 772 KB PNG. A small `.ico`/optimised PNG (and an
-  Apple touch icon) is part of the same handoff.
+- **Social share image.** As of 2026-09-01 `og:image` / `twitter:image` use
+  `/assets/branding/kpearl-icon-512.png` (the 25.b asset kit — a
+  self-contained dark square, background-independent). A purpose-built
+  1200×630 card is still a nice-to-have.
+- **Favicon** now uses the 25.b kit (16/32 + a 180 Apple touch icon). The
+  kit is PNG only (no SVG); a WebP/optimiser pass on the larger files is a
+  worthwhile follow-up.
 - **`*.vercel.app` domain** carries less ranking authority than a custom
   domain; acquiring one is a recommended early post-launch follow-up
   (`docs/deployment.md`).

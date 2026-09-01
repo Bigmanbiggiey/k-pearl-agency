@@ -22,7 +22,7 @@ const LISTING_TYPE_LABEL: Record<PropertyDetail['listingType'], string> = {
 export function propertyJsonLd(property: PropertyDetail): Record<string, unknown> {
   const url = absoluteUrl(`/properties/${property.slug}`);
   const image = property.coverImage
-    ? absoluteUrl(`/assets/branding/k-pearl-logo.png`) // real media URL wired when photos exist
+    ? absoluteUrl(`/assets/branding/kpearl-icon-512.png`) // real media URL wired when photos exist
     : undefined;
 
   return {
